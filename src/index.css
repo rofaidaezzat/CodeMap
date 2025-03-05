@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar{
+    background: linear-gradient(to right,#000000 0%,#371F5A 100%);
+}
+.register{
+    background-color: #852FFF;
+}
+
+
+#spanSearch{ 
+    width: 100% ;
+    height: 100%;
+}
+
+
+span{
+    color: #545BE8;
+}
+.heart{
+    background-color: #2F174E;
+    border-radius: 10px;
+}
+@media (max-width: 600px) {
+    .lenear{
+        height: 650px;
+    }
+}
+
+/* move image in home */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+    }
+
+    .image-container {
+    animation: spin 3s linear infinite; /* يدور بشكل مستمر */
+    }
+
+
+
+
+
