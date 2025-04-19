@@ -6,8 +6,6 @@ import Input from "../Ui/Input"
 
 const FAQFerMember = () => {
 
-
-
 // Render
 
 const renderQuestions= Questions.map(({Question,answer},idx)=>(

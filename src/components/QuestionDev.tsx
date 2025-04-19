@@ -15,9 +15,10 @@ const QuestionDev = ({questionName,answer}:IProps) => {
     }
     return (
 
+
         <div className="" onClick={toggle}>
             {isOpen?(
-                <div className="flex flex-col w-full gap-2 justify-center items-center  ">
+                <div className="flex flex-col w-full gap-2 justify-center items-center">
                     <div className="flex justify-between h-[50px] border-2 border-[#D5D6DD] rounded-xl lg:w-[920px] w-full p-5  items-center cursor-pointer duration-300 cursor-pointer:scale-105">
                     <p>{questionName}</p>
                     <ChevronDown size={20}/>

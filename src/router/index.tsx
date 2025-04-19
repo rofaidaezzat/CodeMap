@@ -12,6 +12,9 @@ import FAQFerMember from '../Pages/FAQFerMember'
 import PrivacyPolicy from '../Pages/PrivacyPolicy'
 import TermsAndConditions from '../Pages/TermsAndConditions'
 import CookiesPolicy from '../Pages/CookiesPolicy'
+import InfoOfFrontend from '../Pages/InfoOfFrontend'
+// import RoadMapOfFrontend from '../Pages/RoadMapOfFrontend'
+import SecondPageOfRoadMap from '../Pages/SecondPageOfRoadMap'
 
 
 const storageKey = "loggedInUser";
@@ -20,58 +23,52 @@ const userData = userDataString ? JSON.parse(userDataString) : null;
 
 
 const router = createBrowserRouter(createRoutesFromElements(
-    <>
-    {/* Root Layout*/}
-    <Route path="/" element={<RoutLayout/>} errorElement={<ErrorHandler/>}>
-    <Route index 
-            element ={
-                    <HomePage/>
-            }
-            />
-    <Route path='/Tracks' 
-                element={
-                    
-                        <Tracks/>
-                
-                }/>
-    <Route path='/AboutUs' 
-                element={
-                    <AboutUs/>
-        }
-        
+        <>
+        {/* Root Layout*/}
+        <Route path="/" element={<RoutLayout/>} errorElement={<ErrorHandler/>}>
+        <Route index 
+                element ={
+                        <HomePage/>
+                }
         />
-    <Route path='/ContactUs'
+        <Route path='/Tracks' 
                 element={
-                    
+                        <Tracks/>
+                }/>
+        <Route path='/AboutUs' 
+                element={
+                        <AboutUs/>
+        }
+        />
+        <Route path='/ContactUs'
+                element={
                         <ContectUs/>
-                    }/>
-    <Route path='/SignUp' 
-                    element={
+                        }/>
+        <Route path='/SignUp' 
+                element={
                         <ProtectedRoute 
-                            isAllowed={!userData?.jwt}
-                            redirectPath="/login"
-                            data={userData}
+                                isAllowed={!userData?.jwt}
+                                redirectPath="/login"
+                                data={userData}
                         >
-                            
-                            <SignUp/>
+                        
+                        <SignUp/>
                         </ProtectedRoute>
-                    }/>
-    <Route path='/LogIn' 
-                    element={
+                        }/>
+        <Route path='/LogIn' 
+                element={
                         <ProtectedRoute
-                            isAllowed={!userData?.jwt}
-                            redirectPath="/"
-                            data={userData}
+                                isAllowed={!userData?.jwt}
+                                redirectPath="/"
+                                data={userData}
                         >
-                            <LogIn/>
+                        <LogIn/>
                         </ProtectedRoute>
-                    }/>
-
-    <Route path='/FAQFerMember' 
+                        }/>
+        <Route path='/FAQFerMember' 
                 element={
                         <FAQFerMember/>
                 }/>
-
                 
         <Route path='/PrivacyPolicy' 
                 element={
@@ -86,16 +83,25 @@ const router = createBrowserRouter(createRoutesFromElements(
                 element={
                         <CookiesPolicy/>
                 }/>
+                <Route path='/InfoOfFrontend' 
+                element={
+                        <InfoOfFrontend/>
+                }/>
+        <Route path='/SecondPageOfRoadMap' 
+                element={
+                        <SecondPageOfRoadMap/>
+                }/>
                 
-    </Route>
+        </Route>
+        
 
 
 
 
-
+        RoadMapOfFrontend
         {/* Page Not Found */}
         <Route path="*" element={<p>error</p>} />
-    </>
+        </>
 )
 
 

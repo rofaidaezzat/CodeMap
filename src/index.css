@@ -1,6 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@plugin "daisyui";
+
+
+
+
+
 
 .navbar{
     background: linear-gradient(to right,#000000 0%,#371F5A 100%);
@@ -43,7 +49,27 @@ span{
     animation: spin 3s linear infinite; /* يدور بشكل مستمر */
     }
 
+.bgForInfo{
+    background-image: url("src/assets/Info/b1bead7070338cf46c3d2accc27b607c.jpg");
+
+}
+
+.fontcolor{
+    color: linear-gradient(to right,#FF4581 0%,#4388DD 100%);
 
 
+}
+
+.bgforroadmap{
+    background: linear-gradient(to right,#fdddf5 0%,#f2ecfb 100%);
+
+
+}
+
+.colorOfUnderline{
+    background-color: linear-gradient(to right,#FF4581 0%,#4388DD 100%);
+
+
+}
 
 

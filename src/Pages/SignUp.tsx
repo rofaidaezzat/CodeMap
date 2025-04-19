@@ -13,7 +13,7 @@ import { IErrorResponse } from '../interfaces'
 import { useState } from 'react'
 import Image from '../components/Image'
 import { Ellipsis } from 'lucide-react';
-import { signInWithGoogle } from '../functions/signInWithGoogle'
+import { signInWithGoogle } from '../utils/signInWithGoogle'
 
 interface IFormInput {
     username:string

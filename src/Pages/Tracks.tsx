@@ -17,50 +17,50 @@ const Tracks = () => {
               url="src/assets/Tracks img/Front-End.jpeg"
               alt="image front end"
               title="Front-end "
-              path="/"
+              path="/InfoOfFrontend"
             />
             <Trackcard
               url=" src/assets/Tracks img/JS.jpeg"
               alt="image backend"
               title="back-end Node js"
-              path="/"
+              path="/InfoOfFrontend"
             />
             <Trackcard
               url="src/assets/Tracks img/Gemini_Generated_Image_8x5cps8x5cps8x5c.jpeg"
               alt="image UI&UX"
               title="UI&UX "
-              path="/"
+              path="/InfoOfFrontend"
             />
             <Trackcard
               url="src\assets\Tracks img\Back-End.jpeg"
               alt="image Backend"
               title="Backend .net "
-              path="/"
+              path="/InfoOfFrontend"
             />
             
             <Trackcard
               url="src/assets/Tracks img/MobileApp.jpeg"
               alt="image flutter"
               title="Flutter "
-              path="/"
+              path="/InfoOfFrontend"
             />
             <Trackcard
               url="src/assets/Tracks img/Robotics.jpeg"
               alt="image Ai"
               title="Machine Learning"
-              path="/"
+              path="/InfoOfFrontend"
             />
             <Trackcard
               url="src/assets/Tracks img/ReactJS.jpeg"
               alt="image Reactjs"
               title="ReactJS  "
-              path="/"
+              path="/InfoOfFrontend"
             />
             <Trackcard
               url="src/assets/Tracks img/Gemini_Generated_Image_uhvkyguhvkyguhvk.jpeg"
               alt="image js"
               title="Mastering JS with Laravel"
-              path="/"
+              path="/InfoOfFrontend"
             />
             </div>
 

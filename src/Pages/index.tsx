@@ -69,7 +69,7 @@ const HomePage = () => {
         <p className="text-center">Most popular tracks suggested for you</p>
         {/* cards */}
         <div className="mt-10 pb-7 flex flex-col items-center lg:gap-10 gap-10 sm:flex-row justify-center overflow-hidden flex-wrap  ">
-            <div className=" hidden md:hidden lg:flex lg:flex-col justify-end gap-10 ">
+            <div className=" hidden md:hidden lg:flex lg:flex-col justify-between h-full gap-10 ">
             <Image imageurl="src/assets/Home/Group2.png" alt="error" className="w-[40px] h-auto"/>
             <Image imageurl="src/assets/Home/Group4.png" alt="error" className="w-[50px] h-auto"/>
             </div>

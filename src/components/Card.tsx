@@ -28,7 +28,6 @@ const Card = ({ url, alt, title, describe }: Iprops) => {
                 <h3 className="text-lg font-bold">{title}</h3>
                 <h3 className="text-blue-500 text-lg">Free</h3>
             </div>
-
         <hr className="w-full" />
         <div className="flex lg:w-auto md:w-[400px]  w-auto gap-3 pb-8 ">
             <div className="flex gap-1 ">

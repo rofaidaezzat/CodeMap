@@ -1,0 +1,35 @@
+.card {
+    @apply relative w-[450px] h-fit p-5 rounded-lg z-[10] overflow-hidden flex flex-col items-center justify-center shadow-md shadow-white;
+    }
+
+    .bg {
+    @apply absolute top-[5px] left-[5px] w-[440px] z-[2] bg-white/95 rounded-[10px] overflow-hidden outline outline-[2px] outline-white;
+    height: calc(100% - 10px); 
+    backdrop-filter: blur(24px); 
+    }
+
+    .blob {
+    @apply absolute z-[1] top-1/2 left-1/2 w-[300px] rounded-full bg-[#DE00A5] opacity-100;
+    height: calc(100% - 10px); 
+
+    filter: blur(12px); /* ✅ raw CSS */
+    animation: blob-bounce 5s infinite ease; /* ✅ raw CSS */
+    }
+
+    @keyframes blob-bounce {
+    0% {
+        transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+    25% {
+        transform: translate(-100%, -100%) translate3d(100%, 0, 0);
+    }
+    50% {
+        transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
+    }
+    75% {
+        transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+    }
+    100% {
+        transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+    }
