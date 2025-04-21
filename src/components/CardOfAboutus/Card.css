@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  @apply h-[294px] w-[240px] text-red-500 [perspective:800px] font-sans;
+}
+
+.card {
+  @apply w-full h-full bg-black rounded-2xl relative transition-transform duration-[1500ms];
+  transform-style: preserve-3d;
+}
+
+.card-top {
+  @apply flex items-center justify-center h-[10%] absolute w-1/2 bg-transparent border-2 border-black top-0 rounded-b-xl shadow-[0_0_10px_5px_rgba(255,0,0,0.7)];
+  border-top: none;
+}
+
+.card-top-para {
+  @apply text-base font-bold;
+}
+
+.container:hover > .card {
+  @apply cursor-pointer;
+  transform: rotateX(180deg) rotateZ(-180deg);
+}
+
+.front,
+.back {
+  @apply w-full h-full rounded-2xl absolute flex flex-col items-center justify-center gap-5 shadow-[0_0_10px_5px_rgba(255,0,0,0.7)];
+  backface-visibility: hidden;
+}
+
+.back {
+  @apply bg-black;
+  transform: rotateX(180deg) rotateZ(-180deg);
+}
+
+.heading {
+  @apply text-[22px] font-bold;
+}
+
+.follow {
+  @apply text-base font-medium;
+}
+
+.icons {
+  @apply flex flex-row gap-5 mt-5;
+}

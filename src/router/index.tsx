@@ -15,6 +15,7 @@ import CookiesPolicy from '../Pages/CookiesPolicy'
 import InfoOfFrontend from '../Pages/InfoOfFrontend'
 // import RoadMapOfFrontend from '../Pages/RoadMapOfFrontend'
 import SecondPageOfRoadMap from '../Pages/SecondPageOfRoadMap'
+import Profile from '@/Pages/Profile'
 
 
 const storageKey = "loggedInUser";
@@ -90,6 +91,10 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/SecondPageOfRoadMap' 
                 element={
                         <SecondPageOfRoadMap/>
+                }/>
+        <Route path='/Profile' 
+                element={
+                        <Profile/>
                 }/>
                 
         </Route>

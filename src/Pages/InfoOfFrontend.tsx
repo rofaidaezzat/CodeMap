@@ -43,7 +43,7 @@ const InfoOfFrontend = () => {
         <CalendarDays color='black' size={40} />
         <p className='text-black text-[20px]'>Available now</p>
         </div>
-        <Button className='bg-[#DE00A5] w-fit text-black  px-4 md:px-6 py-2 rounded-md flex items-center justify-center font-semibold text-sm md:text-base'>
+        <Button className=' w-fit text-[#DE00A5]  px-4 md:px-6 py-2 rounded-md flex items-center justify-center font-semibold text-sm md:text-base'>
         Join today
         </Button>
       </div>

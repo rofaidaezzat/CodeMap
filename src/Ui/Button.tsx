@@ -3,8 +3,6 @@ interface Iprops extends ButtonHTMLAttributes <HTMLButtonElement>{// يعني د
     children:ReactNode;
     className?:string;
     isLoading?: boolean;
-
-
 }
 const Button = ({children,className,isLoading,...rest}:Iprops) => {  // rest=> يعني ايه حاجه هاتتبعت للcomponnent da
     return (
@@ -33,7 +31,6 @@ const Button = ({children,className,isLoading,...rest}:Iprops) => {  // rest=> �
         </svg>
         ) : null}
         {children}
-
         </button>
     )
 }

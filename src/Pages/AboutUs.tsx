@@ -3,6 +3,7 @@ import { CircleArrowLeft, CircleArrowRight, UsersRound } from "lucide-react";
 import { useRef } from "react";
 import Image from "../components/Image";
 import CardPersonal from "../components/CardPersonal";
+import CardOfaboutUs from "@/components/CardOfAboutus/CardOfaboutUs";
 
 const AboutUs = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -153,44 +154,14 @@ const AboutUs = () => {
               ref={scrollRef}
               className="flex lg:mx-20 gap-6 overflow-x-hidden scroll-snap-x mandatory scrollbar-hide p-4"
             >
-              <CardPersonal
-                url="src/assets/About us-20250305T145038Z-001/About us/person.jpg"
-                alt="person Name"
-                name="person Name"
-                field="Front End"
-              />
-              <CardPersonal
-                url="src/assets/About us-20250305T145038Z-001/About us/person.jpg"
-                alt="person Name"
-                name="person Name"
-                field="Front End"
-              />
-              <CardPersonal
-                url="src/assets/About us-20250305T145038Z-001/About us/person.jpg"
-                alt="person Name"
-                name="person Name"
-                field="Front End"
-              />
-              <CardPersonal
-                url="src/assets/About us-20250305T145038Z-001/About us/person.jpg"
-                alt="person Name"
-                name="person Name"
-                field="Front End"
-              />
-              <CardPersonal
-                url="src/assets/About us-20250305T145038Z-001/About us/person.jpg"
-                alt="person Name"
-                name="person Name"
-                field="Front End"
-              />
-              <CardPersonal
-                url="src/assets/About us-20250305T145038Z-001/About us/person.jpg"
-                alt="person Name"
-                name="person Name"
-                field="Front End"
-              />
+              <CardOfaboutUs/>
+              <CardOfaboutUs/>
+              <CardOfaboutUs/>
+              <CardOfaboutUs/>
+              <CardOfaboutUs/>
+              <CardOfaboutUs/>
+              <CardOfaboutUs/>
             </div>
-
             {/* زر السهم لليمين */}
             <button
               onClick={scrollRight}
