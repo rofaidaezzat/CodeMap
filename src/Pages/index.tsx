@@ -4,7 +4,6 @@ import { Search } from "lucide-react";
 import Button from "../Ui/Button";
 import Card from "../components/Card";
 import CardWithOutImage from "../components/CardWithOutImage";
-import CardOfaboutUs from "@/components/CardOfAboutus/CardOfaboutUs";
 
 const HomePage = () => {
     return (
@@ -199,7 +198,7 @@ const HomePage = () => {
             className="w-11 h-11 hidden lg:flex"
             />
         </div>
-        <CardOfaboutUs/>
+
     </div>
 </>
 

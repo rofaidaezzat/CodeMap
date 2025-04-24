@@ -2,7 +2,7 @@ import { CalendarDays } from 'lucide-react';
 import Button from '../Ui/Button';
 import { DataOfCardInfo } from '../data';
 import CardOfInfo from '../components/Course Overview Of info/CardOfInfo';
-import ParticleRing from '../components/ParticleRing';
+import HeaderOfInfo from '@/components/HeaderOfInfo/HeaderOfInfo';
 
 const InfoOfFrontend = () => {
 
@@ -10,7 +10,7 @@ const InfoOfFrontend = () => {
     <div className='min-h-screen pt-20 m-10 flex flex-col gap-10 items-center'>
       {/* first section  */}
       <div  className="w-full ">
-            <ParticleRing title='Front-End' description='Let Learning With Us'/>
+        <HeaderOfInfo title='Front-End'  description='Let’s Learning With Us'/>
       </div>
 
       {/*  second dev */}
@@ -43,7 +43,7 @@ const InfoOfFrontend = () => {
         <CalendarDays color='black' size={40} />
         <p className='text-black text-[20px]'>Available now</p>
         </div>
-        <Button className=' w-fit text-[#DE00A5]  px-4 md:px-6 py-2 rounded-md flex items-center justify-center font-semibold text-sm md:text-base'>
+        <Button className=' w-fit  bg-[#DE00A5] px-4 md:px-6 py-2 rounded-md flex items-center justify-center font-semibold text-sm md:text-base'>
         Join today
         </Button>
       </div>

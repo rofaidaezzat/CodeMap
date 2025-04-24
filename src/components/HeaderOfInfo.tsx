@@ -7,7 +7,7 @@ interface IProps{
     // backgroundImage:string
 
 }
-const HeaderOfInfo = ({ description,title}:IProps) => {
+const ContentOfHeaderOfInfo = ({ description,title}:IProps) => {
     const navigate=useNavigate()
     const navigateToRoadmap=()=>{
 
@@ -28,4 +28,4 @@ const HeaderOfInfo = ({ description,title}:IProps) => {
 )
 }
 
-export default HeaderOfInfo
+export default ContentOfHeaderOfInfo

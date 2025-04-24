@@ -72,4 +72,8 @@ span{
 
 }
 
+.bgOfPhotoOfProfile{
+    background: linear-gradient(to right,#371F5A 0%,#6f44af 100%);
+}
+
 

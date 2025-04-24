@@ -1,14 +1,14 @@
-.card {
+.cardOfRoadMap {
     @apply relative w-[450px] h-fit p-5 rounded-lg z-[10] overflow-hidden flex flex-col items-center justify-center shadow-md shadow-white;
     }
 
-    .bg {
+    .bgOfRoadMap {
     @apply absolute top-[5px] left-[5px] w-[440px] z-[2] bg-white/95 rounded-[10px] overflow-hidden outline outline-[2px] outline-white;
     height: calc(100% - 10px); 
     backdrop-filter: blur(24px); 
     }
 
-    .blob {
+    .blobOfRoadMaap {
     @apply absolute z-[1] top-1/2 left-1/2 w-[300px] rounded-full bg-[#DE00A5] opacity-100;
     height: calc(100% - 10px); 
 

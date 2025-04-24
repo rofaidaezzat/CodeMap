@@ -39,9 +39,9 @@ const CardOfRoadMap = ({numberOfStage,category,titleOfStage,setDotPosition}:Ipro
         </div>
         <div>
         {isOpen&&
-        <div className="card">
-        <div className="bg" />
-        <div className="blob" />
+        <div className="cardOfRoadMap">
+        <div className="bgOfRoadMap" />
+        <div className="blobOfRoadMaap" />
     
       {/* Content wrapper with higher z-index */}
         <div className="relative z-[3] flex flex-col gap-4 w-full">
