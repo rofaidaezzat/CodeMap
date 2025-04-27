@@ -1,7 +1,10 @@
-
 import { CircleArrowLeft, CircleArrowRight, UsersRound } from "lucide-react";
 import { useRef } from "react";
 import Image from "../components/Image";
+
+import { AboutUsCardInfo } from "@/data";
+import CardOfaboutUs from "@/components/CardOfaboutUs/CardOfAboutUs";
+
 
 const AboutUs = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -140,20 +143,33 @@ const AboutUs = () => {
           <h3 className="mt-10 text-center text-3xl font-bold text-gray-900">
             Meet Our Team
           </h3>
-          <div className="relative w-full lg:px-10 mt-10 ">
+          <div className="relative w-full lg:px-10 mt-10">
             <button
               onClick={scrollLeft}
-              className="absolute  left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-400"
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-400"
             >
               <CircleArrowLeft size={40} />
             </button>
 
             <div
               ref={scrollRef}
-              className="flex lg:mx-20 gap-6 overflow-x-hidden scroll-snap-x mandatory scrollbar-hide p-4"
+              className="flex lg:mx-20 gap-6 overflow-x-auto scroll-snap-x mandatory scrollbar-hide p-4"
             >
+              {AboutUsCardInfo.map((cardInfo, index) => (
+                <div key={index} className="min-w-[300px]">
+                  <CardOfaboutUs
+                    name={cardInfo.name}
+                    person_add={cardInfo.person_add}
+                    srcImage={cardInfo.srcImage}
+                    srcfacebookimg={cardInfo.srcfacebookimg}
+                    srcinstgramim={cardInfo.srcinstgramim}
+                    srctwitterimg={cardInfo.srctwitterimg}
+                    srcwhatsappimg={cardInfo.srcwhatsappimg}
+                  />
+                </div>
+              ))}
             </div>
-            {/* زر السهم لليمين */}
+
             <button
               onClick={scrollRight}
               className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-400"
@@ -161,6 +177,7 @@ const AboutUs = () => {
               <CircleArrowRight size={40} />
             </button>
           </div>
+          
         </div>
       </div>
     </>

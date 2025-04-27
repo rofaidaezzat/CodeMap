@@ -67,5 +67,30 @@ export interface IDataOfCardInfo {
       imagetitle: string;
     }[];
   }
-  
+
+    export interface IAboutUsInfo {
+    srcImage: string;
+    name: string;
+    person_add: string;
+    srcinstgramim: string;
+    srctwitterimg: string;
+    srcwhatsappimg: string;
+    srcfacebookimg: string;
+    }
+
+
+    export interface IsidebarData {
+        id: string;
+        title: string;
+        lessons: {
+            id: string;
+            title: string;
+            subLessons: {
+            id: string;
+            title: string;
+            duration: string;
+            videoUrl: string;
+            }[];
+        }[];
+        }
 

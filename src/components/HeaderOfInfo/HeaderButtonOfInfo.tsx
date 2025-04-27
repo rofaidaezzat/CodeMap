@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 const HeaderButtonOfInfo = () => {
     const navigate =useNavigate()
     const goToRoadMap=()=>{
-        navigate('/SecondPageOfRoadMap')
+        navigate('SecondPageOfRoadMap')
     }
   return (
     <button onClick={goToRoadMap}

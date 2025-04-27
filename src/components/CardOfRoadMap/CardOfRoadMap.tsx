@@ -4,6 +4,7 @@ import './CardOfRoadMap.css'
 import HeaderOfRoadCard from './HeaderOfRoadCard';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom';
 
 
 interface Iprops {
@@ -17,7 +18,13 @@ interface Iprops {
 
 const CardOfRoadMap = ({numberOfStage,category,titleOfStage,setDotPosition}:Iprops) => {
     const [isOpen,setIsOpen]=useState(true)
+    const Navigate=useNavigate()
     const ref = useRef<HTMLDivElement>(null);
+
+    const NavigateToCourse=()=>{
+        Navigate('/tracks/InfoOfFrontend/SecondPageOfRoadMap/coursefrontend')
+
+    }
 
 
     const ToggleCard=()=>{
@@ -59,7 +66,7 @@ const CardOfRoadMap = ({numberOfStage,category,titleOfStage,setDotPosition}:Ipro
             {Object.entries(category)
             .filter(([key]) => key !== "id" && key !== "StageName")
             .map(([key, value]) => (
-                <div key={key} className="flex gap-1 items-center  cursor-pointer">
+                <div key={key} className="flex gap-1 items-center  cursor-pointer" onClick={NavigateToCourse}>
                 <Youtube size={30} color="#4388DD" />
                 <p>{value}</p>
                 </div>

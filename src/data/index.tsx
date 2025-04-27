@@ -1,4 +1,15 @@
-import { Icategories, IDataOfCardInfo, ILoginInput, IQuestions, IRegisterInput } from "../interfaces";
+import { IAboutUsInfo, Icategories, IDataOfCardInfo, ILoginInput, IQuestions, IRegisterInput, IsidebarData } from "../interfaces";
+import HtmlIcon from "../assets/Info/html-5-svgrepo-com.svg?url";
+import CssIcon from "../assets/Info/css-document-extension-file-file-format-file-type-svgrepo-com.svg?url";
+import JavaScriptIcon from "../assets/Info/javascript.svg?url";
+import ReactIcon from "../assets/Info/react-svgrepo-com.svg?url";
+import VueIcon from "../assets/Info/vue-svgrepo-com.svg?url";
+import AngularIcon from "../assets/Info/angular-svgrepo-com.svg?url";
+import SvelteIcon from "../assets/Info/svelte-icon-svgrepo-com.svg?url";
+import VsCodeIcon from "../assets/Info/vs-code-svgrepo-com.svg?url";
+import WebStormIcon from "../assets/Info/webstorm-svgrepo-com.svg?url";
+import SublimeTextIcon from "../assets/Info/sublimetext-icon-svgrepo-com.svg?url";
+
 
 export const REGISTER_FORM: IRegisterInput[] = [
     {
@@ -183,15 +194,15 @@ export const LOGIN_FORM: ILoginInput[] = [
             title:"Core Languages",
             content:[
                 {
-                    imagurl:"src/assets/Info/html-5-svgrepo-com.svg",
+                    imagurl:HtmlIcon,
                     imagetitle:"HTML"
                 },
                 {
-                    imagurl:"src/assets/Info/css-document-extension-file-file-format-file-type-svgrepo-com.svg",
+                    imagurl:CssIcon,
                     imagetitle:"Css"
                 },
                 {
-                    imagurl:"src/assets/Info/javascript.svg",
+                    imagurl:JavaScriptIcon,
                     imagetitle:"JavaScript"
                 }
                 
@@ -201,19 +212,19 @@ export const LOGIN_FORM: ILoginInput[] = [
             title:"Popular FrameWork",
             content:[
                 {
-                    imagurl:"src/assets/Info/react-svgrepo-com.svg",
+                    imagurl:ReactIcon,
                     imagetitle:"React"
                 },
                 {
-                    imagurl:"src/assets/Info/vue-svgrepo-com.svg",
+                    imagurl:VueIcon,
                     imagetitle:"Vue"
                 },
                 {
-                    imagurl:"src/assets/Info/angular-svgrepo-com.svg",
+                    imagurl:AngularIcon,
                     imagetitle:"Angular"
                 },
                 {
-                    imagurl:"src/assets/Info/svelte-icon-svgrepo-com.svg",
+                    imagurl:SvelteIcon,
                     imagetitle:"Svelte"
                 },
                 
@@ -223,21 +234,528 @@ export const LOGIN_FORM: ILoginInput[] = [
             title:"Development Tools",
             content:[
                 {
-                    imagurl:"src/assets/Info/vs-code-svgrepo-com.svg",
+                    imagurl:VsCodeIcon,
                     imagetitle:"VS CODE"
                 },
                 {
-                    imagurl:"src/assets/Info/webstorm-svgrepo-com.svg",
+                    imagurl:WebStormIcon,
                     imagetitle:"WebStorm"
                 },
                 {
-                    imagurl:"src/assets/Info/sublimetext-icon-svgrepo-com.svg",
+                    imagurl:SublimeTextIcon,
                     imagetitle:"Sublime Text"
                 },
             ]
         }
 
     ] 
+
+    export const AboutUsCardInfo: IAboutUsInfo[] = [
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+        {
+          srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
+          name: "rofaida",
+          person_add: "",
+          srcfacebookimg: "",
+          srcinstgramim: "",
+          srctwitterimg: "",
+          srcwhatsappimg: "",
+        },
+      ];
+
+      export const roadmapData: IsidebarData[] = [
+        {
+          id: "1",
+          title: "HTML",
+      
+          lessons: [
+            {
+              id: "1",
+              title: "Introduction and Basics",
+              subLessons: [
+                {
+                  id: "1.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/6QAELgirvjs",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/qfPUMV9J5yw",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "2",
+              title: "HTML Structure and Basic Elements",
+              subLessons: [
+                {
+                  id: "2.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/6QAELgirvjs",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/qfPUMV9J5yw",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "3",
+              title: "Attributes, Links, and Formatting",
+              subLessons: [
+                {
+                  id: "3.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "4",
+              title: "Lists, Tables, and Div/Span Usage",
+              subLessons: [
+                {
+                  id: "4.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "4.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "4.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "2",
+          title: "CSS",
+      
+          lessons: [
+            {
+              id: "1",
+              title: "Introduction and Basics",
+              subLessons: [
+                {
+                  id: "1.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "2",
+              title: "HTML Structure and Basic Elements",
+              subLessons: [
+                {
+                  id: "2.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: " 3",
+              title: "Attributes, Links, and Formatting",
+              subLessons: [
+                {
+                  id: "3.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "3",
+          title: "javaScript",
+      
+          lessons: [
+            {
+              id: "1",
+              title: "Introduction and Basics",
+              subLessons: [
+                {
+                  id: "1.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "2",
+              title: "HTML Structure and Basic Elements",
+              subLessons: [
+                {
+                  id: "2.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "3",
+              title: "Attributes, Links, and Formatting",
+              subLessons: [
+                {
+                  id: "3.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "4",
+          title: "Bootstrap",
+      
+          lessons: [
+            {
+              id: "1",
+              title: "Introduction and Basics",
+              subLessons: [
+                {
+                  id: "1.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "2",
+              title: "HTML Structure and Basic Elements",
+              subLessons: [
+                {
+                  id: "2.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "3",
+              title: "Attributes, Links, and Formatting",
+              subLessons: [
+                {
+                  id: "3.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "5",
+          title: "Reactjs",
+      
+          lessons: [
+            {
+              id: "1",
+              title: "Introduction and Basics",
+              subLessons: [
+                {
+                  id: "1.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "1.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "2",
+              title: "HTML Structure and Basic Elements",
+              subLessons: [
+                {
+                  id: "2.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "2.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+            {
+              id: "3",
+              title: "Attributes, Links, and Formatting",
+              subLessons: [
+                {
+                  id: "3.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.1",
+                  title: "Introduction and What I Need To Learn",
+                  videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.2",
+                  title: "Elements And Browser",
+                  videoUrl: "https://www.youtube.com/embed/video2",
+                  duration: "2 hrs",
+                },
+                {
+                  id: "3.3",
+                  title: "First Project And First Page",
+                  videoUrl: "https://www.youtube.com/embed/video3",
+                  duration: "2 hrs",
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      
 
 
     

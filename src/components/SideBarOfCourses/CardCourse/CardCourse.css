@@ -1,0 +1,125 @@
+
+/* styles.css */
+
+.card-cardcourse {
+    @apply w-[300px] relative bg-white p-5;
+    position: relative;
+  }
+  
+  .card-cardcourse ::after,
+  .card-cardcourse ::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 10px;
+    bottom: 15px;
+    z-index: -1;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.1s ease-in;
+  }
+  
+  .card-cardcourse ::after {
+    right: 0;
+    transform: rotate(5deg);
+  }
+  
+  .card-cardcourse ::before {
+    left: 0;
+    transform: rotate(-5deg);
+  }
+  
+  .card-cardcourse :hover::before,
+  .card-cardcourse :hover::after {
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.6);
+  }
+  
+  .card-cardcourse :hover::before {
+    transform: rotate(-8deg);
+  }
+  
+  .card-cardcourse :hover::after {
+    transform: rotate(8deg);
+  }
+  
+  .card__img-cardcourse {
+    @apply relative w-full h-[175px];
+    background: linear-gradient(315deg, #68ffc0, #007c0d);
+  }
+  
+  .card__span-cardcpourse {
+    @apply absolute top-[10px] left-[10px] text-[11px] bg-white px-[7px] py-[3px] shadow-md cursor-pointer select-none transition-transform;
+  }
+  
+  .card__span-cardcpourse:hover {
+    transform: translateX(5px);
+  }
+  
+  .card-int-cardcourse {
+    @apply pt-5;
+  }
+  
+  .card-int__title-cardcourse {
+    @apply font-bold text-[1.2rem] mb-2;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .card-int__button {
+    @apply cursor-pointer mt-5 px-5 py-[7px] w-full bg-green-100 text-black relative overflow-hidden select-none border-0 transition-shadow;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0);
+  }
+  
+  .card-int__button:active {
+    box-shadow: 0px 0px 15px rgba(0, 119, 255, 0.5);
+  }
+  
+  .card-int__button::before {
+    content: "More for this article";
+    @apply flex items-center justify-center absolute w-full h-full top-0 left-0;
+    background: linear-gradient(315deg, #68ffc0, #007c0d);
+    color: white;
+    transform: translateX(-99%);
+    z-index: 1;
+    animation: effect_one 10s infinite;
+  }
+  
+  .card-int__button:hover::before {
+    animation: effect_two 0.4s 1;
+    transform: translateX(0%);
+  }
+  
+  .excerpt {
+    @apply text-sm;
+  }
+  
+  /* Animations */
+  @keyframes effect_one {
+    0% {
+      transform: translateX(-99%);
+    }
+  
+    25% {
+      transform: translateX(-90%);
+    }
+  
+    50% {
+      transform: translateX(-80%);
+    }
+  
+    75% {
+      transform: translateX(-95%);
+    }
+  
+    100% {
+      transform: translateX(-99%);
+    }
+  }
+  
+  @keyframes effect_two {
+    from {
+      transform: translateX(-99%);
+    }
+  
+    to {
+      transform: translateX(-1%);
+    }
+  }

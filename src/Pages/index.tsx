@@ -3,7 +3,6 @@ import Image from "../components/Image";
 import { Search } from "lucide-react";
 import Button from "../Ui/Button";
 import Card from "../components/Card";
-// import CardWithOutImage from "../components/CardWithOutImage";
 import CardWithoutImageInHome from "@/components/CardWithoutImageInHome/CardWithoutImageInHome";
 import MorphingText from "@/components/eldoraui/morphingtext";
 import { motion } from 'framer-motion';
@@ -12,14 +11,13 @@ import { motion } from 'framer-motion';
 const HomePage = () => {
     const texts = [
         "Course",
-        "vedio",
+        "Video",
         "Track",
-        
+        'Mo2a'
         ];
 
     return (
     <>
-    
     <div className="bg-[#CFD8FF] rounded-b-xl ">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-around px-8 py-16 mt-10">
@@ -79,7 +77,6 @@ const HomePage = () => {
 </div>
 </div>
 {/* our track */}
-
 <div className="mt-5">
         <div className="flex justify-between mx-10 px-10 w-auto h-11">
             <Image imageurl="src/assets/Home/lamb.png" alt="error" className="w-[80px] h-auto"/>

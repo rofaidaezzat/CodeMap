@@ -1,4 +1,4 @@
-import { categories } from '../data';
+import { categories } from '../../../data';
 import { GradualSpacing } from '@/components/eldoraui/gradualspacing';
 import CardOfRoadMap from '@/components/CardOfRoadMap/CardOfRoadMap';
 import { CircleSmall } from 'lucide-react';
@@ -44,9 +44,6 @@ const SecondPageOfRoadMap = () => {
           />
         )}
   
-
-      
-
       </div>
       {/* Middle Line & Dot */}
       <div className="relative flex justify-center min-h-[350px]">

@@ -1,7 +1,7 @@
 import { CalendarDays } from 'lucide-react';
-import Button from '../Ui/Button';
-import { DataOfCardInfo } from '../data';
-import CardOfInfo from '../components/Course Overview Of info/CardOfInfo';
+import Button from '../../Ui/Button';
+import { DataOfCardInfo } from '../../data';
+import CardOfInfo from '../../components/Course Overview Of info/CardOfInfo';
 import HeaderOfInfo from '@/components/HeaderOfInfo/HeaderOfInfo';
 const InfoOfFrontend = () => {
 

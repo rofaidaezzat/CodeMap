@@ -1,0 +1,45 @@
+.container {
+    @apply h-[294px] w-[240px] text-white [perspective:800px] font-sans;
+  }
+  
+  .card-aboutus {
+    @apply w-full h-full bg-black rounded-2xl relative transition-transform duration-[1500ms] shadow-[0_8px30px#9C4DF4];
+    transform-style: preserve-3d;
+  }
+  
+  .card-top-aboutus {
+    @apply flex items-center justify-center h-[10%] absolute w-1/2 bg-transparent border-2 border-white top-0 rounded-b-xl shadow-[0_4px20px#9C4DF4];
+    border-top: none;
+  }
+  
+  .card-top-para-aboutus {
+    @apply text-base font-bold;
+  }
+  
+  .container:hover > .card-aboutus {
+    @apply cursor-pointer;
+    transform: rotateX(180deg) rotateZ(-180deg);
+  }
+  
+  .front,
+  .back-aboutus {
+    @apply w-full h-full rounded-2xl absolute flex flex-col items-center justify-center gap-5 ;
+    backface-visibility: hidden;
+  }
+  
+  .back-aboutus {
+    @apply bg-black;
+    transform: rotateX(180deg) rotateZ(-180deg);
+  }
+  
+  .heading-aboutus {
+    @apply text-[22px] font-bold;
+  }
+  
+  .follow-aboutus {
+    @apply text-base font-medium;
+  }
+  
+  .icons-aboutus {
+    @apply flex flex-row gap-5 mt-5;
+  }
