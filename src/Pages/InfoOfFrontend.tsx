@@ -3,7 +3,6 @@ import Button from '../Ui/Button';
 import { DataOfCardInfo } from '../data';
 import CardOfInfo from '../components/Course Overview Of info/CardOfInfo';
 import HeaderOfInfo from '@/components/HeaderOfInfo/HeaderOfInfo';
-
 const InfoOfFrontend = () => {
 
   return (
@@ -33,10 +32,7 @@ const InfoOfFrontend = () => {
     </h3>
     <p className='text-[20px] text-[#888080]'>Start straight away and join a global classroom of learners.<br/> If the course
     hasn’t started yet you’ll see the future date listed below.</p>
-
       </div>
-  
-    
     <div className='border-2  border-l-4 border-[#888080] border-l-[#DE00A5] w-[600px]  h-[75px] p-2 flex justify-between'>
   
         <div className='flex gap-2 items-center justify-center cursor-pointer'>

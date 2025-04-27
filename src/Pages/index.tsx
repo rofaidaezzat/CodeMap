@@ -3,17 +3,34 @@ import Image from "../components/Image";
 import { Search } from "lucide-react";
 import Button from "../Ui/Button";
 import Card from "../components/Card";
-import CardWithOutImage from "../components/CardWithOutImage";
+// import CardWithOutImage from "../components/CardWithOutImage";
+import CardWithoutImageInHome from "@/components/CardWithoutImageInHome/CardWithoutImageInHome";
+import MorphingText from "@/components/eldoraui/morphingtext";
+import { motion } from 'framer-motion';
+
 
 const HomePage = () => {
+    const texts = [
+        "Course",
+        "vedio",
+        "Track",
+        
+        ];
+
     return (
     <>
     
     <div className="bg-[#CFD8FF] rounded-b-xl ">
+        {/* Header */}
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-around px-8 py-16 mt-10">
-        <div className="text-left max-w-lg flex flex-col gap-0">
-            <h6 className="text-3xl md:text-4xl font-bold text-gray-900 leading-snug">
-                Let's Find The Right <span className="text-[#545BE8]">Course</span> For You
+        <motion.div
+        initial={{ x: -300, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1 }} 
+        className="text-left max-w-lg flex flex-col gap-0"
+        >
+            <h6 className="text-3xl  md:text-4xl font-bold text-gray-900 leading-snug">
+                Let's Find The Right <span className="text-[#545BE8]"><MorphingText texts={texts} /></span> For You
             </h6>
             <div className="flex justify-between " >
             <Image imageurl="src/assets/Home/Group7.png" alt="error" className="w-10" />
@@ -30,10 +47,14 @@ const HomePage = () => {
                 <Search size={20} /> Search
                 </Button>
             </div>
-        </div>
-        <div className="w-80 md:w-[450px]">
-            <Image imageurl="src/assets/Home/OBJECTS.png" alt="error" className="w-full" />
-        </div>
+        </motion.div>
+        <motion.div
+        initial={{ x: 300, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1 }} 
+        className="w-80 md:w-[450px]">
+                <Image imageurl="src/assets/Home/OBJECTS.png" alt="error" className="w-full" />
+        </motion.div>
         </div>
         <div className=" flex justify-between px-2 pb-2">
             <Image imageurl="src/assets/Home/casual-life-3d-orange-planet-with-disk 1.png" alt="error" className="w-10" />
@@ -52,7 +73,6 @@ const HomePage = () => {
         Not sure where to start? <br className="hidden md:block" />
         Talk to our chatbot
     </h6>
-
     <Button className="bg-[#2F174E] text-white px-4 md:px-6 py-2 rounded-full flex items-center justify-center font-semibold text-sm md:text-base">
         Start Chatting
     </Button>
@@ -150,8 +170,6 @@ const HomePage = () => {
         </div>
         </div>
         </div>
-
-
       {/* what student say */}
     <div className="py-12  ">
         <h3 className="text-center font-semibold text-4xl">
@@ -162,43 +180,17 @@ const HomePage = () => {
         </p>
         <div className="mt-10 mb-10 flex flex-col items-center lg:gap-0 gap-5 space-y-2 sm:flex-row sm:justify-center md:justify-around flex-wrap">
             <Image imageurl="src\assets\Home\Group12.png" alt="error" className=" hidden lg:flex w-20 h-20 " />
-            <CardWithOutImage
-            url="src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg"
-            alt="personalprofile image"
-            description="“Teachings of the great explore of truth, 
-            the master-builder of human happiness. 
-            no one rejects,dislikes, or avoids pleasure 
-            itself, pleasure itself”"
-            name="Finlay Kirk"
-            field="Machine Learning Engineer"
-            />
-            <CardWithOutImage
-            url="src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg"
-            alt="personalprofile image"
-            description="“Complete account of the system and
-                    expound the actual Contrary to popular
-                    belief, Lorem Ipsum is not simply 
-                    random text. It has roots”"
-            name="Dannette P. Cervantes"
-            field="Back End Developer"
-            />
-            <CardWithOutImage
-            url="src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg"
-            alt="personalprofile image"
-            description="“There are many variations of passages
-                    of Lorem Ipsum available, but the majority
-                    have suffered alteration in some form,
-                    by injected humour”"
-            name="Clara R. Altman"
-            field="UI&UX Design"
-            />
+        
+            <CardWithoutImageInHome/>
+            <CardWithoutImageInHome/>
+            <CardWithoutImageInHome/>
+            
             <Image
             imageurl="src\assets\Home\casual-life-3d-orange-planet-with-disk 1.png"
             alt="error"
             className="w-11 h-11 hidden lg:flex"
             />
         </div>
-
     </div>
 </>
 

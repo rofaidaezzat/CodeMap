@@ -3,6 +3,7 @@ import { Icategories } from '../../interfaces';
 import './CardOfRoadMap.css'
 import HeaderOfRoadCard from './HeaderOfRoadCard';
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion'
 
 
 interface Iprops {
@@ -39,7 +40,12 @@ const CardOfRoadMap = ({numberOfStage,category,titleOfStage,setDotPosition}:Ipro
         </div>
         <div>
         {isOpen&&
-        <div className="cardOfRoadMap">
+        <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5 }} 
+        className="cardOfRoadMap">
         <div className="bgOfRoadMap" />
         <div className="blobOfRoadMaap" />
     
@@ -60,7 +66,7 @@ const CardOfRoadMap = ({numberOfStage,category,titleOfStage,setDotPosition}:Ipro
             ))}
         </div>
         </div>
-    </div>
+    </motion.div>
         }
 
         </div>

@@ -9,7 +9,8 @@ interface Iprops {
 const HeaderOfRoadCard = ({ToggleCard,numberOfStage}:Iprops) => {
     return (
     <div className="flex items-center gap-10" >
-            <div className="flex gap-1 items-center cursor-pointer" onClick={ToggleCard}>
+            <div className="flex gap-1 items-center transition-all duration-300 ease-in-out
+                hover:scale-105 cursor-pointer" onClick={ToggleCard}>
             <Image
             imageurl="src/assets/Roadmap-20250312T012925Z-001/Roadmap/video player.png"
             className="w-[70px] h-[70px]"

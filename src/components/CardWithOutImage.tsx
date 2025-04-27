@@ -7,6 +7,7 @@ interface Iprops {
     name: string;
     field: string;
     }
+
     const CardWithOutImage = ({ description, url, alt, name, field }: Iprops) => {
     return (
         <>

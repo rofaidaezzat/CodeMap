@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card-title-Home {
+  @apply text-[#262626] text-[1.5em] leading-normal font-bold mb-2;
+}
+
+.small-desc-Home {
+  @apply text-base font-normal leading-6 text-[#452c2c];
+}
+
+.go-corner-Home {
+  @apply flex items-center justify-center absolute w-8 h-8 overflow-hidden top-0 right-0 rounded-tr-md rounded-bl-[32px];
+  background: linear-gradient(135deg, #CFD8FF, #371F5A); /* custom gradient */
+}
+
+.go-arrow-Home {
+  @apply -mt-1 -mr-1 text-white;
+  font-family: courier, sans;
+}
+
+.card-Home {
+  @apply block relative max-w-[300px] max-h-[320px] rounded-[10px] px-5 py-8 m-3 no-underline z-0 overflow-hidden font-sans;
+  background: linear-gradient(to bottom, #CFD8FF, #9573c8); /* custom gradient */
+}
+
+
+
+.card-Home:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -16px;
+  right: -16px;
+  background: linear-gradient(135deg, #CFD8FF, #CFD8FF); /* custom gradient */
+  height: 32px;
+  width: 32px;
+  border-radius: 32px;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 0.35s ease-out;
+}
+
+.card-Home:hover:before {
+  transform: scale(28);
+}
+
+.card-Home:hover .small-desc {
+  transition: all 0.5s ease-out;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card-Home:hover .card-title {
+  transition: all 0.5s ease-out;
+  color: #ffffff;
+}

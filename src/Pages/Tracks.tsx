@@ -1,3 +1,4 @@
+import { LetterPullUp } from '@/components/eldoraui/letterpullup'
 import Image from '../components/Image'
 import Trackcard from '../components/Trackcard'
 import Button from '../Ui/Button'
@@ -5,13 +6,15 @@ import Button from '../Ui/Button'
 const Tracks = () => {
   return (
     <>
-      <div className="pt-20 mt-5  flex ">
+      <div className="pt-20 mt-5  flex overflow-x-hidden">
         
         {/* left section */}
           <div className='flex flex-col  space-y-5 justify-start p-8 gap-8 w-full lg:w-4/6 '>
-          <h3 className=" pb-4 text-3xl  font-bold ">
-          Choose your learning track
-          </h3>
+          
+            <LetterPullUp
+            className="text-black font-display text-start text-2xl font-bold tracking-wide md:text-4xl"
+            text="Choose your learning track"
+            />
             <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:justify-center  gap-10">
             <Trackcard
               url="src/assets/Tracks img/Front-End.jpeg"

@@ -2,6 +2,7 @@ import CardofProfileOfCourses from "@/components/CardofProfileOfCourses/CardofPr
 import Image from "@/components/Image"
 import { useState } from "react"
 import { motion } from 'framer-motion'
+import Calendar from "@/components/Calender"
 
 
 
@@ -90,7 +91,15 @@ const Profile = () => {
                     </motion.div>
                 }
             </div>
-        
+                <div className=" mx-auto mt-5">
+                    <Calendar/>
+                </div>
+                <div className="">
+                    
+                    <div className="w-full bg-slate-50">
+
+                    </div>
+                </div>
             </div>
 
 
