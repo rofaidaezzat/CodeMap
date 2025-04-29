@@ -24,6 +24,7 @@ import TrackLayout from "@/Pages/TrackLayout/TrackLayout";
 import RoadmapLayout from "@/Pages/TrackLayout/roadmapLayout/RoadmapLayout";
 import SecondPageOfRoadMap from "@/Pages/TrackLayout/roadmapLayout/SecondPageOfRoadMap";
 import CoursePage from "@/Pages/TrackLayout/roadmapLayout/CoursePage";
+import Setting from "@/Pages/Setting";
       
       const storageKey = "loggedInUser";
       const userDataString = localStorage.getItem(storageKey);
@@ -44,7 +45,7 @@ import CoursePage from "@/Pages/TrackLayout/roadmapLayout/CoursePage";
               <Route path="FAQFerMember" element={<FAQFerMember />} />
               <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
               {/* <Route path="tasks" element={<Tasks />} /> */}
-              <Route path="settings" element={<PrivacyPolicy />} />
+              <Route path="settings" element={<Setting/>} />
               <Route
                 path="tasks"
                 element={

@@ -42,7 +42,7 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
             My profile
         </Link>
         <Link
-            to="/"
+            to="/settings"
             className="w-full border-2 border-gray-400 text-left flex items-center gap-2 p-2 rounded-md hover:bg-gray-100"
         >
             <span className="text-lg">⚙️</span> Settings

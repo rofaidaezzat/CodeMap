@@ -15,7 +15,7 @@ export const ToggleClose = ({
       onClick={() => setOpen((pv) => !pv)}
       className="absolute  left-0 right-0 border-t border-slate-300 transition-colors hover:bg-slate-100"
     >
-      <div className="flex items-center p-2">
+        <div className="flex items-center p-2">
         <motion.div layout className="grid place-content-center text-lg">
         <FiChevronsRight className={`transition-transform ${open ? "rotate-180" : ""}`} />
 
