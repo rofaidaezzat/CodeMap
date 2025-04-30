@@ -4,6 +4,8 @@ import { Menu, X } from "lucide-react";
 import { Bell } from 'lucide-react';
 import { CircleUserRound } from 'lucide-react';
 import ProfileMenuModal from "./ProfileMenuModal";
+import Logo1 from "@/assets/Header/Rectangle 1938.png";
+import Logo2 from "@/assets/Header/Rectangle 1939.png";
 
 
 
@@ -24,12 +26,12 @@ const userData = userDataString ? JSON.parse(userDataString) : null;
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
-              src="src/assets/Header/Rectangle 1938.png"
+              src={Logo1}
               alt="Logo"
               className="h-10"
             />
             <img
-              src="src/assets/Header/Rectangle 1939.png"
+              src={Logo2}
               alt="Logo"
               className="h-10"
             />
@@ -89,13 +91,13 @@ const userData = userDataString ? JSON.parse(userDataString) : null;
           // Buttons (Desktop)
           <div className="hidden md:flex space-x-4 ">
             <Link
-              to="login"
+              to="/login"
               className="px-4 py-2 border-2 border-white rounded-lg text-center w-20"
             >
               Login
             </Link>
             <Link
-              to="signup"
+              to="/signup"
               className="px-4 py-2 rounded-lg w-20 text-center register"
             >
               Signup
@@ -160,13 +162,13 @@ const userData = userDataString ? JSON.parse(userDataString) : null;
             //Buttons (Mobile)
             <div className="flex flex-col items-center space-y-3 py-4">
           <Link
-            to="/logIn"
+            to="/login"
             className="px-4 py-2 border-2 border-white rounded-lg text-center w-20"
           >
             Login
           </Link>
           <Link
-            to="/signUp"
+            to="/signup"
             className="px-4 py-2 rounded-lg bg-[#2F174E] text-white w-20 text-center"
           >
             Signup

@@ -6,11 +6,9 @@ type IProfileMenuModalProps = {
 };
 
 const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
-
+    
     const { pathname } = useLocation();
-
     if (!isOpen) return null;
-
     const storageKey = "loggedInUser";
 
     const onLogout = () => {
@@ -28,7 +26,6 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
         aria-hidden="true"
         ></div>
       {/* Modal Dropdown */}
-
     <div className="absolute gap-2 flex flex-col mt-2 w-56 right-[-50px] rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 text-black p-2">
         <Link
             to="/Profile"

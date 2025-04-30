@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import { Facebook, MessageCircleCode, Linkedin, Instagram } from "lucide-react";
 import Image from "./Image";
+import Logo1 from "@/assets/Header/Rectangle 1938.png";
+import Logo2 from "@/assets/Header/Rectangle 1939.png";
+
 
 const Footer = () => {
     return (
@@ -10,12 +13,12 @@ const Footer = () => {
         <div className="col-span-2 md:col-span-1">
           <Link to="/" className="flex items-center mb-4 ">
             <Image
-              imageurl="src/assets/Header/Rectangle 1938.png"
+              imageurl={Logo1}
               alt="Logo"
               className="h-10"
             />
             <Image
-              imageurl="src/assets/Header/Rectangle 1939.png"
+              imageurl={Logo2}
               alt="Logo"
               className="h-10"
             />

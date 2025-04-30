@@ -33,73 +33,72 @@ import Setting from "@/Pages/Setting";
       const router = createBrowserRouter(
         createRoutesFromElements(
           <>
-            {/* Root Layout*/}
-            <Route path="/" element={<RoutLayout />} errorElement={<ErrorHandler />}>
-              <Route index element={<HomePage />} />
-              <Route path="aboutus" element={<AboutUs />} />
-              <Route path="contactus" element={<ContectUs />} />
-              <Route path="Profile" element={<Profile />} />
-              <Route path="notification" element={<Notification />} />
-              <Route path="TermsAndConditions" element={<TermsAndConditions />} />
-              <Route path="CookiesPolicy" element={<CookiesPolicy />} />
-              <Route path="FAQFerMember" element={<FAQFerMember />} />
-              <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
-              {/* <Route path="tasks" element={<Tasks />} /> */}
-              <Route path="settings" element={<Setting/>} />
-              <Route
-                path="tasks"
-                element={
-                  <ProtectedRoute
-                    isAllowed={!!userData?.jwt}
-                    redirectPath="/login"
-                    data={userData}
-                  >
-                    <Tasks />
-                  </ProtectedRoute>
-                }
-              />
-      
-              <Route
-                path="/SignUp"
-                element={
-                  <ProtectedRoute
-                    isAllowed={!userData?.jwt}
-                    redirectPath="login"
-                    data={userData}
-                  >
-                    <SignUp />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="login"
-                element={
-                  <ProtectedRoute
-                    isAllowed={!userData?.jwt}
-                    redirectPath="/"
-                    data={userData}
-                  >
-                    <LogIn />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            {/* Track Layout */}
-            <Route path="/Tracks" element={<TrackLayout />}>
-              <Route index element={<Tracks />} />
-              <Route path="InfoOfFrontend" element={<InfoOfFrontend />} />
-            </Route>
-            {/* Roadmap Layout */}
-            <Route
-              path="/tracks/InfoOfFrontend/SecondPageOfRoadMap"
-              element={<RoadmapLayout />}
-            >
-              <Route index element={<SecondPageOfRoadMap />} />
-              <Route path="coursefrontend" element={<CoursePage />} />
-            </Route>
-      
-            {/* Page Not Found */}
-            <Route path="*" element={<p>error</p>} />
+          <Route path="/" element={<RoutLayout />} errorElement={<ErrorHandler />}>
+  <Route index element={<HomePage />} />
+  <Route path="aboutus" element={<AboutUs />} />
+  <Route path="contactus" element={<ContectUs />} />
+  <Route path="Profile" element={<Profile />} />
+  <Route path="notification" element={<Notification />} />
+  <Route path="TermsAndConditions" element={<TermsAndConditions />} />
+  <Route path="CookiesPolicy" element={<CookiesPolicy />} />
+  <Route path="FAQFerMember" element={<FAQFerMember />} />
+  <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
+  <Route path="settings" element={<Setting />} />
+
+  {/* Tracks and Roadmaps nested here */}
+  <Route path="Tracks" element={<TrackLayout />}>
+    <Route index element={<Tracks />} />
+    <Route path="InfoOfFrontend" element={<InfoOfFrontend />} />
+    <Route path="InfoOfFrontend/SecondPageOfRoadMap" element={<RoadmapLayout />}>
+      <Route index element={<SecondPageOfRoadMap />} />
+      <Route path="coursefrontend" element={<CoursePage />} />
+    </Route>
+  </Route>
+  
+  {/* Auth routes inside main layout */}
+  <Route
+    path="SignUp"
+    element={
+      <ProtectedRoute
+        isAllowed={!userData?.jwt}
+        redirectPath="/login"
+        data={userData}
+      >
+        <SignUp />
+      </ProtectedRoute>
+    }
+  />
+  <Route
+    path="login"
+    element={
+      <ProtectedRoute
+        isAllowed={!userData?.jwt}
+        redirectPath="/"
+        data={userData}
+      >
+        <LogIn />
+      </ProtectedRoute>
+    }
+  />
+
+  {/* Protected task route */}
+  <Route
+    path="tasks"
+    element={
+      <ProtectedRoute
+        isAllowed={!!userData?.jwt}
+        redirectPath="/login"
+        data={userData}
+      >
+        <Tasks />
+      </ProtectedRoute>
+    }
+  />
+
+  {/* Fallback */}
+  <Route path="*" element={<p>error</p>} />
+</Route>
+
           </>
         )
       );
