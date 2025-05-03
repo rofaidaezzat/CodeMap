@@ -40,25 +40,27 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
         )}
 
         {open && (
-          <div className="space-y-4 m-2">
+          <div className=" flex flex-col gap-4 m-2">
             <Button />
-            <h3 className="text-2xl">Frontend Roadmap</h3>
-
+            <h3 className="text-2xl font-blod font-medium">Frontend Roadmap</h3>
             {roadmapData.map((item) => (
               <div key={item.id} className="space-y-1">
                 <div
-                  className="flex justify-between items-center bg-[#C9B2E8] p-4 rounded-md cursor-pointer"
+                  className="flex justify-between items-center bg-[#C9B2E8] p-3 rounded-md cursor-pointer "
                   onClick={() => toggleMain(item.id)}
                 >
                   <h3 className="text-lg font-semibold">{item.title}</h3>
                 </div>
-
                 {expandedMainId === item.id && (
-                  <div className="space-y-1">
+                  <div className="space-y-3">
                     {item.lessons.map((lesson) => (
                       <div key={lesson.id}>
-                        <div
-                            className="flex justify-between items-center bg-[#CFD8FF] p-3 rounded-md cursor-pointer"
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.5 }} 
+                            className="flex justify-between mt-3 items-center bg-[#CFD8FF] p-3 rounded-md  cursor-pointer"
                             onClick={() =>
                             "subLessons" in lesson && toggleLesson(lesson.id)
                           }
@@ -75,14 +77,18 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                               )}
                             </span>
                           )}
-                        </div>
-
+                        </motion.div>
                         {"subLessons" in lesson &&
                           expandedLessonId === lesson.id && (
                             <ul className="py-1 space-y-1">
                               {lesson.subLessons.map((sub) => (
                                 <li key={sub.id}>
-                                  <button
+                                  <motion.div
+                                      initial={{ opacity: 0, y: -20 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -20 }}
+                                      transition={{ duration: 0.5 }} 
+                                      
                                     onClick={() =>
                                       setSelectedVideo({
                                         videoUrl: sub.videoUrl,
@@ -90,10 +96,10 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                                         duration: sub.duration,
                                       })
                                     }
-                                    className="text-sm text-black text-left bg-[rgba(102,97,152,0.14)] p-2 w-full rounded-md hover:opacity-90"
+                                    className="text-sm cursor-pointer mt-2 text-black text-left bg-[rgba(102,97,152,0.14)] p-2 w-full rounded-md hover:opacity-90"
                                   >
                                     {sub.title}
-                                  </button>
+                                  </motion.div>
                                 </li>
                               ))}
                             </ul>

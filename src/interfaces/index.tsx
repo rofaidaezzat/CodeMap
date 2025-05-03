@@ -93,4 +93,9 @@ export interface IDataOfCardInfo {
             }[];
         }[];
         }
+    
+        export interface IinforamtionOfInfo{
+            title:string;
+            description:string;
+        }
 

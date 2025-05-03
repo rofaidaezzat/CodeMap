@@ -27,7 +27,6 @@ const { register, handleSubmit ,formState:{errors},} = useForm<IFormInput>({
     });
 
    // ** Handler
-
     const onSubmit: SubmitHandler<IFormInput> = async(data) => {
     console.log(data)
     setIsLoading(true)// fetch data is loading
@@ -52,8 +51,6 @@ try{
       //navigate("/",) مش هاينفع اعملها كده علشان هو مش بيعمل refresh ll pages
         location.replace('/')
     },2000)
-
-    
     }
   //Reject =>field => optional
     }catch(error){

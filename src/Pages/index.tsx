@@ -5,7 +5,10 @@ import Button from "../Ui/Button";
 import Card from "../components/Card";
 import CardWithoutImageInHome from "@/components/CardWithoutImageInHome/CardWithoutImageInHome";
 import MorphingText from "@/components/eldoraui/morphingtext";
-import { motion } from 'framer-motion';
+import { useAnimation } from "framer-motion";
+import { useEffect } from "react";
+import {motion} from 'framer-motion'
+import { useInView } from 'react-intersection-observer';
 
 
 const HomePage = () => {
@@ -16,7 +19,46 @@ const HomePage = () => {
         'Mo2a'
         ];
 
+        // Animation statemangment
+        const controlsTracks = useAnimation();
+        const { ref: refTracks, inView: inViewTracks } = useInView({
+            triggerOnce: true,
+            threshold: 0.3,
+        });
+        
+        useEffect(() => {
+            if (inViewTracks) {
+            controlsTracks.start('visible');
+            }
+        }, [inViewTracks]);
+        
+
+        const controlsTestimonials = useAnimation();
+        const { ref: refTestimonials, inView: inViewTestimonials } = useInView({
+            triggerOnce: true,
+            threshold: 0.3,
+        });
+        
+        useEffect(() => {
+            if (inViewTestimonials) {
+            controlsTestimonials.start('visible');
+            }
+        }, [inViewTestimonials]);
+
+        const controlsPremium = useAnimation();
+        const { ref: refPremium, inView: inViewPremium } = useInView({
+            triggerOnce: true,
+            threshold: 0.3,
+            });
+        
+            useEffect(() => {
+            if (inViewPremium) {
+                controlsPremium.start("visible");
+            }
+            }, [inViewPremium]);
     return (
+
+
     <>
     <div className="bg-[#CFD8FF] rounded-b-xl ">
         {/* Header */}
@@ -77,7 +119,14 @@ const HomePage = () => {
 </div>
 </div>
 {/* our track */}
-<div className="mt-5">
+<motion.div
+        ref={refTracks}
+        initial="hidden"
+        animate={controlsTracks}
+        variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+        }} className="mt-5">
         <div className="flex justify-between mx-10 px-10 w-auto h-11">
             <Image imageurl="src/assets/Home/lamb.png" alt="error" className="w-[80px] h-auto"/>
             <Image imageurl="src/assets/Home/Group3.png" alt="error" className="w-8 h-8 "/>
@@ -114,18 +163,34 @@ const HomePage = () => {
             </div>
         
         </div>
-        </div>
+        </motion.div>
       {/* premium learing */}
-    <div className="my-10 p-5 flex flex-col md:flex-row md:h-[500px] h-[400px] lg:flex-row bg-[#CFD8FF] lg:justify-around gap-5  ">
+    <motion.div
+        ref={refPremium}
+        initial="hidden"
+        animate={controlsPremium}  
+        className="my-10 p-5 flex flex-col md:flex-row md:h-[500px] h-[400px] lg:flex-row bg-[#CFD8FF] lg:justify-around gap-5  ">
         {/* image  */}
-            <div className="hidden w-full lg:w-[450px] h-[500px] lg:flex justify-center ml-11 ">
+            <motion.div
+                initial={{ x: -100, opacity: 0 }}
+                animate={controlsPremium}
+                variants={{
+                hidden: { x: -100, opacity: 0 },
+                visible: { x: 0, opacity: 1, transition: { duration: 1 } },
+            }} className="hidden w-full lg:w-[450px] h-[500px] lg:flex justify-center ml-11 ">
             <img
             src="src\assets\Home\OBJECTS2.png"
             alt="Premium LearningExperience"
             className="sm:w-3/4 lg:w-full w-[516px] h-[500px]"
             />
-            </div>
-        <div className="w-full lg:w-1/2 flex flex-col items-start justify-center gap-10">
+            </motion.div>
+            <motion.div
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={controlsPremium}
+                    variants={{
+                    hidden: { x: 100, opacity: 0 },
+                    visible: { x: 0, opacity: 1, transition: { duration: 1 } },
+            }} className="w-full lg:w-1/2 flex flex-col items-start justify-center gap-10">
               {/* header */}
                 <div className="flex">
                     <h3 className="font-bold text-[40px]  w-full ">
@@ -165,10 +230,17 @@ const HomePage = () => {
             </div>
             </div>
         </div>
-        </div>
-        </div>
+        </motion.div>
+        </motion.div>
       {/* what student say */}
-    <div className="py-12  ">
+    <motion.div
+        ref={refTestimonials}
+        initial="hidden"
+        animate={controlsTestimonials}
+        variants={{
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+        }} className="py-12  ">
         <h3 className="text-center font-semibold text-4xl">
             What student’s say
         </h3>
@@ -188,7 +260,7 @@ const HomePage = () => {
             className="w-11 h-11 hidden lg:flex"
             />
         </div>
-    </div>
+    </motion.div>
 </>
 
 );

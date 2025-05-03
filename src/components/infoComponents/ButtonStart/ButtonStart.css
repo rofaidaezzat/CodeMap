@@ -1,0 +1,158 @@
+/* Buttons Container */
+.buttons-startInfo {
+
+    @apply flex justify-around ;
+
+}
+
+  /* Button Base Styles */
+    .buttons-startInfo button {
+    @apply w-[150px] h-[50px] bg-[#b43c96] m-5 text-[#ffffff] relative overflow-hidden 
+            text-sm tracking-wider font-medium uppercase transition-all duration-300 
+            ease-in-out cursor-pointer border-0 flex items-center justify-center rounded;
+    }
+
+  /* Keep custom styling for pseudo-elements */
+    .buttons-startInfo button:before,
+    .buttons-startInfo button:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #cdb6db;
+    transition: all 0.3s cubic-bezier(0.35, 0.1, 0.25, 1);
+  }
+  
+  .buttons-startInfo button:before {
+    right: 0;
+    top: 0;
+    transition: all 0.5s cubic-bezier(0.35, 0.1, 0.25, 1);
+  }
+  
+  .buttons-startInfo button:after {
+    left: 0;
+    bottom: 0;
+  }
+  
+  /* Span Layer */
+  .buttons-startInfo button span {
+    @apply w-full h-full absolute left-0 top-0 m-0 p-0 z-[1];
+  }
+  
+  /* Keep span pseudo-elements as custom CSS */
+  .buttons-startInfo button span:before,
+  .buttons-startInfo button span:after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background-color: #cdb6db;
+    transition: all 0.3s cubic-bezier(0.35, 0.1, 0.25, 1);
+  }
+  
+  .buttons-startInfo button span:before {
+    right: 0;
+    top: 0;
+    transition: all 0.5s cubic-bezier(0.35, 0.1, 0.25, 1);
+  }
+  
+  .buttons-startInfo button span:after {
+    left: 0;
+    bottom: 0;
+  }
+  
+  /* Paragraph Text Styles */
+  .buttons-startInfo button p {
+    @apply m-0 p-0 transition-all duration-300 ease-in-out absolute w-full h-full;
+  }
+  
+  .buttons-startInfo button p:before,
+  .buttons-startInfo button p:after {
+    position: absolute;
+    width: 100%;
+    transition: all 0.4s cubic-bezier(0.35, 0.1, 0.25, 1);
+    z-index: 1;
+    left: 0;
+  }
+  
+  .buttons-startInfo button p:before {
+    content: attr(data-title);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .buttons-startInfo button p:after {
+    content: attr(data-text);
+    top: 150%;
+    color: #fafafa;
+  }
+  
+  /* Hover Effects (partial use of @apply) */
+  .buttons-startInfo button:hover:before,
+  .buttons-startInfo button:hover:after {
+    width: 100%;
+  }
+  
+  .buttons-startInfo button:hover span {
+    z-index: 1;
+  }
+  
+  .buttons-startInfo button:hover span:before,
+  .buttons-startInfo button:hover span:after {
+    height: 100%;
+  }
+  
+  .buttons-startInfo button:hover p:before {
+    top: -50%;
+    transform: rotate(5deg);
+  }
+  
+  .buttons-startInfo button:hover p:after {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Start Button Variant */
+  .buttons-startInfo button.start {
+    @apply bg-[#b585d2] shadow-[0px_5px_10px_-10px_rgba(0,0,0,0.2)] transition-all duration-200 ease-in-out;
+  }
+  
+  .buttons-startInfo button.start p:before {
+    top: -50%;
+    transform: rotate(5deg);
+  }
+  
+  .buttons-startInfo button.start p:after {
+    color: white;
+    transition: all 0s ease;
+    content: attr(data-start);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: start 0.3s ease;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes start {
+    from {
+      top: -50%;
+    }
+  }
+  
+  .buttons-startInfo button.start:hover:before,
+  .buttons-startInfo button.start:hover:after {
+    display: none;
+  }
+  
+  .buttons-startInfo button.start:hover span {
+    display: none;
+  }
+  
+  .buttons-startInfo button:active {
+    outline: none;
+    border: none;
+  }
+  
+  .buttons-startInfo button:focus {
+    outline: 0;
+  }
+  

@@ -1,4 +1,4 @@
-import { IAboutUsInfo, Icategories, IDataOfCardInfo, ILoginInput, IQuestions, IRegisterInput, IsidebarData } from "../interfaces";
+import { IAboutUsInfo, Icategories, IDataOfCardInfo, IinforamtionOfInfo, ILoginInput, IQuestions, IRegisterInput, IsidebarData } from "../interfaces";
 import HtmlIcon from "../assets/Info/html-5-svgrepo-com.svg?url";
 import CssIcon from "../assets/Info/css-document-extension-file-file-format-file-type-svgrepo-com.svg?url";
 import JavaScriptIcon from "../assets/Info/javascript.svg?url";
@@ -66,6 +66,9 @@ export const LOGIN_FORM: ILoginInput[] = [
         },
     },
     ];
+
+
+    
 
     export const Questions:IQuestions[]=[
         {
@@ -755,6 +758,28 @@ export const LOGIN_FORM: ILoginInput[] = [
           ],
         },
       ];
+
+      export const InformationOfInfo:IinforamtionOfInfo[]=[
+        {
+          title:"Career Opportunities",
+          description:"After completing this course, learners will be equipped with the necessary skills to explore opportunities in front-end development, AI applications, and software engineering roles"
+        },
+        {
+          title:"Advanced Topics",
+          description:"State Management in Front-End Applications,Performance Optimization & Lazy Loading,Security Best Practices for Front-End, AI-Powered Personalization in Web Development"
+        },
+        {
+          title:"Project-Based Learning",
+          description:"Hands-on projects include building a responsive website, developing an AI-powered chatbot, and creating a real-time dashboard with live data."
+        },
+        {
+          title:"Testimonials",
+          description:"This course provided me with the skills I needed to land my first job as a front-end developer!,The AI integration lessons were game-changing for my career in real estate applications. - Sarah M."
+        }
+  
+  
+  
+      ]
       
 
 
