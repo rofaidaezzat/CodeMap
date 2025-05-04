@@ -12,10 +12,8 @@ const renderQuestions= Questions.map(({Question,answer},idx)=>(
     <div key={idx}  >
             <QuestionDev questionName={Question} answer={answer}  />
     </div>
-
 )
 )
-    
     return (
         <>
     <div className="min-h-screen  lg:pt-20 mt-10 flex flex-col items-center p-10 ">
