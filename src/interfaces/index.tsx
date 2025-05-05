@@ -12,7 +12,7 @@ export interface IRegisterInput {
 }
 
 export interface ILoginInput {
-    name: "identifier" | "password";
+    name: "email" | "password";
     Label:"Email"|"Password"
     placeholder: string;
     type: string;

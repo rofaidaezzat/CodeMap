@@ -42,7 +42,7 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
         try{
             // const{status}=await axiosInstance.post("auth/local/register",data)
             const{status}=await axiosInstanceNew.post('/auth/register',data)
-            if(status===200){
+            if(status===201){
                 toast.success("You will navigate to the login page after 1 seconds to login",{
                     position:"bottom-center",
                     duration:1500,

@@ -56,7 +56,7 @@ export const REGISTER_FORM: IRegisterInput[] = [
 
 export const LOGIN_FORM: ILoginInput[] = [
     {
-        name: "identifier",
+        name: "email",
         Label:"Email",
         placeholder: "Email",
         type: "email",

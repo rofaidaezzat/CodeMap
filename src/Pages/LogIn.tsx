@@ -11,10 +11,10 @@ import { IErrorResponse } from '../interfaces'
 import { useState } from 'react'
 import Image from '../components/Image'
 import { Ellipsis } from 'lucide-react';
-import { axiosInstance } from '@/config/axios.config'
+import {  axiosInstanceNew } from '@/config/axios.config'
 
 interface IFormInput {
-    identifier:string
+    email:string
     password:string
 }
 
@@ -33,7 +33,7 @@ const { register, handleSubmit ,formState:{errors},} = useForm<IFormInput>({
 
 // Fullfiled
 try{
-    const{status ,data:resData}= await axiosInstance.post("auth/local",data)// هنا انا بعمل اكونت وبخزنه عندي
+    const{status ,data:resData}= await axiosInstanceNew.post("auth/login",data)// هنا انا بعمل اكونت وبخزنه عندي
     
     console.log(resData) // da eloutput elly bytl3
     if(status===200){// كده معناها انو عمل ريجيستر صح

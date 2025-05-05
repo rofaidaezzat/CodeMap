@@ -11,3 +11,5 @@ export const axiosInstanceNew = axios.create({
     withCredentials:true,
     timeout: 10000,
 });
+
+
