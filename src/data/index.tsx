@@ -13,15 +13,25 @@ import SublimeTextIcon from "../assets/Info/sublimetext-icon-svgrepo-com.svg?url
 
 export const REGISTER_FORM: IRegisterInput[] = [
     {
-        name: "username",
-        Label:"Full Name",
-        placeholder: "Username",
+        name: "first_name",
+        Label:"first_name",
+        placeholder: "first_name",
         type: "text",
         validation: {
         required: true,
         minLength: 5,
         },
     },
+    {
+      name: "last_name",
+      Label:"last_name",
+      placeholder: "last_name",
+      type: "text",
+      validation: {
+      required: true,
+      minLength: 5,
+      },
+  },
     {
         name: "email",
         Label:"Email",

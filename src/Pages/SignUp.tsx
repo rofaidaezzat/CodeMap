@@ -5,18 +5,19 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { SignUpSchema } from '../Validation'
 import { yupResolver } from "@hookform/resolvers/yup"
 import InputErrorMessage from '../Ui/InputErrorMessage'
-import axiosInstance from '../config/axios.config'
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from "axios";
 import { IErrorResponse } from '../interfaces'
-import { useState } from 'react'
+import {  useState } from 'react'
 import Image from '../components/Image'
 import { Ellipsis } from 'lucide-react';
 import { signInWithGoogle } from '../utils'
+import { axiosInstance, axiosInstanceNew } from '@/config/axios.config'
 
 interface IFormInput {
-    username:string
+    first_name:string,
+    last_name:string
     email:string
     password:string
     // terms: boolean
@@ -39,7 +40,8 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
         console.log(data)
         setIsLoading(true)
         try{
-            const{status}=await axiosInstance.post("auth/local/register",data)
+            // const{status}=await axiosInstance.post("auth/local/register",data)
+            const{status}=await axiosInstanceNew.post('/auth/register',data)
             if(status===200){
                 toast.success("You will navigate to the login page after 1 seconds to login",{
                     position:"bottom-center",
@@ -60,6 +62,8 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
 
         }catch(error){
             const errorObj=error as AxiosError<IErrorResponse>// elobject da haibqa fi reponse elly rag3 mn axios
+            console.log(errorObj.response?.data?.error.message)
+            console.log(errorObj)
             toast.error(`${errorObj.response?.data?.error.message}`,{
             position:"bottom-center",
             duration:4000,
@@ -69,7 +73,7 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
             }
     } 
     const onclick=()=>{
-            navigate("/LogIn",)
+            navigate("/LogIn")
     }
 
 

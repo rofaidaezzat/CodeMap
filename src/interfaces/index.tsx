@@ -1,7 +1,7 @@
 
 export interface IRegisterInput {
-    name: "email" | "username" | "password";
-    Label:"Full Name"|"Email"|"Password"
+    name: "email" | "first_name" |"last_name"|"password";
+    Label:"first_name"|"last_name"|"Email"|"Password"
     placeholder: string;
     type: string;
     validation: {

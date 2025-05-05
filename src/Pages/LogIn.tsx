@@ -5,13 +5,13 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { loginSchema} from '../Validation'
 import { yupResolver } from "@hookform/resolvers/yup"
 import InputErrorMessage from '../Ui/InputErrorMessage'
-import axiosInstance from '../config/axios.config'
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { IErrorResponse } from '../interfaces'
 import { useState } from 'react'
 import Image from '../components/Image'
 import { Ellipsis } from 'lucide-react';
+import { axiosInstance } from '@/config/axios.config'
 
 interface IFormInput {
     identifier:string
@@ -34,6 +34,7 @@ const { register, handleSubmit ,formState:{errors},} = useForm<IFormInput>({
 // Fullfiled
 try{
     const{status ,data:resData}= await axiosInstance.post("auth/local",data)// هنا انا بعمل اكونت وبخزنه عندي
+    
     console.log(resData) // da eloutput elly bytl3
     if(status===200){// كده معناها انو عمل ريجيستر صح
     toast.success("You will navigate to the home page after 1 seconds",{

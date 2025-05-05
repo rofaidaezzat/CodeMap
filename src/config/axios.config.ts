@@ -1,9 +1,13 @@
 import axios from "axios";
-// هنا زي ده انا ثابت الجزء ال ثابت من اللينك{envirinment
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
     baseURL: "http://localhost:1337/api",
     timeout: 1000,
 });
 
-export default axiosInstance;
+
+export const axiosInstanceNew = axios.create({
+    baseURL: 'https://bcad-102-189-220-41.ngrok-free.app/',
+    withCredentials:true,
+    timeout: 10000,
+});
