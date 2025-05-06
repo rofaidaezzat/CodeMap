@@ -6,12 +6,12 @@ import { loginSchema } from "../Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputErrorMessage from "../Ui/InputErrorMessage";
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { IErrorResponse } from "../interfaces";
 import { useState } from "react";
 import Image from "../components/Image";
 import { Ellipsis } from "lucide-react";
-import { axiosInstanceNew } from "@/config/axios.config";
+
 import { Link } from "react-router-dom";
 
 interface IFormInput {
@@ -37,9 +37,10 @@ const LogIn = () => {
 
     // Fullfiled
     try {
-      const { status, data: resData } = await axiosInstanceNew.post(
-        "auth/login",
-        data
+      const { status, data: resData } = await axios.post(
+        "https://bcad-102-189-220-41.ngrok-free.app/auth/login",
+        data,
+        { withCredentials: true }
       ); // هنا انا بعمل اكونت وبخزنه عندي
 
       console.log(resData); // da eloutput elly bytl3

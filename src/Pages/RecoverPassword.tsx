@@ -1,5 +1,6 @@
 import Image from "@/components/Image";
-import { axiosInstanceNew } from "@/config/axios.config";
+import { axiosInstance } from "@/config/axios.config";
+
 import { FORGETPASSWORD } from "@/data";
 import { IErrorResponse } from "@/interfaces";
 import Button from "@/Ui/Button";
@@ -33,7 +34,7 @@ const RecoverPassword = () => {
 
     // Fullfiled
     try {
-      const { status, data: resData } = await axiosInstanceNew.post(
+      const { status, data: resData } = await axiosInstance.post(
         "reset-password",
         data
       );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
-import { axiosInstanceNew } from "@/config/axios.config";
+
 import Image from "@/components/Image";
 import { NEWPASSWORD } from "@/data"; // Ensure this data structure matches your needs
 import { IErrorResponse } from "@/interfaces";
@@ -9,7 +9,7 @@ import Input from "@/Ui/Input";
 import InputErrorMessage from "@/Ui/InputErrorMessage";
 import { NewPasswordSchema } from "@/Validation"; // Ensure this schema matches your password rules
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { Ellipsis } from "lucide-react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -41,10 +41,10 @@ const ResetPassword = () => {
     setIsLoading(true);
     try {
       // --- CORRECTED API CALL ---
-      const { status, data: resData } = await axiosInstanceNew.post(
+      const { status, data: resData } = await axios.post(
         // Construct the URL with the token from useParams
         // Adjust '/auth' prefix if it's already in your axiosInstanceNew baseURL
-        `reset-password/${token}`,
+        `https://bcad-102-189-220-41.ngrok-free.app/reset-password/${token}`,
         // Send the new password in the format expected by the backend
         { password: data.newPassword }
       );
