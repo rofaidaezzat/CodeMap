@@ -1,23 +1,35 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { axiosInstance } from "@/config/axios.config";
+import { Link } from "react-router-dom";
 type IProfileMenuModalProps = {
     isOpen: boolean;
     onClose: () => void;
 };
 
+
 const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
     
-    const { pathname } = useLocation();
     if (!isOpen) return null;
-    const storageKey = "loggedInUser";
+    ;
 
-    const onLogout = () => {
-    localStorage.removeItem(storageKey);
 
-    setTimeout(() => {
-      location.replace(pathname); // بيجيب الباث الي واقف فيه دلوقتي
-    }, 1500);
-    };
+    const onLogout = async () => {
+        try {
+            await axiosInstance.post("/auth/logout");
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("accessToken");
+            
+            setTimeout(() => {
+            location.replace('/');
+            }, 1500);
+        } catch (err) {
+            console.error("Logout failed", err);
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("accessToken");
+            location.replace("/login");
+        }
+        };
+
     return (
     <div className="relative inline-block text-left">
         <div

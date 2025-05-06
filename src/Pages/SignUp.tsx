@@ -7,13 +7,13 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import InputErrorMessage from '../Ui/InputErrorMessage'
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom'
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { IErrorResponse } from '../interfaces'
 import {  useState } from 'react'
 import Image from '../components/Image'
 import { Ellipsis } from 'lucide-react';
 import { signInWithGoogle } from '../utils'
-import { axiosInstance, axiosInstanceNew } from '@/config/axios.config'
+import { axiosInstance } from '@/config/axios.config'
 
 interface IFormInput {
     first_name:string,
@@ -41,7 +41,7 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
         setIsLoading(true)
         try{
             // const{status}=await axiosInstance.post("auth/local/register",data)
-            const{status}=await axiosInstanceNew.post('/auth/register',data)
+            const{status}=await axios.post('https://bcad-102-189-220-41.ngrok-free.app/auth/register',data,{ withCredentials: true })
             if(status===201){
                 toast.success("You will navigate to the login page after 1 seconds to login",{
                     position:"bottom-center",
@@ -89,14 +89,12 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
                 
                 };
                 const password = Math.random().toString(36).slice(-8);
-
                 localStorage.setItem("loggedInUser", JSON.stringify(userInfo));
                 await axiosInstance.post("auth/local/register",{
                     username: userInfo.username,
                     email: userInfo.email,
                     password
                 });
-    
             setTimeout(()=>{
             //navigate("/",) مش هاينفع اعملها كده علشان هو مش بيعمل refresh ll pages
                 location.replace('/')

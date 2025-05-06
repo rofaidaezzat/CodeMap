@@ -33,7 +33,7 @@ import Setting from "@/Pages/Setting";
       const router = createBrowserRouter(
         createRoutesFromElements(
           <>
-          <Route path="/" element={<RoutLayout />} errorElement={<ErrorHandler />}>
+  <Route path="/" element={<RoutLayout />} errorElement={<ErrorHandler />}>
   <Route index element={<HomePage />} />
   <Route path="aboutus" element={<AboutUs />} />
   <Route path="contactus" element={<ContectUs />} />
@@ -50,8 +50,24 @@ import Setting from "@/Pages/Setting";
     <Route index element={<Tracks />} />
     <Route path="InfoOfFrontend" element={<InfoOfFrontend />} />
     <Route path="InfoOfFrontend/SecondPageOfRoadMap" element={<RoadmapLayout />}>
-      <Route index element={<SecondPageOfRoadMap />} />
-      <Route path="coursefrontend" element={<CoursePage />} />
+      <Route index element={
+        <ProtectedRoute
+        isAllowed={!!userData?.accessToken}
+        redirectPath="/login"
+        data={userData}
+        >
+              <SecondPageOfRoadMap />
+        </ProtectedRoute>
+        } />
+      <Route path="coursefrontend" element={
+        <ProtectedRoute
+        isAllowed={!!userData?.accessToken}
+        redirectPath="/login"
+        data={userData}
+        >
+              <CoursePage />
+        </ProtectedRoute>
+        } />
     </Route>
   </Route>
   
@@ -60,7 +76,7 @@ import Setting from "@/Pages/Setting";
     path="SignUp"
     element={
       <ProtectedRoute
-        isAllowed={!userData?.jwt}
+        isAllowed={!userData?.accessToken}
         redirectPath="/login"
         data={userData}
       >
@@ -72,7 +88,7 @@ import Setting from "@/Pages/Setting";
     path="login"
     element={
       <ProtectedRoute
-        isAllowed={!userData?.jwt}
+        isAllowed={!userData?.accessToken}
         redirectPath="/"
         data={userData}
       >
@@ -86,7 +102,7 @@ import Setting from "@/Pages/Setting";
     path="tasks"
     element={
       <ProtectedRoute
-        isAllowed={!!userData?.jwt}
+        isAllowed={!!userData?.accessToken}
         redirectPath="/login"
         data={userData}
       >

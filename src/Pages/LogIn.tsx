@@ -6,12 +6,11 @@ import { loginSchema} from '../Validation'
 import { yupResolver } from "@hookform/resolvers/yup"
 import InputErrorMessage from '../Ui/InputErrorMessage'
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { IErrorResponse } from '../interfaces'
 import { useState } from 'react'
 import Image from '../components/Image'
 import { Ellipsis } from 'lucide-react';
-import {  axiosInstanceNew } from '@/config/axios.config'
 
 interface IFormInput {
     email:string
@@ -19,9 +18,9 @@ interface IFormInput {
 }
 
 
+
 const LogIn = () => {
 const[isLoading,setIsLoading]=useState(false)
-
 const { register, handleSubmit ,formState:{errors},} = useForm<IFormInput>({
     resolver: yupResolver(loginSchema), 
     });
@@ -33,10 +32,13 @@ const { register, handleSubmit ,formState:{errors},} = useForm<IFormInput>({
 
 // Fullfiled
 try{
-    const{status ,data:resData}= await axiosInstanceNew.post("auth/login",data)// هنا انا بعمل اكونت وبخزنه عندي
-    
-    console.log(resData) // da eloutput elly bytl3
-    if(status===200){// كده معناها انو عمل ريجيستر صح
+    const{status ,data:resData}= await axios.post(
+                                    "https://bcad-102-189-220-41.ngrok-free.app/auth/login",
+                                    data,
+                                    { withCredentials: true }
+                                )
+    console.log(resData) 
+    if(status===200){
     toast.success("You will navigate to the home page after 1 seconds",{
         position:"bottom-center",
         duration:1000,
@@ -47,7 +49,10 @@ try{
         },
     })
     {/*loggedInUser =>name of key will saved  */}
-    localStorage.setItem('loggedInUser',JSON.stringify(resData))// kda ana bkhazen eldata elly rag3a men el reponse
+    localStorage.setItem('loggedInUser',JSON.stringify(resData))
+    const accessToken = resData.accessToken;
+    localStorage.setItem("accessToken", accessToken);
+
     setTimeout(()=>{
       //navigate("/",) مش هاينفع اعملها كده علشان هو مش بيعمل refresh ll pages
         location.replace('/')
@@ -55,8 +60,9 @@ try{
     }
   //Reject =>field => optional
     }catch(error){
-    const errorObj=error as AxiosError<IErrorResponse>// elobject da haibqa fi reponse elly rag3 mn axios
-    toast.error(`${errorObj.response?.data?.error.message}`,{
+    const errorObj=error as AxiosError<IErrorResponse>
+    console.log(errorObj)
+    toast.error(`${errorObj.message}`,{
     position:"bottom-center",
     duration:4000,
     });
