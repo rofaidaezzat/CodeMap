@@ -118,3 +118,39 @@ export interface IinforamtionOfInfo {
   title: string;
   description: string;
 }
+
+export interface IContactUs {
+  name: "first_name" | "last_name" | "whatsappnumber" | "email" | "message";
+  Label: "First Name" | "Last Name" | "Whatsapp Number" | "Email" | "Message";
+  placeholder: string;
+  type: string;
+  validation: {
+    required?: boolean;
+    minLength?: number;
+    pattern?: RegExp; // regular Expression
+  };
+}
+
+export interface IUpdateUserProfile {
+  name: "first_name" | "last_name" | "email";
+  Label: "First Name" | "Last Name" | "Email";
+  placeholder: string;
+  type: string;
+  validation: {
+    required?: boolean;
+    minLength?: number;
+    pattern?: RegExp; // regular Expression
+  };
+}
+export interface IUpdatePassword {
+  name: "currentPassword" | "newPassword" | "confirmNewPassword";
+  Label: "Current Password" | "New Password" | "Confirm New Password";
+  placeholder: string;
+  type: string;
+  validation: {
+    required?: boolean;
+    minLength?: number;
+    pattern?: RegExp; // regular Expression
+  };
+}
+

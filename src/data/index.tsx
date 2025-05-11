@@ -1,6 +1,7 @@
 import {
   IAboutUsInfo,
   Icategories,
+  IContactUs,
   IDataOfCardInfo,
   IFROGETPASSWORD,
   IinforamtionOfInfo,
@@ -9,6 +10,8 @@ import {
   IQuestions,
   IRegisterInput,
   IsidebarData,
+  IUpdatePassword,
+  IUpdateUserProfile,
 } from "../interfaces";
 import HtmlIcon from "../assets/Info/html-5-svgrepo-com.svg?url";
 import CssIcon from "../assets/Info/css-document-extension-file-file-format-file-type-svgrepo-com.svg?url";
@@ -827,3 +830,123 @@ export const InformationOfInfo: IinforamtionOfInfo[] = [
       "This course provided me with the skills I needed to land my first job as a front-end developer!,The AI integration lessons were game-changing for my career in real estate applications. - Sarah M.",
   },
 ];
+
+export const ContactUs_FORM: IContactUs[] = [
+  {
+    name: "first_name",
+    Label: "First Name",
+    placeholder: "First Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 5,
+    },
+  },
+  {
+    name: "last_name",
+    Label: "Last Name",
+    placeholder: "Last Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 5,
+    },
+  },
+  {
+    name: "whatsappnumber",
+    Label: "Whatsapp Number",
+    placeholder: "Whatsapp Number",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 12,
+    },
+  },
+  {
+    name: "email",
+    Label: "Email",
+    placeholder: "Email",
+    type: "email",
+    validation: {
+      required: true,
+      pattern: /^[^@ ]+@[^@ ]+.[^@ .]{2,}$/,
+    },
+  },
+  {
+    name: "message",
+    Label: "Message",
+    placeholder: "Message",
+    type: "textarea",
+    validation: {
+      required: true,
+      minLength: 10,
+    },
+  },
+];
+
+export const UpdateUserProfile: IUpdateUserProfile[] = [
+  {
+    name: "first_name",
+    Label: "First Name",
+    placeholder: "First Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "last_name",
+    Label: "Last Name",
+    placeholder: "Last Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "email",
+    Label: "Email",
+    placeholder: "Email",
+    type: "email",
+    validation: {
+      required: true,
+      pattern: /^[^@ ]+@[^@ ]+.[^@ .]{2,}$/,
+    },
+  },
+];
+export const UpdatePassword: IUpdatePassword[] = [
+  {
+    name: "currentPassword",
+    Label: "Current Password",
+    placeholder: "Current Password",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "newPassword",
+    Label: "New Password",
+    placeholder: "New Password",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "confirmNewPassword",
+    Label: "Confirm New Password",
+    placeholder: "Confirm New Password",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+];
+
+
