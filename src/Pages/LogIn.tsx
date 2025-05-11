@@ -11,8 +11,9 @@ import { IErrorResponse } from "../interfaces";
 import { useState } from "react";
 import Image from "../components/Image";
 import { Ellipsis } from "lucide-react";
-
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { AccessTokenAction } from "@/app/features/AccessTokenSlice";
 
 interface IFormInput {
   email: string;
@@ -20,8 +21,9 @@ interface IFormInput {
 }
 
 const LogIn = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const Dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -37,88 +39,88 @@ const LogIn = () => {
 
     // Fullfiled
     try {
-      const { status, data: resData } = await axios.post(
-        "https://bcad-102-189-220-41.ngrok-free.app/auth/login",
+        const { status, data: resData } = await axios.post(
+        "https://ab3d-102-189-219-210.ngrok-free.app/auth/login",
         data,
         { withCredentials: true }
       ); // هنا انا بعمل اكونت وبخزنه عندي
 
       console.log(resData); // da eloutput elly bytl3
-      if (status === 200) {
-        // كده معناها انو عمل ريجيستر صح
+        if (status === 200) {
         toast.success("You will navigate to the home page after 1 seconds", {
-          position: "bottom-center",
-          duration: 1000,
-          style: {
+            position: "bottom-center",
+            duration: 1000,
+            style: {
             backgroundColor: "black",
             color: "white",
             width: "fit-content",
-          },
+            },
         });
         {
           /*loggedInUser =>name of key will saved  */
         }
         localStorage.setItem("loggedInUser", JSON.stringify(resData)); // kda ana bkhazen eldata elly rag3a men el reponse
-        // const accessToken = resData.data.accessToken;
-        // localStorage.setItem("accessToken", accessToken);
+        const accessToken = resData.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+        Dispatch(AccessTokenAction(resData.accessToken));
         setTimeout(() => {
           //navigate("/",) مش هاينفع اعملها كده علشان هو مش بيعمل refresh ll pages
-          location.replace("/");
+            location.replace("/");
         }, 2000);
-      }
+        }
       //Reject =>field => optional
     } catch (error) {
-      const errorObj = error as AxiosError<IErrorResponse>; // elobject da haibqa fi reponse elly rag3 mn axios
-      toast.error(`${errorObj.response?.data?.error.message}`, {
+        const errorObj = error as AxiosError<IErrorResponse>; 
+        toast.error(`${errorObj.message}`, {
         position: "bottom-center",
         duration: 4000,
-      });
+        });
     } finally {
       setIsLoading(false); // كده خلص تحميل
     }
-  };
-  const togoogle = () => {
+    };
+    const togoogle = () => {
     // navigate("/google")//?
-  };
-  {
+    };
+    {
     /**Render */
-  }
-  const renderLogInUpForm = LOGIN_FORM.map(
+    }
+    const renderLogInUpForm = LOGIN_FORM.map(
     ({ name, Label, placeholder, type, validation }, idx) => (
-      <div key={idx} className="flex flex-col gap-2 ">
+        <div key={idx} className="flex flex-col gap-2 ">
         <label className="text-gray-700 font-medium">{Label}</label>
         <Input
-          type={type}
-          placeholder={placeholder}
-          {...register(name, validation)}
+            type={type}
+            placeholder={placeholder}
+            {...register(name, validation)}
         />
         {errors[name] && <InputErrorMessage msg={errors[name]?.message} />}
-      </div>
+    </div>
     )
-  );
-  return (
+    );
+    return (
     <div className="flex flex-col md:flex-row justify-between  sm:gap-5 md:justify-around  items-center min-h-screen pt-[60px]  my-6 py-10">
       {/**the left dev */}
-      <div className="hidden  lg:flex flex-col items-center gap-7">
+        <div className="hidden  lg:flex flex-col items-center gap-7">
         <span className=" text-3xl font-bold text-[#2F174E] text-left ">
-          Welcome to
-          <br />
-          Code Map Online
-          <br />
-          Learning Platform
+            Welcome to
+            <br />
+            Code Map Online
+            <br />
+            Learning Platform
         </span>
         <Image
-          imageurl="src/assets/SignUp/mainImage.png"
-          alt="error"
-          className="w-[400px] md:w-[460px]"
+            imageurl="src/assets/SignUp/mainImage.png"
+            alt="error"
+            className="w-[400px] md:w-[460px]"
         />
         <Ellipsis color="#C2CEFF" size={50} />
-      </div>
-      <span className="hidden lg:block md:hidden bg-[#5D5A6F] w-1 h-96 rounded-2xl"></span>
-      {/**the right dev  (input section )*/}
-      <div className="flex flex-col w-full md:w-[550px]  lg:w-[550px] bg-white p-10 shadow-md rounded-md gap-2 mt-6 ">
+    </div>
+    <span className="hidden lg:block md:hidden bg-[#5D5A6F] w-1 h-96 rounded-2xl"></span>
+        {/**the right dev  (input section )*/}
+        <div className="flex flex-col w-full md:w-[550px]  lg:w-[550px] bg-white p-10 shadow-md rounded-md gap-2 mt-6 ">
         <div className="border-2 rounded-lg flex gap-3 justify-start">
-          <Image
+            <Image
             imageurl="src/assets/SignUp/icon.png"
             alt="error"
             className="cursor-pointer"

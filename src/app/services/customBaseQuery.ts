@@ -1,0 +1,52 @@
+
+// customBaseQuery.ts
+import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import type { RootState } from '../store';
+import { AccessTokenAction } from '../features/AccessTokenSlice';
+
+
+
+
+interface IRefreshResponse {
+    accessToken: string;
+    }
+
+
+const baseQuery = fetchBaseQuery({
+    baseUrl: 'https://ab3d-102-189-219-210.ngrok-free.app/',
+    credentials: 'include',
+    prepareHeaders: (headers, { getState }) => {
+    const state = getState() as RootState;
+    const token = state.accessToken.accesstoken
+    if (token) {
+        headers.set('x-token', token);
+    }
+    return headers;
+    },
+});
+
+
+export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
+    async (args, api, extraOptions) => {
+    let result = await baseQuery(args, api, extraOptions);
+
+    // لو الـ token مش صالح
+    if (result.error && result.error.status === 401) {
+      // جرب تبعت refresh token
+        const refreshResult = await baseQuery('/auth/refresh', api, extraOptions);
+
+        if (refreshResult.data) {
+        const newAccessToken = (refreshResult.data as IRefreshResponse).accessToken;
+
+        // اعمل dispatch للـ new access token على store
+        api.dispatch(AccessTokenAction(newAccessToken));
+
+        // جرب تعمل request تاني بالتوكن الجديد
+        result = await baseQuery(args, api, extraOptions);
+        } else {
+            window.location.href = "/login";
+        }
+    }
+    return result;
+    };

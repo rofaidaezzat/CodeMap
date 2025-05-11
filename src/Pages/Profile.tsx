@@ -1,8 +1,8 @@
 import CardofProfileOfCourses from "@/components/CardofProfileOfCourses/CardofProfileOfCourses"
-import Image from "@/components/Image"
 import { useState } from "react"
 import { motion } from 'framer-motion'
 import Calendar from "@/components/Calender"
+import DetailsOfUser from "@/components/profileComponents/DetailsOfUser"
 
 
 
@@ -16,13 +16,7 @@ const Profile = () => {
             {/* <CardOfaboutUs/> */}
             <div className="w-5/6 mt-10 flex flex-col gap-6">
             {/* profile name */}
-            <div className="bgOfPhotoOfProfile h-[150px] rounded-3xl flex items-center gap-5 p-5">
-                <Image imageurl="src/assets/Info/60a1719d559469dbb6bfa1b6d0890e5e.jpg" alt="profileImge" className="w-[130px] h-[130px] rounded-full" />
-                <div className="flex flex-col text-white">
-                    <h3 className="text-[30px]">User Name </h3>
-                    <p className="text-[15px]">AI Engineer @ Google | LLMs & GenAI @ MIT</p>
-                </div>
-            </div>
+            <DetailsOfUser/>
             {/* tasks and tracks */}
             <div className="flex gap-3 ">
                 <div className={`border-gray-400 rounded-lg border-2 w-1/4 h-[100px] p-3

@@ -1,4 +1,29 @@
+import { axiosInstance } from "@/config/axios.config";
+import { useQuery } from "@tanstack/react-query";
+
 const PrivacyPolicy = () => {
+
+   interface IMember {
+      _id: string;
+      title: string;
+      requirments: string;
+      target_audience: string;
+    }
+  
+    type ImemberResponse = IMember[];
+  
+    const getMembers = async (): Promise<IMember[]> => {
+      const res = await axiosInstance.get<ImemberResponse>('/roadmaps');
+      console.log(res.data)
+      return res.data;
+    };
+  
+    const { data} = useQuery<IMember[], Error>({
+      queryKey: ['Members'],
+      queryFn: getMembers,
+    
+    });
+    console.log(data)
     
     return (
       <div className="my-28 px-48">

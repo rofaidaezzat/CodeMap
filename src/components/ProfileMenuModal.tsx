@@ -1,5 +1,6 @@
 
 import { axiosInstance } from "@/config/axios.config";
+import { CircleUserRound } from "lucide-react";
 import { Link } from "react-router-dom";
 type IProfileMenuModalProps = {
     isOpen: boolean;
@@ -43,11 +44,12 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
             to="/Profile"
             className="w-full border-2 border-gray-400 text-left flex items-center gap-2 p-2 rounded-md hover:bg-gray-100"
         >
-            <img
+            {/* <img
             src="https://via.placeholder.com/30"
             className="w-7 h-7 rounded-full"
             alt="profile small"
-            />
+            /> */}
+                <CircleUserRound />
             My profile
         </Link>
         <Link
@@ -57,7 +59,7 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
             <span className="text-lg">⚙️</span> Settings
         </Link>
         <button
-            className="w-full text-left flex items-center gap-2 p-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            className="w-full text-left flex items-center gap-2 p-2 bg-red-700 text-white rounded-md hover:bg-red-600"
             onClick={onLogout}
         >
         <span className="text-lg">↩️</span> Log Out

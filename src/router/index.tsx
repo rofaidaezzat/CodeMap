@@ -27,6 +27,7 @@ import CoursePage from "@/Pages/TrackLayout/roadmapLayout/CoursePage";
 import Setting from "@/Pages/Setting";
 
 import RecoverPassword from "@/Pages/RecoverPassword";
+import Test from "@/Pages/test";
 
 const storageKey = "loggedInUser";
 const userDataString = localStorage.getItem(storageKey);
@@ -47,6 +48,8 @@ const router = createBrowserRouter(
         <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="settings" element={<Setting />} />
         <Route path="recoverpassword" element={<RecoverPassword />} />
+        <Route path="/test" element={<Test/>} />
+
 
         {/* Tracks and Roadmaps nested here */}
         <Route path="Tracks" element={<TrackLayout />}>
@@ -66,7 +69,7 @@ const router = createBrowserRouter(
           path="SignUp"
           element={
             <ProtectedRoute
-              isAllowed={!userData?.jwt}
+              isAllowed={!userData?.accessToken}
               redirectPath="/login"
               data={userData}
             >
@@ -78,7 +81,7 @@ const router = createBrowserRouter(
           path="login"
           element={
             <ProtectedRoute
-              isAllowed={!userData?.jwt}
+              isAllowed={!userData?.accessToken}
               redirectPath="/"
               data={userData}
             >
@@ -92,7 +95,7 @@ const router = createBrowserRouter(
           path="tasks"
           element={
             <ProtectedRoute
-              isAllowed={!!userData?.jwt}
+              isAllowed={!!userData?.accessToken}
               redirectPath="/login"
               data={userData}
             >

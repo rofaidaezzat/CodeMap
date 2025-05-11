@@ -41,7 +41,7 @@ const onSubmit: SubmitHandler<IFormInput> =async (data) =>
         setIsLoading(true)
         try{
             // const{status}=await axiosInstance.post("auth/local/register",data)
-            const{status}=await axios.post('https://bcad-102-189-220-41.ngrok-free.app/auth/register',data,{ withCredentials: true })
+            const{status}=await axios.post('https://ab3d-102-189-219-210.ngrok-free.app/auth/register',data,{ withCredentials: true })
             if(status===201){
                 toast.success("You will navigate to the login page after 1 seconds to login",{
                     position:"bottom-center",
