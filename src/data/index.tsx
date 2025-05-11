@@ -67,6 +67,58 @@ export const REGISTER_FORM: IRegisterInput[] = [
   },
 ];
 
+export const ContactUs_FORM: IContactUs[] = [
+  {
+    name: "first_name",
+    Label: "First Name",
+    placeholder: "First Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 5,
+    },
+  },
+  {
+    name: "last_name",
+    Label: "Last Name",
+    placeholder: "Last Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 5,
+    },
+  },
+  {
+    name: "whatsappnumber",
+    Label: "Whatsapp Number",
+    placeholder: "Whatsapp Number",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 12,
+    },
+  },
+  {
+    name: "email",
+    Label: "Email",
+    placeholder: "Email",
+    type: "email",
+    validation: {
+      required: true,
+      pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+    },
+  },
+  {
+    name: "message",
+    Label: "Message",
+    placeholder: "Message",
+    type: "textarea",
+    validation: {
+      required: true,
+      minLength: 10,
+    },
+  },
+];
 export const LOGIN_FORM: ILoginInput[] = [
   {
     name: "email",
@@ -123,7 +175,70 @@ export const NEWPASSWORD: INEWPASSWORD[] = [
     },
   },
 ];
-
+export const UpdateUserProfile: IUpdateUserProfile[] = [
+  {
+    name: "first_name",
+    Label: "First Name",
+    placeholder: "First Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "last_name",
+    Label: "Last Name",
+    placeholder: "Last Name",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "email",
+    Label: "Email",
+    placeholder: "Email",
+    type: "email",
+    validation: {
+      required: true,
+      pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+    },
+  },
+];
+export const UpdatePassword: IUpdatePassword[] = [
+  {
+    name: "currentPassword",
+    Label: "Current Password",
+    placeholder: "Current Password",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "newPassword",
+    Label: "New Password",
+    placeholder: "New Password",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+  {
+    name: "confirmNewPassword",
+    Label: "Confirm New Password",
+    placeholder: "Confirm New Password",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+    },
+  },
+];
 export const Questions: IQuestions[] = [
   {
     Question: "How can I get started with Learnly?",

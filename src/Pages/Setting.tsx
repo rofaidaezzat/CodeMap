@@ -3,19 +3,17 @@ import { UpdatePassword, UpdateUserProfile } from "@/data";
 import Button from "@/Ui/Button";
 import Input from "@/Ui/Input";
 import InputErrorMessage from "@/Ui/InputErrorMessage";
+import { UpdatePasswordSchema, UpdateProfileSchema } from "@/Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { UpdatePasswordSchema, UpdateProfileSchema } from "@/Validation";
-import DeleteAccount from "@/components/SettingComponents/DeleteAcount";
 
 interface Iuserprofile {
   first_name: string;
   last_name: string;
   email: string;
 }
-
 
 interface Ipasswordupdate {
   currentPassword: string;

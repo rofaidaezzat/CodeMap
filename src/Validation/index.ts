@@ -1,7 +1,4 @@
 import * as yup from "yup"
-
-
-
 export const SignUpSchema = yup
     .object({
     first_name: yup.string().required('Username is required').min(5,'userName should be at least 5 character'),
@@ -10,9 +7,7 @@ export const SignUpSchema = yup
     .required("Email is required.")
     .matches(/^[^@]+@[^@]+\.[^@.]{2,}$/,"Not a valide email address."),
     password: yup.string().required("Password is required").min(8, "Password should be at least 8 charachters."),
-    // terms: yup.boolean().oneOf([true], "You must accept the terms and conditions")
-
-})
+   })
 .required()
 
 export const loginSchema = yup
@@ -25,6 +20,32 @@ export const loginSchema = yup
     .string()
     .required("Password is required")
     .min(8, "Password should be at least 6 charachters."),
+})
+.required();
+export const ContactUs_Schema = yup
+    .object({
+        first_name: yup
+    .string()
+    .required("first name is required")
+    .min(2, "first name should be at least 6 charachters."),
+    last_name: yup
+    .string()
+    .required("last name is required")
+    .min(2, "last name should be at least 6 charachters."),
+    email: yup
+    .string()
+    .required("email is required")
+    .matches(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, "Not a valid email address."),
+    whatsappnumber: yup
+    .string()
+    .required("whatsapp number is required")
+    .min(10, "whatsapp number should be at least 6 charachters."),
+    message: yup
+    .string()
+    .required("message is required")
+    .min(10, "message should be at least 6 charachters."),
+
+
 })
 .required();
 
@@ -47,32 +68,6 @@ export const NewPasswordSchema = yup.object({
       .required("Please confirm your password"),
   })
   .required();
-
-  export const ContactUs_Schema = yup
-    .object({
-        first_name: yup
-    .string()
-    .required("first name is required")
-    .min(2, "first name should be at least 6 charachters."),
-    last_name: yup
-    .string()
-    .required("last name is required")
-    .min(2, "last name should be at least 6 charachters."),
-    email: yup
-    .string()
-    .required("email is required")
-    .matches(/^[^@ ]+@[^@ ]+.[^@ .]{2,}$/, "Not a valid email address."),
-    whatsappnumber: yup
-    .string()
-    .required("whatsapp number is required")
-    .min(10, "whatsapp number should be at least 6 charachters."),
-    message: yup
-    .string()
-    .required("message is required")
-    .min(10, "message should be at least 10 charachters."),
-})
-.required();
-
 export const UpdatePasswordSchema = yup.object({
     currentPassword: yup
       .string()
@@ -101,8 +96,6 @@ export const UpdateProfileSchema = yup.object({
     email: yup
     .string()
     .required("email is required")
-    .matches(/^[^@ ]+@[^@ ]+.[^@ .]{2,}$/, "Not a valid email address."),
+    .matches(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, "Not a valid email address."),
 })
 .required();
-
-
