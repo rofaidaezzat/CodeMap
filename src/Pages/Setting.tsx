@@ -8,12 +8,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-
-interface Iuserprofile {
-  first_name: string;
-  last_name: string;
-  email: string;
-}
+import DeleteAccount from "@/components/DeleteAccount";
+import { jwtDecode } from "jwt-decode";
 
 interface Ipasswordupdate {
   currentPassword: string;
@@ -21,9 +17,38 @@ interface Ipasswordupdate {
   confirmNewPassword: string;
 }
 
+interface IUserProfileForm {
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
 const Setting = () => {
-  const baseURL = "https://ab3d-102-189-219-210.ngrok-free.app/";
-  const token = localStorage.getItem("accessToken") || "";
+  const baseURL = "https://d378-105-197-134-227.ngrok-free.app/";
+
+  // Extract token and user data from localStorage
+  const userDataString = localStorage.getItem("loggedInUser");
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const token = userData?.accessToken || "";
+  console.log("userData", userData);
+  console.log("token", token);
+  interface DecodedToken {
+    UserInfo: {
+      id: string;
+    };
+  }
+
+  const decoded = jwtDecode<DecodedToken>(token);
+  const userId = decoded.UserInfo.id;
+  console.log("userId", userId);
+  // Axios instance
+  const axiosInstance = axios.create({
+    baseURL,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    // withCredentials: true,
+  });
 
   // Profile Form
   const {
@@ -31,8 +56,13 @@ const Setting = () => {
     handleSubmit: handleProfileSubmit,
     formState: { errors: profileErrors },
     reset,
-  } = useForm<Iuserprofile>({
+  } = useForm<IUserProfileForm>({
     resolver: yupResolver(UpdateProfileSchema),
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+    },
   });
 
   // Password Form
@@ -48,41 +78,34 @@ const Setting = () => {
   useEffect(() => {
     const getUserProfile = async () => {
       try {
-        const response = await axios.get("/users/me", {
-          baseURL,
-          headers: {
-            "x-token": token,
-          },
-          withCredentials: true,
-        });
-
-        const userData = response.data;
+        if (!userId) return;
+        const response = await axiosInstance.get(`/users/${userId}`);
+        const userDataFromServer = response.data;
+        // return htmlpage not json
+        console.log("Raw response data:", response.data);
 
         reset({
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-          email: userData.email,
+          first_name: userDataFromServer.first_name,
+          last_name: userDataFromServer.last_name,
+          email: userDataFromServer.email,
         });
       } catch (error) {
         console.error("خطأ في تحميل البيانات:", error);
       }
     };
-
     getUserProfile();
-  }, []);
+  }, [reset, userId]);
 
   // تحديث البروفايل
-  const onSubmituserprofileupdate: SubmitHandler<Iuserprofile> = async (
+  const onSubmituserprofileupdate: SubmitHandler<IUserProfileForm> = async (
     data
   ) => {
     try {
-      const { status } = await axios.put("/users/update-profile", data, {
-        baseURL,
-        headers: {
-          "x-token": token,
-        },
-        withCredentials: true,
-      });
+      const payload = userData ? { ...data, _id: userData._id } : data;
+      const { status } = await axiosInstance.put(
+        "/users/update-profile",
+        payload
+      );
 
       if (status === 200) {
         toast.success("Your Update Done successfully", {
@@ -115,13 +138,10 @@ const Setting = () => {
     data
   ) => {
     try {
-      const { status } = await axios.put("/users/update-password", data, {
-        baseURL,
-        headers: {
-          "x-token": token,
-        },
-        withCredentials: true,
-      });
+      const { status } = await axiosInstance.put(
+        "/users/update-password",
+        data
+      );
 
       if (status === 200) {
         toast.success("Your Update Done successfully", {
@@ -150,7 +170,7 @@ const Setting = () => {
   };
 
   const renderUserProfileForm = () => {
-    return UpdateUserProfile.map(({ name, Label, type, validation }, index) => (
+    return UpdateUserProfile.map(({ name, Label, type }, index) => (
       <div className="flex flex-col gap-2 w-1/2" key={index}>
         <label htmlFor={name} className="font-semibold text-gray-700">
           {Label}
@@ -158,12 +178,13 @@ const Setting = () => {
         <Input
           type={type}
           id={name}
+          autoComplete="off"
           className="h-12 bg-gray-100 border border-gray-300 rounded px-3"
-          {...profileRegister(name as keyof Iuserprofile, validation)}
+          {...profileRegister(name as keyof IUserProfileForm)}
         />
-        {profileErrors[name as keyof Iuserprofile] && (
+        {profileErrors[name as keyof IUserProfileForm] && (
           <InputErrorMessage
-            msg={profileErrors[name as keyof Iuserprofile]?.message}
+            msg={profileErrors[name as keyof IUserProfileForm]?.message}
           />
         )}
       </div>
@@ -179,6 +200,7 @@ const Setting = () => {
         <Input
           type={type}
           id={name}
+          autoComplete="off"
           className="h-12 bg-gray-100 border border-gray-300 rounded px-3"
           {...passwordRegister(name as keyof Ipasswordupdate, validation)}
         />
@@ -223,7 +245,7 @@ const Setting = () => {
           </div>
         </form>
       </div>
-      <DeleteAccount/>
+      <DeleteAccount />
     </div>
   );
 };

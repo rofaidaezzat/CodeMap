@@ -28,6 +28,9 @@ import Setting from "@/Pages/Setting";
 
 import RecoverPassword from "@/Pages/RecoverPassword";
 import Test from "@/Pages/test";
+import ChatbotLayout from "@/Pages/Chatbot/ChatbotLayout";
+import Welcome from "@/Pages/Chatbot/Welcome";
+import ServicesPage from "@/Pages/Chatbot/ServicesPage";
 
 const storageKey = "loggedInUser";
 const userDataString = localStorage.getItem(storageKey);
@@ -48,8 +51,7 @@ const router = createBrowserRouter(
         <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="settings" element={<Setting />} />
         <Route path="recoverpassword" element={<RecoverPassword />} />
-        <Route path="/test" element={<Test/>} />
-
+        <Route path="/test" element={<Test />} />
 
         {/* Tracks and Roadmaps nested here */}
         <Route path="Tracks" element={<TrackLayout />}>
@@ -106,6 +108,11 @@ const router = createBrowserRouter(
 
         {/* Fallback */}
         <Route path="*" element={<p>error</p>} />
+      </Route>
+      {/*---------------- chatbot-------------- */}
+      <Route path="chatbot" element={<ChatbotLayout />}>
+        <Route index element={<Welcome />} />
+        <Route path="services" element={<ServicesPage />} />
       </Route>
     </>
   )

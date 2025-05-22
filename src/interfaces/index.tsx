@@ -21,17 +21,7 @@ export interface ILoginInput {
     pattern?: RegExp; // regular Expression
   };
 }
-export interface IContactUs {
-  name: "first_name" | "last_name" | "whatsappnumber" | "email" | "message";
-  Label: "First Name" | "Last Name" | "Whatsapp Number" | "Email" | "Message";
-  placeholder: string;
-  type: string;
-  validation: {
-    required?: boolean;
-    minLength?: number;
-    pattern?: RegExp; // regular Expression
-  };
-}
+
 export interface IFROGETPASSWORD {
   name: "email";
   Label: "Email";
@@ -186,4 +176,9 @@ export interface IUpdatePassword {
     pattern?: RegExp; // regular Expression
   };
 }
-
+export interface IinfoChatbot {
+  imageurl: string;
+  alt: string;
+  title: string;
+  description: string;
+}

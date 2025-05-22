@@ -22,32 +22,31 @@ export const loginSchema = yup
     .min(8, "Password should be at least 6 charachters."),
 })
 .required();
-export const ContactUs_Schema = yup
-    .object({
-        first_name: yup
-    .string()
-    .required("first name is required")
-    .min(2, "first name should be at least 6 charachters."),
+export const ContactUs_Schema = yup.object({
+    first_name: yup
+        .string()
+        .trim()
+        .required("First name is required")
+        .min(2, "First name should be at least 2 characters"),
     last_name: yup
-    .string()
-    .required("last name is required")
-    .min(2, "last name should be at least 6 charachters."),
+        .string()
+        .trim()
+        .required("Last name is required")
+        .min(2, "Last name should be at least 2 characters"),
     email: yup
-    .string()
-    .required("email is required")
-    .matches(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, "Not a valid email address."),
+        .string()
+        .required("Email is required")
+        .matches(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, "Not a valid email address"),
     whatsappnumber: yup
-    .string()
-    .required("whatsapp number is required")
-    .min(10, "whatsapp number should be at least 6 charachters."),
+        .string()
+        .required("Whatsapp number is required")
+        .min(10, "Whatsapp number should be at least 10 digits"),
     message: yup
-    .string()
-    .required("message is required")
-    .min(10, "message should be at least 6 charachters."),
-
-
-})
-.required();
+        .string()
+        .transform((value) => value?.trim())
+        .required("Message is required")
+        .min(10, "Message should be at least 10 characters")
+}).required();
 
 export const ForgetPasswordSchema = yup
     .object({
@@ -57,6 +56,8 @@ export const ForgetPasswordSchema = yup
     .matches(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, "Not a valid email address."),
 })
 .required();
+
+
 export const NewPasswordSchema = yup.object({
     newPassword: yup
       .string()

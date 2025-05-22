@@ -1,9 +1,9 @@
 import {
   IAboutUsInfo,
   Icategories,
-  IContactUs,
   IDataOfCardInfo,
   IFROGETPASSWORD,
+  IinfoChatbot,
   IinforamtionOfInfo,
   ILoginInput,
   INEWPASSWORD,
@@ -23,6 +23,10 @@ import SvelteIcon from "../assets/Info/svelte-icon-svgrepo-com.svg?url";
 import VsCodeIcon from "../assets/Info/vs-code-svgrepo-com.svg?url";
 import WebStormIcon from "../assets/Info/webstorm-svgrepo-com.svg?url";
 import SublimeTextIcon from "../assets/Info/sublimetext-icon-svgrepo-com.svg?url";
+import chatbot1 from "../assets/Chatbot/chatbot1.jpg";
+import chatbot2 from "../assets/Chatbot/chatbot2.jpg?url";
+import chatbot3 from "../assets/Chatbot/chatbot3.jpg?url";
+import chatbot4 from "../assets/Chatbot/chatbot4.jpg?url";
 
 export const REGISTER_FORM: IRegisterInput[] = [
   {
@@ -63,59 +67,6 @@ export const REGISTER_FORM: IRegisterInput[] = [
     validation: {
       required: true,
       minLength: 6,
-    },
-  },
-];
-
-export const ContactUs_FORM: IContactUs[] = [
-  {
-    name: "first_name",
-    Label: "First Name",
-    placeholder: "First Name",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 5,
-    },
-  },
-  {
-    name: "last_name",
-    Label: "Last Name",
-    placeholder: "Last Name",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 5,
-    },
-  },
-  {
-    name: "whatsappnumber",
-    Label: "Whatsapp Number",
-    placeholder: "Whatsapp Number",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 12,
-    },
-  },
-  {
-    name: "email",
-    Label: "Email",
-    placeholder: "Email",
-    type: "email",
-    validation: {
-      required: true,
-      pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-    },
-  },
-  {
-    name: "message",
-    Label: "Message",
-    placeholder: "Message",
-    type: "textarea",
-    validation: {
-      required: true,
-      minLength: 10,
     },
   },
 ];
@@ -945,123 +896,33 @@ export const InformationOfInfo: IinforamtionOfInfo[] = [
       "This course provided me with the skills I needed to land my first job as a front-end developer!,The AI integration lessons were game-changing for my career in real estate applications. - Sarah M.",
   },
 ];
-
-export const ContactUs_FORM: IContactUs[] = [
+export const InfoChatbot: IinfoChatbot[] = [
   {
-    name: "first_name",
-    Label: "First Name",
-    placeholder: "First Name",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 5,
-    },
+    imageurl: chatbot1,
+    alt: "chatbot",
+    title: "Track Advisor",
+    description:
+      "Find the ideal learning track with tailored recommendations for courses and resources.",
   },
   {
-    name: "last_name",
-    Label: "Last Name",
-    placeholder: "Last Name",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 5,
-    },
+    imageurl: chatbot2,
+    alt: "chatbot",
+    title: "Progress Manager",
+    description:
+      "Stay on top of your tasks and deadlines with smart notifications and progress tracking.",
   },
   {
-    name: "whatsappnumber",
-    Label: "Whatsapp Number",
-    placeholder: "Whatsapp Number",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 12,
-    },
+    imageurl: chatbot3,
+    alt: "chatbot",
+    title: "Chat Assistant",
+    description:
+      "Get immediate guidance and answers to your questions about learning paths and tools.",
   },
   {
-    name: "email",
-    Label: "Email",
-    placeholder: "Email",
-    type: "email",
-    validation: {
-      required: true,
-      pattern: /^[^@ ]+@[^@ ]+.[^@ .]{2,}$/,
-    },
-  },
-  {
-    name: "message",
-    Label: "Message",
-    placeholder: "Message",
-    type: "textarea",
-    validation: {
-      required: true,
-      minLength: 10,
-    },
+    imageurl: chatbot4,
+    alt: "chatbot",
+    title: "Custom Planner",
+    description:
+      "Design a roadmap that suits your schedule and aligns with your goals.",
   },
 ];
-
-export const UpdateUserProfile: IUpdateUserProfile[] = [
-  {
-    name: "first_name",
-    Label: "First Name",
-    placeholder: "First Name",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 2,
-    },
-  },
-  {
-    name: "last_name",
-    Label: "Last Name",
-    placeholder: "Last Name",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 2,
-    },
-  },
-  {
-    name: "email",
-    Label: "Email",
-    placeholder: "Email",
-    type: "email",
-    validation: {
-      required: true,
-      pattern: /^[^@ ]+@[^@ ]+.[^@ .]{2,}$/,
-    },
-  },
-];
-export const UpdatePassword: IUpdatePassword[] = [
-  {
-    name: "currentPassword",
-    Label: "Current Password",
-    placeholder: "Current Password",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 2,
-    },
-  },
-  {
-    name: "newPassword",
-    Label: "New Password",
-    placeholder: "New Password",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 2,
-    },
-  },
-  {
-    name: "confirmNewPassword",
-    Label: "Confirm New Password",
-    placeholder: "Confirm New Password",
-    type: "text",
-    validation: {
-      required: true,
-      minLength: 2,
-    },
-  },
-];
-
-
