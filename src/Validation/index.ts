@@ -70,20 +70,20 @@ export const NewPasswordSchema = yup.object({
   })
   .required();
 export const UpdatePasswordSchema = yup.object({
-    currentPassword: yup
-      .string()
-      .required("Password is required")
-      .min(8, "Password should be at least 8 characters."),
-    newPassword: yup
-      .string()
-      .required("Password is required")
-      .min(8, "Password should be at least 8 characters."),
-    confirmNewPassword: yup
-      .string()
-      .oneOf([yup.ref("newPassword")], "Passwords must match")
-      .required("Please confirm your password"),
-  })
-  .required();
+  currentPassword: yup.string().required("Current password is required"),
+  newPassword: yup
+    .string()
+    .required("New password is required")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Must include at least one uppercase letter")
+    .matches(/[a-z]/, "Must include at least one lowercase letter")
+    .matches(/\d/, "Must include at least one number")
+    .matches(/[@$!%*?&]/, "Must include at least one special character"),
+  confirmNewPassword: yup
+    .string()
+    .oneOf([yup.ref('newPassword')], "Passwords must match")
+    .required("Please confirm your new password"),
+});
 
 export const UpdateProfileSchema = yup.object({
     first_name: yup

@@ -18,7 +18,7 @@ const Navbar = ({ bg }: INavbarProps) => {
 
   return (
     <nav
-      className={`w-full p-3 shadow-md rounded-b-3xl ${bg} bg-neutral-900 fixed top-0 left-0 right-0 z-50`}
+      className={`w-full p-3 shadow-md rounded-b-3xl ${bg}  fixed top-0 left-0 right-0 z-50`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center text-white font-semibold">
         {/* Logo & Navigation Links */}

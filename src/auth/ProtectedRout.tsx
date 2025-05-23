@@ -7,8 +7,6 @@ interface IProps {
     children: ReactNode;
     data?: unknown;
 }
-
-
 const ProtectedRoute = ({
     isAllowed,
     redirectPath,

@@ -5,11 +5,12 @@ import Input from "@/Ui/Input";
 import InputErrorMessage from "@/Ui/InputErrorMessage";
 import { UpdatePasswordSchema, UpdateProfileSchema } from "@/Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import DeleteAccount from "@/components/DeleteAccount";
-import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "@/config/axios.config";
+import OTPForm from "@/components/VerifyCode";
 
 interface Ipasswordupdate {
   currentPassword: string;
@@ -24,31 +25,23 @@ interface IUserProfileForm {
 }
 
 const Setting = () => {
-  const baseURL = "https://d378-105-197-134-227.ngrok-free.app/";
+  const [userInfo, setUserInfo] = useState<IUserProfileForm | null>(null);
+  //const baseURL = "https://d378-105-197-134-227.ngrok-free.app/";
 
   // Extract token and user data from localStorage
   const userDataString = localStorage.getItem("loggedInUser");
   const userData = userDataString ? JSON.parse(userDataString) : null;
-  const token = userData?.accessToken || "";
-  console.log("userData", userData);
-  console.log("token", token);
-  interface DecodedToken {
-    UserInfo: {
-      id: string;
-    };
-  }
+  // const token = userData?.accessToken || "";
+  // console.log("userData", userData);
 
-  const decoded = jwtDecode<DecodedToken>(token);
-  const userId = decoded.UserInfo.id;
-  console.log("userId", userId);
   // Axios instance
-  const axiosInstance = axios.create({
-    baseURL,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    // withCredentials: true,
-  });
+  // const axiosInstance = axios.create({
+  //   baseURL,
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // withCredentials: true,
+  // });
 
   // Profile Form
   const {
@@ -64,7 +57,24 @@ const Setting = () => {
       email: "",
     },
   });
+  useEffect(() => {
+    const userDataString = localStorage.getItem("loggedInUser");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
 
+    if (userData) {
+      setUserInfo({
+        first_name: userData.first_name || "",
+        last_name: userData.last_name || "",
+        email: userData.email || "",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      reset(userInfo);
+    }
+  }, [userInfo, reset]);
   // Password Form
   const {
     register: passwordRegister,
@@ -73,29 +83,6 @@ const Setting = () => {
   } = useForm<Ipasswordupdate>({
     resolver: yupResolver(UpdatePasswordSchema),
   });
-
-  // جلب بيانات المستخدم عند تحميل الصفحة
-  useEffect(() => {
-    const getUserProfile = async () => {
-      try {
-        if (!userId) return;
-        const response = await axiosInstance.get(`/users/${userId}`);
-        const userDataFromServer = response.data;
-        // return htmlpage not json
-        console.log("Raw response data:", response.data);
-
-        reset({
-          first_name: userDataFromServer.first_name,
-          last_name: userDataFromServer.last_name,
-          email: userDataFromServer.email,
-        });
-      } catch (error) {
-        console.error("خطأ في تحميل البيانات:", error);
-      }
-    };
-    getUserProfile();
-  }, [reset, userId]);
-
   // تحديث البروفايل
   const onSubmituserprofileupdate: SubmitHandler<IUserProfileForm> = async (
     data
@@ -108,6 +95,17 @@ const Setting = () => {
       );
 
       if (status === 200) {
+        const updatedUserData = {
+          ...userData,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+        };
+
+        localStorage.setItem("loggedInUser", JSON.stringify(updatedUserData)); // ✅ حفظ التحديثات
+        setUserInfo(updatedUserData); // ✅ تحديث واجهة المستخدم
+        console.log("Updated user:", updatedUserData);
+
         toast.success("Your Update Done successfully", {
           position: "bottom-center",
           duration: 1000,
@@ -118,6 +116,7 @@ const Setting = () => {
           },
         });
       }
+      <OTPForm />;
     } catch (error) {
       toast.error("Error sending message", {
         position: "bottom-center",
@@ -154,98 +153,110 @@ const Setting = () => {
           },
         });
       }
-    } catch (error) {
-      toast.error("Error sending message", {
-        position: "bottom-center",
-        duration: 1500,
-        style: {
-          backgroundColor: "black",
-          color: "white",
-          width: "fit-content",
-        },
-      });
-
-      console.error("خطأ في الإرسال:", error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("خطأ في الإرسال:", error.response?.data);
+      } else {
+        console.error("خطأ غير متوقع:", error);
+      }
+      toast.error("Error sending message");
     }
   };
 
   const renderUserProfileForm = () => {
-    return UpdateUserProfile.map(({ name, Label, type }, index) => (
-      <div className="flex flex-col gap-2 w-1/2" key={index}>
-        <label htmlFor={name} className="font-semibold text-gray-700">
-          {Label}
-        </label>
-        <Input
-          type={type}
-          id={name}
-          autoComplete="off"
-          className="h-12 bg-gray-100 border border-gray-300 rounded px-3"
-          {...profileRegister(name as keyof IUserProfileForm)}
-        />
-        {profileErrors[name as keyof IUserProfileForm] && (
-          <InputErrorMessage
-            msg={profileErrors[name as keyof IUserProfileForm]?.message}
-          />
-        )}
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        {UpdateUserProfile.map(({ name, Label, type }, index) => (
+          <div className="flex flex-col gap-2" key={index}>
+            <label htmlFor={name} className="font-semibold text-gray-700">
+              {Label}
+            </label>
+            <Input
+              type={type}
+              id={name}
+              autoComplete="off"
+              className="h-12 bg-gray-100 border border-gray-300 rounded px-3 focus:outline-none focus:ring-2 focus:ring-[#413198] shadow-sm transition"
+              {...profileRegister(name as keyof IUserProfileForm)}
+            />
+            {profileErrors[name as keyof IUserProfileForm] && (
+              <InputErrorMessage
+                msg={profileErrors[name as keyof IUserProfileForm]?.message}
+              />
+            )}
+          </div>
+        ))}
       </div>
-    ));
+    );
   };
 
   const renderPasswordChangeForm = () => {
-    return UpdatePassword.map(({ name, Label, type, validation }, index) => (
-      <div className="flex flex-col gap-2 w-1/2" key={index}>
-        <label htmlFor={name} className="font-semibold text-gray-700">
-          {Label}
-        </label>
-        <Input
-          type={type}
-          id={name}
-          autoComplete="off"
-          className="h-12 bg-gray-100 border border-gray-300 rounded px-3"
-          {...passwordRegister(name as keyof Ipasswordupdate, validation)}
-        />
-        {passwordErrors[name as keyof Ipasswordupdate] && (
-          <InputErrorMessage
-            msg={passwordErrors[name as keyof Ipasswordupdate]?.message}
-          />
-        )}
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        {UpdatePassword.map(({ name, Label, type, validation }, index) => (
+          <div className="flex flex-col gap-2" key={index}>
+            <label htmlFor={name} className="font-semibold text-gray-700">
+              {Label}
+            </label>
+            <Input
+              type={type}
+              id={name}
+              autoComplete="off"
+              className="h-12 bg-gray-100 border border-gray-300 rounded px-3 focus:outline-none focus:ring-2 focus:ring-[#413198] shadow-sm transition"
+              {...passwordRegister(name as keyof Ipasswordupdate, validation)}
+            />
+            {passwordErrors[name as keyof Ipasswordupdate] && (
+              <InputErrorMessage
+                msg={passwordErrors[name as keyof Ipasswordupdate]?.message}
+              />
+            )}
+          </div>
+        ))}
       </div>
-    ));
+    );
   };
 
   return (
-    <div className="mt-28 mx-16 mb-24 space-y-10">
-      <h1 className="text-3xl font-bold">Account Settings</h1>
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-[#f3f0ff] via-[#e9e6fa] to-[#f7f7fb] py-20 px-2">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-[#413198] text-center mb-10 drop-shadow-sm tracking-tight">
+        Account Settings
+      </h1>
 
-      <div className="space-y-8">
+      <div className="space-y-12 w-full max-w-4xl">
         {/* User Info */}
         <form
-          className="space-y-6"
+          className="space-y-6 bg-white/90 p-8 rounded-2xl shadow-xl border border-gray-100 mx-auto backdrop-blur-sm"
           onSubmit={handleProfileSubmit(onSubmituserprofileupdate)}
         >
+          <h2 className="text-2xl font-bold text-[#413198] text-center mb-6">
+            Profile Information
+          </h2>
           {renderUserProfileForm()}
-          <div className="flex justify-end w-1/2">
-            <Button className="px-6 py-3 bg-[#413198] text-white rounded-md">
+          <div className="flex justify-end w-full mt-4">
+            <Button className="px-6 py-3 bg-gradient-to-r from-[#413198] to-[#6c63ff] text-white rounded-lg w-full md:w-auto shadow-lg hover:from-[#2d236b] hover:to-[#413198] transition font-semibold text-lg">
               Change Profile
             </Button>
           </div>
         </form>
 
         {/* Password Change */}
-        <h2 className="text-2xl font-semibold font-serif">Change Password</h2>
         <form
-          className="space-y-6"
+          className="space-y-6 bg-white/90 p-8 rounded-2xl shadow-xl border border-gray-100 mx-auto backdrop-blur-sm"
           onSubmit={handlePasswordSubmit(onSubmitpasswordupdate)}
         >
+          <h2 className="text-2xl font-bold text-[#413198] text-center mb-6">
+            Change Password
+          </h2>
           {renderPasswordChangeForm()}
-          <div className="flex justify-end w-1/2">
-            <Button className="px-6 py-3 bg-[#413198] text-white rounded-md">
+          <div className="flex justify-end w-full mt-4">
+            <Button className="px-6 py-3 bg-gradient-to-r from-[#413198] to-[#6c63ff] text-white rounded-lg w-full md:w-auto shadow-lg hover:from-[#2d236b] hover:to-[#413198] transition font-semibold text-lg">
               Change Password
             </Button>
           </div>
         </form>
+        <div className="flex justify-center mt-8">
+          <DeleteAccount />
+        </div>
       </div>
-      <DeleteAccount />
     </div>
   );
 };

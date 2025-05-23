@@ -2,7 +2,7 @@ import { refreshAccessToken } from "@/services/authService";
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://d378-105-197-134-227.ngrok-free.app/", 
+  baseURL: "https://d378-105-197-134-227.ngrok-free.app", 
   withCredentials: true, // ضروري لإرسال واستقبال الـ cookies تلقائيًا
   timeout: 10000, 
 });
