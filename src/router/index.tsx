@@ -105,7 +105,6 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
-
         {/* Fallback */}
         <Route path="*" element={<p>error</p>} />
       </Route>

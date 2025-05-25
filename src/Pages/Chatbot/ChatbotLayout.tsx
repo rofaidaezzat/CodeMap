@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const ChatbotLayout = () => {
   return (
     <div className="">
-      <Navbar bg="bg-[#270C4A]" />
+      <Navbar bg="bg-[#371F5A]" />
       <Outlet />
     </div>
   );

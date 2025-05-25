@@ -1,29 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import Image from '../Image'
-import { useUploadImageProfileMutation } from '@/app/services/crudeProfile'
+import { useDeleteImageProfileMutation, useUploadImageProfileMutation } from '@/app/services/crudeProfile'
 import toast from 'react-hot-toast'
 import LoadingSpanner from '../LoadingSpanner'
+import { axiosInstance } from '@/config/axios.config'
+import { useQuery } from '@tanstack/react-query'
+
+
+interface IUser {
+    profile_image: string;
+
+}
 
 const DetailsOfUser = () => {
-    const [profileImage, setProfileImage] = useState<string | null>(null)
+    // states
+    const userDataString = localStorage.getItem("loggedInUser");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const [uploadImage,{isSuccess,isLoading:isLoadingUploadImage}]=useUploadImageProfileMutation()
     const [openMenu, setOpenMenu] = useState(false)
-    const [uploadImage,{isSuccess,isLoading}]=useUploadImageProfileMutation()
+    const [DeleteImage,{isSuccess:isSuccessDelete,isLoading:isLoadingDelete}]=useDeleteImageProfileMutation()
+    const IdUser=userData.id
 
+
+    const getUserById = async (): Promise<IUser> => {
+            if (!IdUser) throw new Error("No User ID Provided");
+            const { data } = await axiosInstance.get(`users/${IdUser}`);
+            return data;
+        };
+    
+    // fetch image from database 
+    const { data ,isLoading:isloadingFetchImage} = useQuery({
+            queryKey: ["oneUser", IdUser],
+            queryFn: getUserById,
+            enabled: !!IdUser,
+        });
 
     const toggleMenu = () => {
         setOpenMenu(prev => !prev)
     }
 
     const deleteImage=()=>{
-        setProfileImage(null)
+        DeleteImage({})
         localStorage.removeItem("profileImage")
         setOpenMenu(false)
     }
+
+    // Handlers
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-        const imageUrl = URL.createObjectURL(file)
-        setProfileImage(imageUrl)
+        
         const formData=new FormData()
         if(file){
             formData.append("profileImage",file)
@@ -32,62 +58,84 @@ const DetailsOfUser = () => {
     }
     }
     
+
+        //is success upload image
     useEffect(() => {
-        const savedImage = localStorage.getItem("profileImage")
-        if (savedImage) {
-            setProfileImage(savedImage)
-        }
-        }, [])
-        useEffect(() => {
-        if (isSuccess && profileImage) {
+        if (isSuccess ) {
             toast.success("You uploaded image successfully", {
             position: "bottom-center",
-            duration: 2000,
+            duration: 4000,
             style: {
                 backgroundColor: "black",
                 color: "white",
                 width: "fit-content",
             },
             })
-            localStorage.setItem("profileImage", profileImage)
             setOpenMenu(false)
+            setTimeout(() => {
+            window.location.reload();
+        }, 800); // بعد 0.8 ثانية حتى تظهر رسالة التوست أولاً
         }
-        }, [isSuccess, profileImage])
+    }, [isSuccess])
+
+
+    // is success delete image 
+    useEffect(()=>{
+        if(isSuccessDelete){
+            toast.success("You Delete image successfully", {
+            position: "bottom-center",
+            duration: 4000,
+            style: {
+                backgroundColor: "black",
+                color: "white",
+                width: "fit-content",
+            },
+            })
+            setTimeout(() => {
+            window.location.reload();
+            }, 800); // بعد 0.8 ثانية حتى تظهر رسالة التوست أولاً
+        }
+    },[isSuccessDelete])
 
 
     return (
-    <div className="bgOfPhotoOfProfile hs-dropdown relative inline-flex h-[150px] rounded-3xl items-center gap-5 p-5">
+    <div className="bgOfPhotoOfProfile hs-dropdown relative inline-flex h-[150px] w-full rounded-3xl items-center gap-5 p-5">
       {/* Profile Image Area */}
         <div className="w-[130px] h-[130px] rounded-full cursor-pointer overflow-hidden" >
-        <div className="w-[130px] h-[130px] rounded-full cursor-pointer overflow-hidden">
-        {isLoading ? (
+        <div className="w-[130px] h-[130px] rounded-full cursor-pointer overflow-hidden">  
+
+        {
+        isloadingFetchImage || isLoadingUploadImage ||isLoadingDelete ? (
         <div className="w-full h-full flex items-center justify-center">
         <LoadingSpanner />
         </div>
-        ) : profileImage ? (
+        ) :
+        data?.profile_image?.length ? (
         <Image
-        imageurl={profileImage}
+        imageurl={`https://d378-105-197-134-227.ngrok-free.app/${data.profile_image.replace(/\\/g, '/')}`}
         alt="Profile"
         className="rounded-full object-cover w-[130px] h-[130px]"
         onClick={toggleMenu}
-    />
-    ) : (
-    <>
-    <label
+        />
+        ) : (
+        <>
+        <label
         htmlFor="upload-photo"
         className="w-full h-full bg-gray-300 rounded-full font-bold flex items-center justify-center text-sm text-gray-600 cursor-pointer"
-    >
+        >
         Upload Image
-    </label>
-    <input
+        </label>
+        <input
         id="upload-photo"
         type="file"
         accept="image/*"
         className="hidden"
         onChange={handleImageUpload}
-    />
-    </>
-)}
+        />
+        </>
+        )
+        }
+
      {/* Dropdown Menu */}
         {openMenu && (
         <div
@@ -115,13 +163,12 @@ const DetailsOfUser = () => {
             </label>
         </div>
         )}
-</div>
-    
+    </div>
         </div>
       {/* User Info */}
         <div className="flex flex-col text-white">
-        <h3 className="text-[30px]">User Name</h3>
-        <p className="text-[15px]">AI Engineer @ Google | LLMs & GenAI @ MIT</p>
+        <h3 className="text-[30px]">{userData.first_name} {userData.last_name}</h3>
+        <p className="text-[15px]">{userData.email}</p>
         </div>
     </div>
     )

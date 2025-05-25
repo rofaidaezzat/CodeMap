@@ -13,18 +13,26 @@ export const ProfileApiSlice=createApi({
     baseQuery: baseQueryWithReauth,   
         endpoints:(builder)=>({
 
-              //Create=>post
+              //Update=>put Image
                 UploadImageProfile: builder.mutation({
                 query: ({ body }: { body: FormData}) => ({
-                    url: `users/upload-profile-image`,
-                    method: "POST",
+                    url: `users/update-profile`,
+                    method: "PUT",
                     body: body
                 }),
             }),
+             //Update=>put Image
+                deleteImageProfile: builder.mutation({
+                query: () => ({
+                    url: `users/delete-profile-image`,
+                    method: "DELETE",
+                }),
+            }),
+
     })
 
 })
 
-export const {useUploadImageProfileMutation}=ProfileApiSlice
+export const {useUploadImageProfileMutation,useDeleteImageProfileMutation}=ProfileApiSlice
 
 

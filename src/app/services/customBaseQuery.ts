@@ -1,12 +1,16 @@
-
 // customBaseQuery.ts
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { RootState } from '../store';
 import { AccessTokenAction } from '../features/AccessTokenSlice';
 
-
-
+// Add global type for window._isLoggingOut to avoid 'any' usage
+// This prevents multiple redirects on 401 errors
+declare global {
+    interface Window {
+    _isLoggingOut?: boolean;
+    }
+}
 
 interface IRefreshResponse {
     accessToken: string;
@@ -14,13 +18,13 @@ interface IRefreshResponse {
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://d378-105-197-134-227.ngrok-free.app',
+    baseUrl: 'https://d378-105-197-134-227.ngrok-free.app/',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
-    const token = state.accessToken.accesstoken
+    const token = state.accessToken.accesstoken;
     if (token) {
-        headers.set('x-token', token);
+        headers.set('Authorization', `Bearer ${token}`);
     }
     return headers;
     },
@@ -45,7 +49,12 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
         // جرب تعمل request تاني بالتوكن الجديد
         result = await baseQuery(args, api, extraOptions);
         } else {
-            window.location.href = "/login";
+            // Prevent multiple redirects using window._isLoggingOut
+            if (!window._isLoggingOut) {
+                window._isLoggingOut = true;
+                window.location.href = "/login";
+                return { error: { status: 401, data: "Unauthorized" } }; // Halt further processing
+            }
         }
     }
     return result;

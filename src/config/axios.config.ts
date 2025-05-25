@@ -1,60 +1,67 @@
-import { refreshAccessToken } from "@/services/authService";
+// Add global type for window._isLoggingOut to avoid 'any' usage
+// This prevents multiple redirects on 401 errors
+
+declare global {
+    interface Window {
+    _isLoggingOut?: boolean;
+    }
+}
+
 import axios from "axios";
+import { refreshAccessToken } from "../services/authService";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://d378-105-197-134-227.ngrok-free.app", 
-  withCredentials: true, // ضروري لإرسال واستقبال الـ cookies تلقائيًا
-  timeout: 10000, 
+    baseURL: "https://d378-105-197-134-227.ngrok-free.app/", 
+    withCredentials: true, 
+    timeout: 10000, 
 });
 
 axiosInstance.interceptors.request.use(
     async (config) => {
-      // لو الرابط خاص بتسجيل الدخول أو الريفرش أو التسجيل، مانحطش توكن
         const noAuthEndpoints = ["/auth/login", "/auth/refresh", "/auth/register"];
         if (noAuthEndpoints.some((url) => config.url?.includes(url))) {
-        return config; // أرجع الطلب كما هو بدون تعديل
+        return config; 
         }
 
     const token = localStorage.getItem("accessToken");
 
-      // لو التوكن موجود، نضيفه في الهيدر مع كل طلب
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
         }
 
-      return config; // نرجع الطلب بعد ما ضفنا التوكن
+        return config; 
     },
-    (error) => Promise.reject(error) // لو فيه خطأ في الإرسال، نرجعه
+    (error) => Promise.reject(error) 
     );
 
     axiosInstance.interceptors.response.use(
-        (response) => response, // لو مفيش مشاكل في الرد، نرجعه كما هو
+        (response) => response, 
         async (error) => {
-          const originalRequest = error.config; // نحتفظ بنسخة من الطلب اللي فشل
-    
-         // لو السيرفر رجع 401 (غير مصرح) ودي أول محاولة نعمل ريفرش
+            const originalRequest = error.config; 
             if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true; // نحط علامة إننا حاولنا مرة بالفعل
+            originalRequest._retry = true; 
     
             try {
-              // نحاول نجدد التوكن باستخدام الريفرش توكن
             const newToken = await refreshAccessToken();
     
-              // لو رجعلنا توكن جديد، نحطه في الهيدر ونكرر الطلب
             if (newToken) {
                 axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
                 originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                return axiosInstance(originalRequest); // نعيد إرسال الطلب القديم
+                return axiosInstance(originalRequest);
                 }
             } catch (err) {
-              // لو فشل تجديد التوكن، نحذف بيانات المستخدم ونوجهه للّوج إن
+                console.log(err)
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("loggedInUser");
-                console.log(err)
-                window.location.href = "/login";
+                // Prevent multiple redirects using window._isLoggingOut
+                if (!window._isLoggingOut) {
+                    window._isLoggingOut = true;
+                    window.location.href = "/login";
+                    return new Promise(() => {}); // Halt further processing
+                }
             }
             }
-          return Promise.reject(error); // لو مفيش تجديد، نرجع الخطأ كما هو
+            return Promise.reject(error); 
         }
         );
 

@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import DeleteAccount from "@/components/DeleteAccount";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "@/config/axios.config";
-import OTPForm from "@/components/VerifyCode";
+import OTPForm from "@/components/OTPForm";
 
 interface Ipasswordupdate {
   currentPassword: string;
@@ -26,22 +26,14 @@ interface IUserProfileForm {
 
 const Setting = () => {
   const [userInfo, setUserInfo] = useState<IUserProfileForm | null>(null);
-  //const baseURL = "https://d378-105-197-134-227.ngrok-free.app/";
+  const [showOTP, setShowOTP] = useState(false);
+  const[isOpenDeleteModal,setIsOpenDeleteModal]=useState(false)
 
   // Extract token and user data from localStorage
   const userDataString = localStorage.getItem("loggedInUser");
   const userData = userDataString ? JSON.parse(userDataString) : null;
   // const token = userData?.accessToken || "";
   // console.log("userData", userData);
-
-  // Axios instance
-  // const axiosInstance = axios.create({
-  //   baseURL,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // withCredentials: true,
-  // });
 
   // Profile Form
   const {
@@ -83,7 +75,7 @@ const Setting = () => {
   } = useForm<Ipasswordupdate>({
     resolver: yupResolver(UpdatePasswordSchema),
   });
-  // تحديث البروفايل
+  // Handler for profile update
   const onSubmituserprofileupdate: SubmitHandler<IUserProfileForm> = async (
     data
   ) => {
@@ -115,8 +107,8 @@ const Setting = () => {
             width: "fit-content",
           },
         });
+        setShowOTP(true); // ✅ عرض فورم OTP بعد تحديث البيانات
       }
-      <OTPForm />;
     } catch (error) {
       toast.error("Error sending message", {
         position: "bottom-center",
@@ -132,7 +124,7 @@ const Setting = () => {
     }
   };
 
-  // تحديث كلمة المرور
+  //  Handler for password update
   const onSubmitpasswordupdate: SubmitHandler<Ipasswordupdate> = async (
     data
   ) => {
@@ -145,7 +137,7 @@ const Setting = () => {
       if (status === 200) {
         toast.success("Your Update Done successfully", {
           position: "bottom-center",
-          duration: 1000,
+          duration: 4000,
           style: {
             backgroundColor: "black",
             color: "white",
@@ -162,7 +154,27 @@ const Setting = () => {
       toast.error("Error sending message");
     }
   };
+  // Handler for email verification
+  const handleVerifyOTP = async (code: string) => {
+    try {
+      const res = await axiosInstance.post("users/verify-email", { code });
 
+      if (res.status === 200) {
+        toast.success("Email verified successfully!", {
+          position: "bottom-center",
+          duration: 4000,
+          style: { backgroundColor: "black", color: "white" },
+        });
+        setShowOTP(false); // ✅ إخفاء الفورم بعد النجاح
+      } else {
+        toast.error("Invalid code");
+      }
+    } catch (err) {
+      toast.error("Verification failed!");
+      console.error(err);
+    }
+  };
+  // ------------Render------------
   const renderUserProfileForm = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -216,7 +228,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-[#f3f0ff] via-[#e9e6fa] to-[#f7f7fb] py-20 px-2">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-[#f3f0ff] via-[#e9e6fa] to-[#f7f7fb] py-20 px-2 relative">
       <h1 className="text-4xl md:text-5xl font-extrabold text-[#413198] text-center mb-10 drop-shadow-sm tracking-tight">
         Account Settings
       </h1>
@@ -253,10 +265,16 @@ const Setting = () => {
             </Button>
           </div>
         </form>
+
         <div className="flex justify-center mt-8">
-          <DeleteAccount />
+          <DeleteAccount isOpenDeleteModal={isOpenDeleteModal} setIsOpenDeleteModal={setIsOpenDeleteModal} />
         </div>
       </div>
+
+      {/* ✅ عرض OTP فورم لما showOTP = true */}
+      {showOTP && (
+          <OTPForm onVerify={handleVerifyOTP}  onClose={()=>setShowOTP(false)} />
+      )}
     </div>
   );
 };

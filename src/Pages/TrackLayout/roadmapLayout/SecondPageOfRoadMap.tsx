@@ -11,12 +11,11 @@ const SecondPageOfRoadMap = () => {
     setDotPositions(prev => ({ ...prev, [id]: pos }));
   };
 
-
   return (
     <div className='bgforroadmap pt-12 mt-10 h-fit w-full pb-10'>
       <div className=' flex items-center justify-center mt-8'>
       <GradualSpacing
-      className="font-display text-center text-4xl font-bold -tracking-widest text-[#2d1551] dark:text-white md:text-7xl md:leading-[5rem]"
+      className="font-display text-center  md:text-5xl lg:text-6xl xl:text-7xl text-4xl font-bold -tracking-widest text-[#2d1551] dark:text-white md:leading-[5rem]"
       text="OUR ROADMAP"
       />
       </div>
