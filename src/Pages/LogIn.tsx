@@ -40,7 +40,7 @@ const LogIn = () => {
     // Fullfiled
     try {
       const { status, data: resData } = await axios.post(
-        "https://d378-105-197-134-227.ngrok-free.app/auth/login",
+        "https://faa4-102-189-161-42.ngrok-free.app/auth/login",
         data,
         { withCredentials: true }
       ); // هنا انا بعمل اكونت وبخزنه عندي

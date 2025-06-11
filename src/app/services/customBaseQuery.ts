@@ -4,8 +4,10 @@ import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolk
 import type { RootState } from '../store';
 import { AccessTokenAction } from '../features/AccessTokenSlice';
 
+
 // Add global type for window._isLoggingOut to avoid 'any' usage
 // This prevents multiple redirects on 401 errors
+
 declare global {
     interface Window {
     _isLoggingOut?: boolean;
@@ -15,10 +17,10 @@ declare global {
 interface IRefreshResponse {
     accessToken: string;
     }
-
+    
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://d378-105-197-134-227.ngrok-free.app/',
+    baseUrl: 'https://faa4-102-189-161-42.ngrok-free.app/',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;

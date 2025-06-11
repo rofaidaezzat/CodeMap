@@ -73,7 +73,7 @@ const ContactUs = () => {
   return (
     <div className="mt-20 lg:mt-24 px-4 overflow-hidden pt-6">
       <div className="w-full lg:flex lg:justify-end sm:pr-0 lg:pr-40">
-        <p className="font-extrabold text-center lg:text-right text-2xl lg:text-4xl mb-10">
+        <p className="font-extrabold text-center  text-2xl lg:text-4xl mb-10">
           Talk to us about anything
           <br /> you want to tell us.
         </p>
@@ -256,14 +256,15 @@ const ContactUs = () => {
                 )}
               </div>
             </div>
-
-            <button
+            <div className="flex justify-end w-full">
+                <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#1F93DD] font-bold text-white py-3 px-10 rounded-2xl shadow-md hover:bg-[#38749a] transition disabled:opacity-50 disabled:cursor-not-allowed mt-6 block"
+              className="bg-[#2F174E] font-bold text-white py-3 px-10 rounded-2xl shadow-md hover:bg-[#684098] transition disabled:opacity-50 disabled:cursor-not-allowed mt-6 block"
             >
               {isSubmitting ? "Sending..." : "Submit"}
             </button>
+            </div>
           </form>
         </div>
       </div>

@@ -11,7 +11,7 @@ import axios from "axios";
 import { refreshAccessToken } from "../services/authService";
 
 export const axiosInstance = axios.create({
-    baseURL: "https://d378-105-197-134-227.ngrok-free.app/", 
+    baseURL: "https://faa4-102-189-161-42.ngrok-free.app/", 
     withCredentials: true, 
     timeout: 10000, 
 });

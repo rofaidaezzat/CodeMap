@@ -78,7 +78,7 @@ export const UpdatePasswordSchema = yup.object({
     .matches(/[A-Z]/, "Must include at least one uppercase letter")
     .matches(/[a-z]/, "Must include at least one lowercase letter")
     .matches(/\d/, "Must include at least one number")
-    .matches(/[@$!%*?&]/, "Must include at least one special character"),
+    .matches(/[@$!%*?&#]/, "Must include at least one special character"),
   confirmNewPassword: yup
     .string()
     .oneOf([yup.ref('newPassword')], "Passwords must match")

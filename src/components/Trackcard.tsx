@@ -7,12 +7,13 @@ interface Iprops {
     alt: string;
     title: string;
     path: string;
-  }
-  const Trackcard = ({ url, alt, title, path }: Iprops) => {
+}
+
+const Trackcard = ({ url, alt, title, path }: Iprops) => {
     return (
       <>
         <Link to={path}>
-          <div className="w-220 h-[330px]  md:h-[300px] md:w-[240px] lg:w-[250px] lg:h-[330px] rounded-3xl space-y-3 overflow-hidden shadow-[0px_0px_10px_rgba(0,0,0,1)] transition-transform duration-300 hover:scale-105 ">
+          <div className="w-220 h-[330px] md:h-[300px] md:w-[240px] lg:w-[250px] lg:h-[330px] rounded-3xl space-y-3 overflow-hidden shadow-[0px_0px_10px_rgba(0,0,0,1)] transition-transform duration-300 hover:scale-105">
             <Image imageurl={url} alt={alt} className="h-44 w-full" />
             {/* icons */}
             <div className="flex justify-between items-center px-2">
@@ -36,7 +37,7 @@ interface Iprops {
               </div>
             </div>
 
-            <h3 className="font-bold ml-3 text-[#515151]  lg:text-[18px]">{title}</h3>
+            <h3 className="font-bold ml-3 text-[#515151] lg:text-[18px]">{title}</h3>
             {/* last dev */}
             <div className="flex justify-between items-center px-2">
               <div className="flex items-center">
@@ -53,7 +54,7 @@ interface Iprops {
               </div>
               <div className="flex ">
                 <p className="text-slate-400">
-                  <Heart  color="black"/>
+                  <Heart color="black"/>
                 </p>
               </div>
             </div>
@@ -61,7 +62,8 @@ interface Iprops {
         </Link>
       </>
     );
-  };
-  export default Trackcard;
+};
+
+export default Trackcard;
   
   

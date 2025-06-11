@@ -31,6 +31,7 @@ import Test from "@/Pages/test";
 import ChatbotLayout from "@/Pages/Chatbot/ChatbotLayout";
 import Welcome from "@/Pages/Chatbot/Welcome";
 import ServicesPage from "@/Pages/Chatbot/ServicesPage";
+import TaskForm from "@/Pages/TaskForm";
 
 const storageKey = "loggedInUser";
 const userDataString = localStorage.getItem(storageKey);
@@ -105,6 +106,20 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
+
+            <Route
+          path="taskform"
+          element={
+            <ProtectedRoute
+              isAllowed={!!userData?.accessToken}
+              redirectPath="/login"
+              data={userData}
+            >
+              <TaskForm />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Fallback */}
         <Route path="*" element={<p>error</p>} />
       </Route>

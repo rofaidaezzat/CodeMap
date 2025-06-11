@@ -6,7 +6,7 @@ interface Iprops extends ButtonHTMLAttributes <HTMLButtonElement>{// يعني د
 }
 const Button = ({children,className,isLoading,...rest}:Iprops) => {  // rest=> يعني ايه حاجه هاتتبعت للcomponnent da
     return (
-        <button className={`${className} p-2  text-white`}{...rest}>
+        <button className={`${className} p-2 flex items-center justify-center  text-white`}{...rest}>
             {isLoading ? (
           // بيدي شكل التحميل
         <svg

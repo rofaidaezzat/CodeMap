@@ -28,7 +28,7 @@ export const refreshAccessToken = async (): Promise<string | null> => {
         ) {
             if (!window._isLoggingOut) {
                 window._isLoggingOut = true;
-                window.location.href = "/authpage";
+                window.location.href = "/login";
                 return null; // Halt further processing
             }
         }

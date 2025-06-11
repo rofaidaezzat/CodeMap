@@ -18,7 +18,7 @@ const Navbar = ({ bg }: INavbarProps) => {
 
   return (
     <nav
-      className={`w-full p-3 shadow-md rounded-b-3xl ${bg}  fixed top-0 left-0 right-0 z-50`}
+      className={`w-full p-3 shadow-md rounded-b-3xl ${bg} fixed top-0 left-0 right-0 z-50`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center text-white font-semibold">
         {/* Logo & Navigation Links */}
@@ -31,19 +31,63 @@ const Navbar = ({ bg }: INavbarProps) => {
           {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center space-x-4">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `px-3 py-1 rounded transition-colors duration-200 ${
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                  `
+                }
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/tracks">Tracks</NavLink>
+              <NavLink
+                to="/tracks"
+                className={({ isActive }) =>
+                  `px-3 py-1 rounded transition-colors duration-200 ${
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                  `
+                }
+              >
+                Tracks
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/tasks">Tasks</NavLink>
+              <NavLink
+                to="/tasks"
+                className={({ isActive }) =>
+                  `px-3 py-1 rounded transition-colors duration-200 ${
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                  `
+                }
+              >
+                Tasks
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/aboutUs">About Us</NavLink>
+              <NavLink
+                to="/aboutUs"
+                className={({ isActive }) =>
+                  `px-3 py-1 rounded transition-colors duration-200 ${
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}`
+                }
+              >
+                About Us
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/contactUs">Contact Us</NavLink>
+              <NavLink
+                to="/contactUs"
+                className={({ isActive }) =>
+                  `px-3 py-1 rounded transition-colors duration-200 ${
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                  `
+                }
+              >
+                Contact Us
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -104,31 +148,66 @@ const Navbar = ({ bg }: INavbarProps) => {
       </div>
 
       {/* Mobile Navigation (Dropdown) */}
+      <div>
+        
+      </div>
       <div
-        className={`absolute top-16 left-0 w-full bg-[#5D5A6F] text-white md:hidden transition-all duration-300 ease-in-out ${
+        className={`absolute top-16 left-0  w-[300px] min-h-screen bg-[#371F5A] text-white md:hidden transition-all duration-300 ease-in-out  ${
           isOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 -translate-y-full hidden"
         }`}
       >
-        <ul className="flex flex-col items-center space-y-4 py-4">
+        <ul className="flex flex-col items-start  p-5 space-y-4 py-4">
           <li>
-            <NavLink to="/" onClick={() => setIsOpen(false)}>
+            <NavLink
+              to="/"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `px-3 py-1 rounded font-medium  transition-colors duration-200 w-full block ${
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                `
+              }
+            >
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/tracks" onClick={() => setIsOpen(false)}>
+            <NavLink
+              to="/tracks"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `px-3 py-1 rounded transition-colors font-medium  duration-200 w-full block ${
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                `
+              }
+            >
               Tracks
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aboutUs" onClick={() => setIsOpen(false)}>
+            <NavLink
+              to="/aboutUs"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `px-3 py-1 font-medium  rounded transition-colors duration-200 w-full block ${
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                `
+              }
+            >
               About Us
             </NavLink>
           </li>
           <li>
-            <NavLink to="/contactUs" onClick={() => setIsOpen(false)}>
+            <NavLink
+              to="/contactUs"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `px-3 py-1 font-medium  rounded transition-colors duration-200 w-full block ${
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                `
+              }
+            >
               Contact Us
             </NavLink>
           </li>
@@ -150,7 +229,7 @@ const Navbar = ({ bg }: INavbarProps) => {
           </div>
         ) : (
           //Buttons (Mobile)
-          <div className="flex flex-col items-center space-y-3 py-4">
+          <div className="flex flex-col items-start  p-5 space-y-3 py-2">
             <Link
               to="/login"
               className="px-4 py-2 border-2 border-white rounded-lg text-center w-20"
@@ -159,7 +238,7 @@ const Navbar = ({ bg }: INavbarProps) => {
             </Link>
             <Link
               to="/signup"
-              className="px-4 py-2 rounded-lg bg-[#2F174E] text-white w-20 text-center"
+              className="px-4 py-2 rounded-lg bg-[#ffff] text-black w-20 text-center"
             >
               Signup
             </Link>

@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import AccessTokenSlice from './features/AccessTokenSlice'
 import { ProfileApiSlice } from './services/crudeProfile';
 import { DeleteAcountApiSlice } from './services/DeleteAccountForUser';
+import { TaskApiSlice } from './services/crudTasks';
 const persistAccessTokenConfig = {
     key: "accessToken",
     storage,
@@ -17,15 +18,17 @@ export const store = configureStore({
     reducer: {
         accessToken:persistedaccessToken,
         [ProfileApiSlice.reducerPath]:ProfileApiSlice.reducer,
-        [DeleteAcountApiSlice.reducerPath]:DeleteAcountApiSlice.reducer
-    
+        [DeleteAcountApiSlice.reducerPath]:DeleteAcountApiSlice.reducer,
+        [TaskApiSlice.reducerPath]:TaskApiSlice.reducer
     }, 
 
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware({
             serializableCheck: false,
         }).concat(ProfileApiSlice.middleware)
-        .concat(DeleteAcountApiSlice.middleware), 
+        .concat(DeleteAcountApiSlice.middleware)
+        .concat(TaskApiSlice.middleware)
+        , 
 })
 
 

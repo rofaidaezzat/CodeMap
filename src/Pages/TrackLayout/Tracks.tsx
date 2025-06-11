@@ -7,7 +7,6 @@ const Tracks = () => {
   return (
     <>
       <div className="pt-20 mt-5  flex overflow-x-hidden">
-        
         {/* left section */}
           <div className='flex flex-col  space-y-5 justify-start p-8 gap-8 w-full lg:w-4/6 '>
           
