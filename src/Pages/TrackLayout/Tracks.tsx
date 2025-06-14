@@ -23,6 +23,7 @@ if (isLoading) return (
 
   const renderTracks=data?.map(({title,_id})=>(
         <Trackcard
+              key={_id}
               url="src/assets/Tracks img/Front-End.jpeg"
               alt={title}
               title={title}

@@ -35,7 +35,10 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
+                    isActive
+                      ? " text-[#bd97f2] underline"
+                      : " hover:text-[#bd97f2]"
+                  }
                   `
                 }
               >
@@ -47,7 +50,10 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/tracks"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
+                    isActive
+                      ? " text-[#bd97f2] underline"
+                      : " hover:text-[#bd97f2]"
+                  }
                   `
                 }
               >
@@ -59,7 +65,10 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/tasks"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
+                    isActive
+                      ? " text-[#bd97f2] underline"
+                      : " hover:text-[#bd97f2]"
+                  }
                   `
                 }
               >
@@ -71,7 +80,10 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/aboutUs"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}`
+                    isActive
+                      ? " text-[#bd97f2] underline"
+                      : " hover:text-[#bd97f2]"
+                  }`
                 }
               >
                 About Us
@@ -82,7 +94,10 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/contactUs"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
+                    isActive
+                      ? " text-[#bd97f2] underline"
+                      : " hover:text-[#bd97f2]"
+                  }
                   `
                 }
               >
@@ -102,11 +117,22 @@ const Navbar = ({ bg }: INavbarProps) => {
             </Link>
             <div className="relative">
               <button onClick={() => setIsOpenModal(!isOpenModal)}>
-                <CircleUserRound
-                  color="white"
-                  size={30}
-                  className="cursor-pointer rounded-sm"
-                />
+                {userData?.profile_image ? (
+                  <img
+                    src={`https://b684-102-189-220-226.ngrok-free.app/${userData.profile_image.replace(
+                      /\\/g,
+                      "/"
+                    )}`}
+                    alt="Profile"
+                    className="w-8 h-8 rounded-full object-cover cursor-pointer border-2 border-white"
+                  />
+                ) : (
+                  <CircleUserRound
+                    color="white"
+                    size={30}
+                    className="cursor-pointer rounded-sm"
+                  />
+                )}
               </button>
               {isOpenModal && (
                 <div className="absolute right-0 mt-2 z-50">
@@ -148,9 +174,7 @@ const Navbar = ({ bg }: INavbarProps) => {
       </div>
 
       {/* Mobile Navigation (Dropdown) */}
-      <div>
-        
-      </div>
+      <div></div>
       <div
         className={`absolute top-16 left-0  w-[300px] min-h-screen bg-[#371F5A] text-white md:hidden transition-all duration-300 ease-in-out  ${
           isOpen
@@ -165,7 +189,8 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 rounded font-medium  transition-colors duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
+                  isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"
+                }
                 `
               }
             >
@@ -178,7 +203,8 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 rounded transition-colors font-medium  duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
+                  isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"
+                }
                 `
               }
             >
@@ -191,7 +217,8 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 font-medium  rounded transition-colors duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
+                  isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"
+                }
                 `
               }
             >
@@ -204,7 +231,8 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 font-medium  rounded transition-colors duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
+                  isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"
+                }
                 `
               }
             >

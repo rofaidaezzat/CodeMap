@@ -1,4 +1,3 @@
-
 import { axiosInstance } from "@/config/axios.config";
 import { CircleUserRound } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -13,6 +12,8 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
     if (!isOpen) return null;
     ;
 
+    const userDataString = localStorage.getItem("loggedInUser");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
 
     const onLogout = async () => {
         try {
@@ -44,12 +45,19 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
             to="/Profile"
             className="w-full border-2 border-gray-400 text-left flex items-center gap-2 p-2 rounded-md hover:bg-gray-100"
         >
-            {/* <img
-            src="https://via.placeholder.com/30"
-            className="w-7 h-7 rounded-full"
-            alt="profile small"
-            /> */}
-                <CircleUserRound />
+            {userData?.profile_image && userData.profile_image.trim() !== "" ? (
+              <img
+                src={`https://b684-102-189-220-226.ngrok-free.app/${userData.profile_image.replace(/\\/g, '/')}`}
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover cursor-pointer border-2 border-white"
+              />
+            ) : (
+              <CircleUserRound
+                color="white"
+                size={30}
+                className="cursor-pointer rounded-sm"
+              />
+            )}
             My profile
         </Link>
         <Link

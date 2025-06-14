@@ -61,7 +61,7 @@ const DetailsOfUser = () => {
 
         //is success upload image
     useEffect(() => {
-        if (isSuccess ) {
+        if (isSuccess && data?.profile_image) {
             toast.success("You uploaded image successfully", {
             position: "bottom-center",
             duration: 4000,
@@ -72,11 +72,18 @@ const DetailsOfUser = () => {
             },
             })
             setOpenMenu(false)
+            // تحديث localStorage بالصورة الجديدة
+            const userDataString = localStorage.getItem("loggedInUser");
+            const userData = userDataString ? JSON.parse(userDataString) : null;
+            if (userData) {
+                userData.profile_image = data.profile_image;
+                localStorage.setItem("loggedInUser", JSON.stringify(userData));
+            }
             setTimeout(() => {
             window.location.reload();
         }, 800); // بعد 0.8 ثانية حتى تظهر رسالة التوست أولاً
         }
-    }, [isSuccess])
+    }, [isSuccess, data?.profile_image])
 
 
     // is success delete image 
