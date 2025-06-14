@@ -1,15 +1,55 @@
-import { categories } from '../../../data';
 import { GradualSpacing } from '@/components/eldoraui/gradualspacing';
 import CardOfRoadMap from '@/components/CardOfRoadMap/CardOfRoadMap';
 import { CircleSmall } from 'lucide-react';
 import { useState } from 'react';
+import { axiosInstance } from '@/config/axios.config';
+import { useQuery } from '@tanstack/react-query';
+import {  useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+
+
+interface Icategory{
+    _id:string,
+    title:string
+
+}
+
+export interface IStatges {
+    _id: string;
+    title: string;
+    order: number;
+    progress: string;
+    category:Icategory[]
+}
+export type IstatgesResponse =IStatges[];
+
+
+
+
+
 
 const SecondPageOfRoadMap = () => {
+    const { ClickedId } = useSelector((state: RootState) => state.clickedId);
   const [dotPositions, setDotPositions] = useState<Record<number, number>>({});
-
   const updateDotPosition = (id: number, pos: number) => {
     setDotPositions(prev => ({ ...prev, [id]: pos }));
   };
+
+ 
+  //fetch statges 
+  const getStatgesById = async (): Promise<IstatgesResponse> => {
+        if (!ClickedId) throw new Error("No stage ID Provided");
+        const { data } = await axiosInstance.get(`/stages/roadmap/${ClickedId}`);
+        return data;
+    };
+
+    const { data } = useQuery({
+        queryKey: ["oneUser", ClickedId],
+        queryFn: getStatgesById,
+        enabled: !!ClickedId,
+    });
+
+
 
   return (
     <div className='bgforroadmap pt-12 mt-10 h-fit w-full pb-10'>
@@ -27,19 +67,19 @@ const SecondPageOfRoadMap = () => {
   <div className="flex flex-col  gap-10 mt-20 px-10">
     
 
-  {categories.map((category, index) => (
+  {data?.map(({_id,category,order,title}) => (
     <div
-      key={category.id}
+      key={_id}
       className="grid grid-cols-3 items-start  relative min-h-[350px]"
     >
       {/* Left */}
-      <div className={`flex justify-center  ${index % 2 === 0 ? 'invisible' : ''}`}>
-        {index % 2 !== 0 && (
+      <div className={`flex justify-center  ${order % 2 === 0 ? 'invisible' : ''}`}>
+        {order % 2 !== 0 && (
           <CardOfRoadMap
             category={category}
-            numberOfStage={category.id}
-            titleOfStage={category.StageName}
-            setDotPosition={(pos) => updateDotPosition(category.id, pos)}
+            numberOfStage={order}
+            titleOfStage={title}
+            setDotPosition={(pos) => updateDotPosition(order, pos)}
           />
         )}
   
@@ -52,19 +92,19 @@ const SecondPageOfRoadMap = () => {
           color="#FFFFFF"
           size={30}
           className="z-10 absolute left-1/2 -translate-x-1/2"
-          style={{ top: dotPositions[category.id] ?? 50 }}
+          style={{ top: dotPositions[order] ?? 50 }}
       />
       
       
     </div>
       {/* Right */}
-      <div className={`flex justify-center ${index % 2 !== 0 ? 'invisible' : ''}`}>
-        {index % 2 === 0 && (
+      <div className={`flex justify-center ${order % 2 !== 0 ? 'invisible' : ''}`}>
+        {order % 2 === 0 && (
           <CardOfRoadMap
             category={category}
-            numberOfStage={category.id}
-            titleOfStage={category.StageName}
-            setDotPosition={(pos) => updateDotPosition(category.id, pos)}
+            numberOfStage={order}
+            titleOfStage={title}
+            setDotPosition={(pos) => updateDotPosition(order, pos)}
           />
         )}
       </div>

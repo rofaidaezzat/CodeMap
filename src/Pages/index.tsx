@@ -80,7 +80,6 @@ const HomePage = () => {
                 className="w-10"
               />
             </div>
-
             <div className="mt-6 flex items-center bg-white p-2 rounded-full shadow-md w-full max-w-md">
               <Input
                 type="text"
@@ -300,7 +299,7 @@ const HomePage = () => {
         className="py-12  "
       >
         <h3 className="text-center font-semibold text-4xl">
-          What student’s say
+          What student's say
         </h3>
         <p className="text-center">
           Lorem Ipsum is simply dummy text of the printing

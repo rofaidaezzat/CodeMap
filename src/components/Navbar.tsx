@@ -35,7 +35,7 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
                   `
                 }
               >
@@ -47,7 +47,7 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/tracks"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
                   `
                 }
               >
@@ -59,7 +59,7 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/tasks"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
                   `
                 }
               >
@@ -71,7 +71,7 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/aboutUs"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}`
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}`
                 }
               >
                 About Us
@@ -82,7 +82,7 @@ const Navbar = ({ bg }: INavbarProps) => {
                 to="/contactUs"
                 className={({ isActive }) =>
                   `px-3 py-1 rounded transition-colors duration-200 ${
-                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#852FFF]"}
+                    isActive ? " text-[#bd97f2] underline" : " hover:text-[#bd97f2]"}
                   `
                 }
               >
@@ -158,14 +158,14 @@ const Navbar = ({ bg }: INavbarProps) => {
             : "opacity-0 -translate-y-full hidden"
         }`}
       >
-        <ul className="flex flex-col items-start  p-5 space-y-4 py-4">
+        <ul className="flex flex-col items-start p-5 space-y-4 py-4">
           <li>
             <NavLink
               to="/"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 rounded font-medium  transition-colors duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
                 `
               }
             >
@@ -178,7 +178,7 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 rounded transition-colors font-medium  duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
                 `
               }
             >
@@ -191,7 +191,7 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 font-medium  rounded transition-colors duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
                 `
               }
             >
@@ -204,7 +204,7 @@ const Navbar = ({ bg }: INavbarProps) => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `px-3 py-1 font-medium  rounded transition-colors duration-200 w-full block ${
-                    isActive ? " text-[#bd97f2]" : " hover:text-[#ae78fb]"}
+                    isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"}
                 `
               }
             >

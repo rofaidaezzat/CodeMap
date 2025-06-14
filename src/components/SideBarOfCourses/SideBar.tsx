@@ -1,9 +1,15 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import Button from "./BackButton/BackButton";
 import ToggleClose from "./ToggleClose";
-import { roadmapData } from "@/data";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { axiosInstance } from "@/config/axios.config";
+import { useQuery } from "@tanstack/react-query";
+import LargeLoadingSpinner from "@/Ui/LargeLoadingSpinner/LargeLoadingSpinner";
+import CheckBox from "../TaskFormComponents/checkbox/CheckBox";
+import { Youtube, Clock, BookOpen } from "lucide-react";
 
 interface SidebarProps {
   setSelectedVideo: (video: {
@@ -11,110 +17,229 @@ interface SidebarProps {
     title: string;
     duration: string;
   }) => void;
+  currentVideo?: {
+    videoUrl: string;
+    title: string;
+    duration: string;
+  };
 }
-const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
+
+interface Icategory {
+  _id: string;
+  title: string;
+}
+
+interface ILessons {
+  _id: string;
+  title: string;
+}
+
+interface IRoadmap{
+    _id: string;
+    title:string
+}
+
+export interface IStatges {
+  _id: string;
+  title: string;
+  category: Icategory[];
+  lesson: ILessons[];
+  roadmap:IRoadmap;
+}
+
+export type IstatgesResponse = IStatges[];
+
+const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
+  const { ClickedId } = useSelector((state: RootState) => state.clickedId);
   const [open, setOpen] = useState(true);
-  const [expandedMainId, setExpandedMainId] = useState<string | null>(null);
-  const [expandedLessonId, setExpandedLessonId] = useState<string | null>(null);
+  const [expandedMainIds, setExpandedMainIds] = useState<string[]>([]);
+  const [expandedLessonIds, setExpandedLessonIds] = useState<string[]>([]);
+  const [checkedLessons, setCheckedLessons] = useState<{ [key: string]: boolean }>({});
 
   const toggleMain = (id: string) => {
-    setExpandedMainId((prev) => (prev === id ? null : id));
-    setExpandedLessonId(null);
+    setExpandedMainIds(prev =>
+      prev.includes(id) ? prev.filter(openId => openId !== id) : [...prev, id]
+    );
   };
 
   const toggleLesson = (id: string) => {
-    setExpandedLessonId((prev) => (prev === id ? null : id));
+    setExpandedLessonIds(prev =>
+      prev.includes(id) ? prev.filter(openId => openId !== id) : [...prev, id]
+    );
   };
+
+  const handleCheckboxChange = (lessonId: string) => {
+    setCheckedLessons(prev => ({
+      ...prev,
+      [lessonId]: !prev[lessonId]
+    }));
+  };
+
+  const getStatgesById = async (): Promise<IstatgesResponse> => {
+    if (!ClickedId) throw new Error("No stage ID Provided");
+    const { data } = await axiosInstance.get(`/stages/roadmap/${ClickedId}`);
+    return data;
+  };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["oneRoadmap", ClickedId],
+    queryFn: getStatgesById,
+    enabled: !!ClickedId,
+  });
 
   return (
     <motion.nav
       layout
-      className=" sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white flex flex-col"
-      style={{ width: open ? "320px" : "56px" }}
+      className="sticky top-0 h-screen shrink-0 border-r border-slate-200 bg-white flex flex-col shadow-lg"
+      style={{ width: open ? "390px" : "56px" }}
     >
-      <div className="flex-1 mb-10 min-h-screen overflow-y-auto">
-        {!open && (
-          <div className="flex justify-center">
-            <Button />
+      <div className="flex-1 mb-10 min-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <LargeLoadingSpinner />
           </div>
-        )}
-
-        {open && (
-          <div className=" flex flex-col gap-4 m-2">
-            <Button />
-            <h3 className="text-2xl font-blod font-medium">Frontend Roadmap</h3>
-            {roadmapData.map((item) => (
-              <div key={item.id} className="space-y-1">
-                <div
-                  className="flex justify-between items-center bg-[#C9B2E8] p-3 rounded-md cursor-pointer "
-                  onClick={() => toggleMain(item.id)}
-                >
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                </div>
-                {expandedMainId === item.id && (
-                  <div className="space-y-3">
-                    {item.lessons.map((lesson) => (
-                      <div key={lesson.id}>
-                        <motion.div
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.5 }} 
-                            className="flex justify-between mt-3 items-center bg-[#CFD8FF] p-3 rounded-md  cursor-pointer"
-                            onClick={() =>
-                            "subLessons" in lesson && toggleLesson(lesson.id)
-                          }
-                        >
-                          <h4 className="text-sm font-medium">
-                            {lesson.title}
-                          </h4>
-                          {"subLessons" in lesson && (
-                            <span>
-                              {expandedLessonId === lesson.id ? (
-                                <FiChevronDown />
-                              ) : (
-                                <FiChevronRight />
-                              )}
-                            </span>
-                          )}
-                        </motion.div>
-                        {"subLessons" in lesson &&
-                          expandedLessonId === lesson.id && (
-                            <ul className="py-1 space-y-1">
-                              {lesson.subLessons.map((sub) => (
-                                <li key={sub.id}>
-                                  <motion.div
-                                      initial={{ opacity: 0, y: -20 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: -20 }}
-                                      transition={{ duration: 0.5 }} 
-                                      
-                                    onClick={() =>
-                                      setSelectedVideo({
-                                        videoUrl: sub.videoUrl,
-                                        title: sub.title,
-                                        duration: sub.duration,
-                                      })
-                                    }
-                                    className="text-sm cursor-pointer mt-2 text-black text-left bg-[rgba(102,97,152,0.14)] p-2 w-full rounded-md hover:opacity-90"
-                                  >
-                                    {sub.title}
-                                  </motion.div>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+        ) : (
+          <>
+            {!open && (
+              <div className="flex justify-center">
+                <Button />
               </div>
-            ))}
-          </div>
+            )}
+
+            {open && (
+              <div className="flex flex-col gap-4 p-4">
+                <div className="space-y-2">
+                  <div className="flex gap-2 items-center"> 
+                                    <Button />
+                                    <h3 className="text-2xl font-bold text-gray-800">{data?.[0]?.roadmap?.title}</h3>
+
+                  </div>
+                  <div className="flex items-center gap-4 text-sm text-gray-600">
+                    <span className="flex items-center gap-1">
+                      <BookOpen size={16} />
+                      {data?.length} Sections
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock size={16} />
+                      Total Duration
+                    </span>
+                  </div>
+                </div>
+
+                {data?.map(({ _id, category, lesson, title }) => (
+                  <div key={_id} className="space-y-4">
+                    <div
+                      className="flex justify-between items-center bg-gradient-to-r from-[#371F5A] to-[#5d3599] p-4 rounded-lg cursor-pointer hover:from-[#57318f] hover:to-[#6d3eb4] transition-all duration-300 shadow-md"
+                      onClick={() => toggleMain(_id)}
+                    >
+                      <h3 className="text-xl font-semibold text-white">{title}</h3>
+                      <motion.span
+                        animate={{ rotate: expandedMainIds.includes(_id) ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-white"
+                      >
+                        <FiChevronDown size={20} />
+                      </motion.span>
+                    </div>
+
+                    <AnimatePresence>
+                      {expandedMainIds.includes(_id) && (
+                        <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.5 }}
+                          className="space-y-3 pl-3 overflow-hidden"
+                        >
+                          {category.map(({ _id: categoryId, title }) => (
+                            <div key={categoryId}>
+                              <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.5 }}
+                                className="flex justify-between items-center bg-gray-50 p-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-all duration-300 border border-gray-200"
+                                onClick={() => toggleLesson(categoryId)}
+                              >
+                                <h4 className="text-lg font-medium text-gray-700">{title}</h4>
+                                <motion.span
+                                  animate={{ rotate: expandedLessonIds.includes(categoryId) ? 90 : 0 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="text-gray-500"
+                                >
+                                  <FiChevronRight size={20} />
+                                </motion.span>
+                              </motion.div>
+                              <AnimatePresence>
+                                {expandedLessonIds.includes(categoryId) && (
+                                  <motion.ul
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="py-2 space-y-0 pl-2 overflow-hidden"
+                                  >
+                                    {lesson.map(({ _id: lessonId, title }, index) => {
+                                      const isActive = currentVideo?.title === title;
+                                      return (
+                                        <li key={lessonId} className="relative">
+                                          {index > 0 && (
+                                            <div className="absolute left-0 right-0 top-0 h-[1px] bg-gray-200" />
+                                          )}
+                                          <motion.div
+                                            initial={{ opacity: 0, y: -20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            transition={{ duration: 0.5 }}
+                                            onClick={() =>
+                                              setSelectedVideo({
+                                                videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
+                                                title: title,
+                                                duration: "2 hrs",
+                                              })
+                                            }
+                                            className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 group relative
+                                              ${isActive 
+                                                ? 'bg-purple-100 border-l-4 border-purple-600' 
+                                                : 'hover:bg-purple-50'}`}
+                                            >
+                                            <CheckBox 
+                                              checked={checkedLessons[lessonId] || false}
+                                              onChange={() => handleCheckboxChange(lessonId)}
+                                            />
+                                            <div className="flex-1">
+                                              <h5 className={`text-md font-medium transition-colors
+                                                ${isActive 
+                                                  ? 'text-black' 
+                                                  : 'text-gray-700 group-hover:text-black'}`}>
+                                                {title}
+                                              </h5>
+                                              <div className="flex items-center gap-2 mt-1">
+                                                <Youtube size={16} className="text-red-600" />
+                                                <span className="text-md text-gray-500">2 hrs</span>
+                                              </div>
+                                            </div>
+                                          </motion.div>
+                                        </li>
+                                      );
+                                    })}
+                                  </motion.ul>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white">
         <ToggleClose open={open} setOpen={setOpen} />
       </div>
     </motion.nav>

@@ -2,8 +2,37 @@ import { LetterPullUp } from '@/components/eldoraui/letterpullup'
 import Image from '../../components/Image'
 import Trackcard from '../../components/Trackcard'
 import Button from '../../Ui/Button'
+import { useGetTracksQuery } from '@/app/services/GetTracks'
+import CardTrackSkeleton from '@/components/CardTrackSkeleton'
 
 const Tracks = () => {
+
+  const{data,isLoading}=useGetTracksQuery()
+
+
+
+if (isLoading) return (
+  <div className="pt-20 mt-5 mb-5 px-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
+    {Array.from({ length: 8 }).map((_, index) => (
+      <CardTrackSkeleton key={index} />
+    ))}
+  </div>
+);
+
+
+
+  const renderTracks=data?.map(({title,_id})=>(
+        <Trackcard
+              url="src/assets/Tracks img/Front-End.jpeg"
+              alt={title}
+              title={title}
+              path="InfoOfFrontend"
+              _id={_id}
+            />
+
+  )
+
+  )
   return (
     <>
       <div className="pt-20 mt-5  flex overflow-x-hidden">
@@ -15,7 +44,9 @@ const Tracks = () => {
             text="Choose your learning track"
             />
             <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:justify-center  gap-10">
-            <Trackcard
+              {renderTracks}
+            
+            {/* <Trackcard
               url="src/assets/Tracks img/Front-End.jpeg"
               alt="image front end"
               title="Front-end "
@@ -63,10 +94,11 @@ const Tracks = () => {
               alt="image js"
               title="Mastering JS with Laravel"
               path="InfoOfFrontend"
-            />
+            /> */}
             </div>
 
           </div>
+
           {/* right section  */}
 
 

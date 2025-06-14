@@ -2,9 +2,9 @@
 /* checkbox settings 👇 */
 
 .ui-checkbox {
-  --primary-color: #1677ff;
+  --primary-color: #5d3599;
   --secondary-color: #fff;
-  --primary-hover-color: #4096ff;
+  --primary-hover-color: #5d3599;
   /* checkbox */
   --checkbox-diameter: 20px;
   --checkbox-border-radius: 5px;

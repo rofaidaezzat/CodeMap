@@ -1,19 +1,33 @@
 import { Link } from "react-router-dom";
 import Image from "./Image";
 import { Clock8, Heart, Users } from "lucide-react";
+import { clickedIdAction } from "@/app/features/clickedIdSlice";
+import { useDispatch } from "react-redux";
 
 interface Iprops {
     url: string;
     alt: string;
     title: string;
     path: string;
+    _id:string
 }
 
-const Trackcard = ({ url, alt, title, path }: Iprops) => {
+const Trackcard = ({ url, alt, title, path,_id }: Iprops) => {
+    const Dispatch=useDispatch()
+
+
+    const navigate_to_roadmap=()=>{
+      Dispatch(clickedIdAction(_id))
+  }
+
+
+
     return (
       <>
         <Link to={path}>
-          <div className="w-220 h-[330px] md:h-[300px] md:w-[240px] lg:w-[250px] lg:h-[330px] rounded-3xl space-y-3 overflow-hidden shadow-[0px_0px_10px_rgba(0,0,0,1)] transition-transform duration-300 hover:scale-105">
+          <div className="w-220 h-[330px] md:h-[300px] md:w-[240px] lg:w-[260px] lg:h-[330px] rounded-3xl space-y-3 overflow-hidden shadow-[0px_0px_10px_rgba(0,0,0,1)] transition-transform duration-300 hover:scale-105"
+          onClick={navigate_to_roadmap}
+          >
             <Image imageurl={url} alt={alt} className="h-44 w-full" />
             {/* icons */}
             <div className="flex justify-between items-center px-2">

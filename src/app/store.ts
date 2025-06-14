@@ -6,20 +6,34 @@ import AccessTokenSlice from './features/AccessTokenSlice'
 import { ProfileApiSlice } from './services/crudeProfile';
 import { DeleteAcountApiSlice } from './services/DeleteAccountForUser';
 import { TaskApiSlice } from './services/crudTasks';
+import { TracksApiSlice } from './services/GetTracks';
+import { statgesApiSlice } from './services/GetStatges';
+import clickedIdSlice from './features/clickedIdSlice';
+import { UserOperationApiSlice } from './services/userOperations';
+
 const persistAccessTokenConfig = {
     key: "accessToken",
     storage,
 };
+const persistclickedIdConfig = {
+    key: "clickedId",
+    storage,
+};
 
 const persistedaccessToken=persistReducer(persistAccessTokenConfig,AccessTokenSlice)
+const persistedclickedId=persistReducer(persistclickedIdConfig,clickedIdSlice)
 
 
 export const store = configureStore({
     reducer: {
         accessToken:persistedaccessToken,
+        clickedId:persistedclickedId,
         [ProfileApiSlice.reducerPath]:ProfileApiSlice.reducer,
         [DeleteAcountApiSlice.reducerPath]:DeleteAcountApiSlice.reducer,
-        [TaskApiSlice.reducerPath]:TaskApiSlice.reducer
+        [TaskApiSlice.reducerPath]:TaskApiSlice.reducer,
+        [TracksApiSlice.reducerPath]:TracksApiSlice.reducer,
+        [statgesApiSlice.reducerPath]:statgesApiSlice.reducer,
+        [UserOperationApiSlice.reducerPath]:UserOperationApiSlice.reducer
     }, 
 
     middleware: (getDefaultMiddleware) => 
@@ -28,6 +42,9 @@ export const store = configureStore({
         }).concat(ProfileApiSlice.middleware)
         .concat(DeleteAcountApiSlice.middleware)
         .concat(TaskApiSlice.middleware)
+        .concat(TracksApiSlice.middleware)
+        .concat(statgesApiSlice.middleware)
+        .concat(UserOperationApiSlice.middleware)
         , 
 })
 

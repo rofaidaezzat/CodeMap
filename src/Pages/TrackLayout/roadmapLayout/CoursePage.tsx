@@ -6,8 +6,8 @@ import { useState } from "react";
 const CoursePage = () => {
   const [selectedVideo, setSelectedVideo] = useState({
     videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
-    title: "",
-    duration: "",
+    title: "Html Introduction",
+    duration: "2h",
   });
 
   return (

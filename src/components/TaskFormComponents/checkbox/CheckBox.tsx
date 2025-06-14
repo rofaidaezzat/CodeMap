@@ -1,5 +1,6 @@
 import './CkeckBox.css'
 
+
 interface CheckBoxProps {
   checked: boolean;
   onChange: () => void;

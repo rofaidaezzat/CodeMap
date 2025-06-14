@@ -1,16 +1,21 @@
 import { Youtube } from 'lucide-react';
-import { Icategories } from '../../interfaces';
 import './CardOfRoadMap.css'
 import HeaderOfRoadCard from './HeaderOfRoadCard';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom';
 
+interface Icategory{
+    _id:string,
+    title:string
+
+}
+
 
 interface Iprops {
     numberOfStage: number;
     titleOfStage: string;
-    category: Icategories;
+    category: Icategory[];
     setDotPosition?: (pos: number) => void; // جديدة
 
 
@@ -68,7 +73,7 @@ const CardOfRoadMap = ({numberOfStage,category,titleOfStage,setDotPosition}:Ipro
             .map(([key, value]) => (
                 <div key={key} className="flex gap-1 items-center  cursor-pointer" onClick={NavigateToCourse}>
                 <Youtube size={30} color="#4388DD" />
-                <p>{value}</p>
+                <p>{value.title}</p>
                 </div>
             ))}
         </div>

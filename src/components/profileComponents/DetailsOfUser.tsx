@@ -112,7 +112,7 @@ const DetailsOfUser = () => {
         ) :
         data?.profile_image?.length ? (
         <Image
-        imageurl={`https://d378-105-197-134-227.ngrok-free.app/${data.profile_image.replace(/\\/g, '/')}`}
+        imageurl={`https://b684-102-189-220-226.ngrok-free.app/${data.profile_image.replace(/\\/g, '/')}`}
         alt="Profile"
         className="rounded-full object-cover w-[130px] h-[130px]"
         onClick={toggleMenu}
