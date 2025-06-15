@@ -290,20 +290,47 @@ const Navbar = ({ bg }: INavbarProps) => {
         {userData ? (
           <ul className="flex flex-col items-center space-y-2 no-underline w-full px-2">
             <li className="flex items-center gap-2 w-full">
-              <CircleUserRound size={20} />
-              <NavLink to="/Profile" onClick={() => setIsOpen(false)} className="flex-1 py-2">
+              {data && data.profile_image ? (
+                <img
+                  src={`https://b684-102-189-220-226.ngrok-free.app/${data.profile_image.replace(
+                    /\\/g,
+                    "/"
+                  )}`}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full object-cover cursor-pointer border-2 border-white"
+                />
+              ) : (
+                <CircleUserRound
+                  color="white"
+                  size={30}
+                  className="cursor-pointer rounded-sm"
+                />
+              )}
+              <NavLink
+                to="/Profile"
+                onClick={() => setIsOpen(false)}
+                className="flex-1 py-2"
+              >
                 My Profile
               </NavLink>
             </li>
             <li className="flex items-center gap-2 w-full">
               <Bell size={20} />
-              <NavLink to="/notification" onClick={() => setIsOpen(false)} className="flex-1 py-2">
+              <NavLink
+                to="/notification"
+                onClick={() => setIsOpen(false)}
+                className="flex-1 py-2"
+              >
                 Notification
               </NavLink>
             </li>
             <li className="flex items-center gap-2 w-full">
               <span className="text-lg">⚙️</span>
-              <NavLink to="/settings" onClick={() => setIsOpen(false)} className="flex-1 py-2">
+              <NavLink
+                to="/settings"
+                onClick={() => setIsOpen(false)}
+                className="flex-1 py-2"
+              >
                 Settings
               </NavLink>
             </li>
