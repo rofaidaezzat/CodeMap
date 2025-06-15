@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Bell } from "lucide-react";
-import { CircleUserRound } from "lucide-react";
+import { Bell, CircleUserRound } from "lucide-react";
 import ProfileMenuModal from "./ProfileMenuModal";
 import Logo1 from "@/assets/Header/Rectangle 1938.png";
 import Logo2 from "@/assets/Header/Rectangle 1939.png";
+import { axiosInstance } from "@/config/axios.config";
+import { useQuery } from "@tanstack/react-query";
 interface INavbarProps {
   bg?: string;
+}
+interface IUser {
+  profile_image: string;
 }
 const Navbar = ({ bg }: INavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +19,35 @@ const Navbar = ({ bg }: INavbarProps) => {
   const storageKey = "loggedInUser";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
+  const IdUser = userData && userData.id ? userData.id : null;
+  const getUserById = async (): Promise<IUser> => {
+    if (!IdUser) throw new Error("No User ID Provided");
+    const { data } = await axiosInstance.get(`users/${IdUser}`);
+    return data;
+  };
 
+  // fetch image from database
+  const { data } = useQuery({
+    queryKey: ["oneUser", IdUser],
+    queryFn: getUserById,
+    enabled: !!IdUser,
+  });
+  const onLogout = async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("accessToken");
+
+      setTimeout(() => {
+        location.replace("/");
+      }, 1500);
+    } catch (err) {
+      console.error("Logout failed", err);
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("accessToken");
+      location.replace("/login");
+    }
+  };
   return (
     <nav
       className={`w-full p-3 shadow-md rounded-b-3xl ${bg} fixed top-0 left-0 right-0 z-50`}
@@ -117,9 +149,9 @@ const Navbar = ({ bg }: INavbarProps) => {
             </Link>
             <div className="relative">
               <button onClick={() => setIsOpenModal(!isOpenModal)}>
-                {userData?.profile_image ? (
+                {data && data.profile_image ? (
                   <img
-                    src={`https://b684-102-189-220-226.ngrok-free.app/${userData.profile_image.replace(
+                    src={`https://b684-102-189-220-226.ngrok-free.app/${data.profile_image.replace(
                       /\\/g,
                       "/"
                     )}`}
@@ -174,7 +206,7 @@ const Navbar = ({ bg }: INavbarProps) => {
       </div>
 
       {/* Mobile Navigation (Dropdown) */}
-      <div></div>
+
       <div
         className={`absolute top-16 left-0  w-[300px] min-h-screen bg-[#371F5A] text-white md:hidden transition-all duration-300 ease-in-out  ${
           isOpen
@@ -213,6 +245,20 @@ const Navbar = ({ bg }: INavbarProps) => {
           </li>
           <li>
             <NavLink
+              to="/tasks"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `px-3 py-1 rounded transition-colors font-medium  duration-200 w-full block ${
+                  isActive ? " text-[#bd97f2]" : " hover:text-[#bd97f2]"
+                }
+                `
+              }
+            >
+              Tasks
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/aboutUs"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
@@ -242,19 +288,34 @@ const Navbar = ({ bg }: INavbarProps) => {
         </ul>
 
         {userData ? (
-          //
-          <div className="flex flex-col items-center space-y-4 no-underline ">
-            <li>
-              <NavLink to="/notification" onClick={() => setIsOpen(false)}>
-                Notification
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/aboutUs" onClick={() => setIsOpen(false)}>
+          <ul className="flex flex-col items-center space-y-2 no-underline w-full px-2">
+            <li className="flex items-center gap-2 w-full">
+              <CircleUserRound size={20} />
+              <NavLink to="/Profile" onClick={() => setIsOpen(false)} className="flex-1 py-2">
                 My Profile
               </NavLink>
             </li>
-          </div>
+            <li className="flex items-center gap-2 w-full">
+              <Bell size={20} />
+              <NavLink to="/notification" onClick={() => setIsOpen(false)} className="flex-1 py-2">
+                Notification
+              </NavLink>
+            </li>
+            <li className="flex items-center gap-2 w-full">
+              <span className="text-lg">⚙️</span>
+              <NavLink to="/settings" onClick={() => setIsOpen(false)} className="flex-1 py-2">
+                Settings
+              </NavLink>
+            </li>
+            <li className="flex items-center gap-2 w-full">
+              <button
+                className="w-full text-left flex items-center gap-2 p-2 text-white rounded-md bg-red-700 hover:bg-red-600 transition-colors"
+                onClick={onLogout}
+              >
+                <span className="text-lg">↩️</span> Log Out
+              </button>
+            </li>
+          </ul>
         ) : (
           //Buttons (Mobile)
           <div className="flex flex-col items-start  p-5 space-y-3 py-2">

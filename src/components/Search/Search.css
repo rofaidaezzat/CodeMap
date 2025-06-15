@@ -1,12 +1,12 @@
 .container-search {
   position: relative;
-  background: linear-gradient(135deg, rgb(208, 179, 253) 0%, rgb(202, 164, 248) 100%);
+  background: linear-gradient(135deg, #6a74e8 0%, #545be8 100%);
   border-radius: 1000px;
   padding: 10px;
   display: grid;
   place-content: center;
   z-index: 0;
-  max-width: 300px;
+  max-width: 450px;
   margin: 0 10px;
 }
 
@@ -14,7 +14,7 @@
   position: relative;
   width: 100%;
   border-radius: 50px;
-  background: linear-gradient(135deg, rgb(232, 218, 247) 0%, rgb(229, 214, 247) 100%);
+  background: linear-gradient(135deg, #e3e6fa 0%, #dbe0fa 100%);
   padding: 5px;
   display: flex;
   align-items: center;
@@ -31,31 +31,32 @@
 .search-container::before {
   top: -1px;
   left: -1px;
-  background: linear-gradient(0deg, rgb(232, 218, 247) 0%, rgb(255, 255, 255) 100%);
+  background: linear-gradient(0deg, #e3e6fa 0%, #ffffff 100%);
   z-index: -1;
 }
 
 .search-container::after {
   bottom: -1px;
   right: -1px;
-  background: linear-gradient(0deg, rgb(206, 163, 255) 0%, rgb(232, 211, 255) 100%);
-  box-shadow: rgba(156, 79, 232, 0.7019607843) 3px 3px 5px 0px, rgba(156, 79, 232, 0.7019607843) 5px 5px 20px 0px;
+  background: linear-gradient(0deg, #545be8 0%, #bfc6fa 100%);
+  box-shadow: rgba(84, 91, 232, 0.7) 3px 3px 5px 0px, rgba(84, 91, 232, 0.7) 5px 5px 20px 0px;
   z-index: -2;
 }
 
 .input {
-  padding: 10px;
-  width: 100%;
-  background: linear-gradient(135deg, rgb(232, 218, 247) 0%, rgb(229, 214, 247) 100%);
+  padding: 14px;
+  width: 350px;
+  background: linear-gradient(135deg, #e3e6fa 0%, #dbe0fa 100%);
   border: none;
-  color: #BC9ED9;
+  color: #545BE8;
   font-size: 20px;
   border-radius: 50px;
+  box-sizing: border-box;
 }
 
 .input:focus {
   outline: none;
-  background: linear-gradient(135deg, rgb(247, 239, 255) 0%, rgb(229, 214, 247) 100%);
+  background: linear-gradient(135deg, #f3f5ff 0%, #dbe0fa 100%);
 }
 
 .search__icon {
@@ -95,11 +96,11 @@
   padding: 10px 15px;
   cursor: pointer;
   transition: background-color 0.2s;
-  color: #371F5A;
+  color: #545BE8;
 }
 
 .suggestion-item:hover {
-  background-color: #f0e6ff;
+  background-color: #e3e6fa;
 }
 
 .suggestion-item:first-child {
@@ -108,4 +109,23 @@
 
 .suggestion-item:last-child {
   border-radius: 0 0 10px 10px;
+}
+
+@media (max-width: 640px) {
+  .container-search {
+    max-width: 260px;
+    min-width: 0;
+    padding: 6px;
+  }
+  .input {
+    width: 160px;
+    min-width: 0;
+    font-size: 15px;
+    padding: 8px;
+  }
+  .search__icon {
+    width: 32px;
+    padding-left: 4px;
+    margin-right: 2px;
+  }
 }

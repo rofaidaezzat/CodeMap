@@ -164,12 +164,13 @@ const HomePage = () => {
 
         <h3 className="text-center font-semibold text-4xl">Our Tracks</h3>
         <p className="text-center">Most popular tracks suggested for you</p>
-        <div className="mt-10 pb-7 flex flex-col items-center lg:gap-10 gap-10 sm:flex-row justify-center overflow-hidden flex-wrap">
-          <div className="hidden md:hidden lg:flex lg:flex-col justify-between h-full gap-10">
+        <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
+          {/* صور اليسار */}
+          <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
               imageurl="src/assets/Home/Group2.png"
               alt="error"
-              className="w-[40px] h-auto"
+              className="w-[40px] h-auto mb-20 ml-5"
             />
             <Image
               imageurl="src/assets/Home/Group4.png"
@@ -177,28 +178,25 @@ const HomePage = () => {
               className="w-[50px] h-auto"
             />
           </div>
-          {isLoading ? (
-            <div className="pt-20 mt-5 mb-5 px-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <CardTrackSkeleton key={index} />
-              ))}
-            </div>
-          ) : (
-            <div>
-              {firstThreeTracks?.map((track) => (
-                <Card
-                  key={track._id}
-                  url="src/assets/Tracks img/Front-End.jpeg"
-                  alt={track.title}
-                  requirments={track.requirments}
-                  title={track.title}
-                  _id={track._id}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="hidden md:hidden lg:flex lg:flex-col justify-end gap-10">
+          {/* الكروت في المنتصف */}
+          <div className="flex flex-col md:flex-row gap-10 justify-center items-center flex-wrap">
+            {isLoading
+              ? Array.from({ length: 3 }).map((_, index) => (
+                  <CardTrackSkeleton key={index} />
+                ))
+              : firstThreeTracks?.map((track) => (
+                  <Card
+                    key={track._id}
+                    url="src/assets/Tracks img/Front-End.jpeg"
+                    alt={track.title}
+                    requirments={track.requirments}
+                    title={track.title}
+                    _id={track._id}
+                  />
+                ))}
+          </div>
+          {/* صور اليمين */}
+          <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
               imageurl="src/assets/Home/Group2.png"
               alt="error"
