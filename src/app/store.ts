@@ -9,7 +9,9 @@ import { TaskApiSlice } from './services/crudTasks';
 import { TracksApiSlice } from './services/GetTracks';
 import { statgesApiSlice } from './services/GetStatges';
 import clickedIdSlice from './features/clickedIdSlice';
+import clickedIdLessonSlice from './features/clickedIdLessonSlice'
 import { UserOperationApiSlice } from './services/userOperations';
+import watchedLessonsSlice from './features/WatchedLesson'
 
 const persistAccessTokenConfig = {
     key: "accessToken",
@@ -20,14 +22,28 @@ const persistclickedIdConfig = {
     storage,
 };
 
+const persistclickedIdLessonConfig = {
+    key: "clickedIdLesson",
+    storage,
+};
+const persistwatchedLessonsConfig = {
+    key: "watchedLessons",
+    storage,
+};
+
 const persistedaccessToken=persistReducer(persistAccessTokenConfig,AccessTokenSlice)
 const persistedclickedId=persistReducer(persistclickedIdConfig,clickedIdSlice)
+const persistedclickedIdLesson=persistReducer(persistclickedIdLessonConfig,clickedIdLessonSlice)
+const persistedwatchedLessons=persistReducer(persistwatchedLessonsConfig,watchedLessonsSlice)
+
 
 
 export const store = configureStore({
     reducer: {
+        watchedLessons: persistedwatchedLessons,
         accessToken:persistedaccessToken,
         clickedId:persistedclickedId,
+        clickedIdLesson:persistedclickedIdLesson,
         [ProfileApiSlice.reducerPath]:ProfileApiSlice.reducer,
         [DeleteAcountApiSlice.reducerPath]:DeleteAcountApiSlice.reducer,
         [TaskApiSlice.reducerPath]:TaskApiSlice.reducer,

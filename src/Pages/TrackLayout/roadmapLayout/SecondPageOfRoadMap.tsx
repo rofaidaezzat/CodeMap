@@ -6,6 +6,7 @@ import { axiosInstance } from '@/config/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import {  useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
+import LoadingTaskForm from '@/components/TaskFormComponents/LoadingTaskForm/LoadingTaskForm';
 
 
 interface Icategory{
@@ -43,11 +44,13 @@ const SecondPageOfRoadMap = () => {
         return data;
     };
 
-    const { data } = useQuery({
+    const { data ,isLoading} = useQuery({
         queryKey: ["oneUser", ClickedId],
         queryFn: getStatgesById,
         enabled: !!ClickedId,
     });
+
+    if (isLoading) return <div className='flex items-center w-full min-h-screen justify-center'><LoadingTaskForm/></div> 
 
 
 

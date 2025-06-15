@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clickedIdAction } from "@/app/features/clickedIdSlice";
 
+
+
 interface Iprops {
   url?: string;
   alt?: string;
@@ -31,7 +33,6 @@ const Card = ({ url, alt, title, requirments, _id }: Iprops) => {
         />
         <div className="flex justify-between pt-5">
           <h3 className="text-lg font-bold">{title}</h3>
-
           <div className="flex">
             <Star className="transition-transform duration-300 hover:rotate-12 w-5" />
             <Star className="transition-transform duration-300 hover:rotate-12 w-5" />

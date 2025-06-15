@@ -22,9 +22,17 @@ export const UserOperationApiSlice=createApi({
                     invalidatesTags: [{ type: "UserOperation", id: "LIST" }]
             }),
 
+               //Create=>post
+                MarkLessonCompleted: builder.mutation({
+                query: (_id:string|null) => ({
+                    url: `/lesson/complete/${_id}`,
+                    method: "POST",
+                }),
+                    invalidatesTags: [{ type: "UserOperation", id: "LIST" }]
+            }),
     })
 
 })
 
-export const {useEnrollRoadMapMutation}=UserOperationApiSlice
+export const {useEnrollRoadMapMutation,useMarkLessonCompletedMutation}=UserOperationApiSlice
 

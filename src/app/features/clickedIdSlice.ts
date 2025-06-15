@@ -10,7 +10,7 @@ const initialState:IidClicked={
 }
 
 const clickedIdSlice=createSlice({
-    name:"clickedId",
+    name:"clickedIdLesson",
     initialState,
     reducers:{
         clickedIdAction:(state,action:PayloadAction<string|null>)=>{

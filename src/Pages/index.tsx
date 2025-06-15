@@ -318,7 +318,7 @@ const HomePage = () => {
           />
           <CardWithoutImageInHome
             title="Full Stack Developer"
-            description="I love how the platform combines theory with practical projects. The community support and interactive learning made my journey much easier and more engaging."
+            description="I love how the platform combines theory with practical projects. The community support and interactive learning made my journey much easier and more engaging.Real-world tasks boosted my growth."
           />
           <CardWithoutImageInHome
             title="Web Developer"

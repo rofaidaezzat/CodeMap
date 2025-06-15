@@ -1,15 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import Button from "./BackButton/BackButton";
 import ToggleClose from "./ToggleClose";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { axiosInstance } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import LargeLoadingSpinner from "@/Ui/LargeLoadingSpinner/LargeLoadingSpinner";
 import CheckBox from "../TaskFormComponents/checkbox/CheckBox";
 import { Youtube, Clock, BookOpen } from "lucide-react";
+import { clickedIdLessonAction } from "@/app/features/clickedIdLessonSlice";
 
 interface SidebarProps {
   setSelectedVideo: (video: {
@@ -49,12 +49,14 @@ export interface IStatges {
 
 export type IstatgesResponse = IStatges[];
 
-const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
+const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
+  const { ClickedIdLesson } = useSelector((state: RootState) => state.clickedIdLesson);
   const { ClickedId } = useSelector((state: RootState) => state.clickedId);
+  const watchedLessonIds = useSelector((state: RootState) => state.watchedLessons.watched);
   const [open, setOpen] = useState(true);
   const [expandedMainIds, setExpandedMainIds] = useState<string[]>([]);
   const [expandedLessonIds, setExpandedLessonIds] = useState<string[]>([]);
-  const [checkedLessons, setCheckedLessons] = useState<{ [key: string]: boolean }>({});
+  const Dispatch=useDispatch()
 
   const toggleMain = (id: string) => {
     setExpandedMainIds(prev =>
@@ -66,13 +68,6 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
     setExpandedLessonIds(prev =>
       prev.includes(id) ? prev.filter(openId => openId !== id) : [...prev, id]
     );
-  };
-
-  const handleCheckboxChange = (lessonId: string) => {
-    setCheckedLessons(prev => ({
-      ...prev,
-      [lessonId]: !prev[lessonId]
-    }));
   };
 
   const getStatgesById = async (): Promise<IstatgesResponse> => {
@@ -90,7 +85,7 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
   return (
     <motion.nav
       layout
-      className="sticky top-0 h-screen shrink-0 border-r border-slate-200 bg-white flex flex-col shadow-lg"
+      className="sticky top-0 h-screen shrink-0 border-r border-slate-200 bg-white flex flex-col shadow-lg "
       style={{ width: open ? "390px" : "56px" }}
     >
       <div className="flex-1 mb-10 min-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
@@ -100,20 +95,11 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
           </div>
         ) : (
           <>
-            {!open && (
-              <div className="flex justify-center">
-                <Button />
-              </div>
-            )}
-
+          
             {open && (
               <div className="flex flex-col gap-4 p-4">
-                <div className="space-y-2">
-                  <div className="flex gap-2 items-center"> 
-                                    <Button />
-                                    <h3 className="text-2xl font-bold text-gray-800">{data?.[0]?.roadmap?.title}</h3>
-
-                  </div>
+                <div className="space-y-4 pt-2">
+                        <h3 className="text-2xl font-bold text-gray-800">{data?.[0]?.roadmap?.title}</h3>
                   <div className="flex items-center gap-4 text-sm text-gray-600">
                     <span className="flex items-center gap-1">
                       <BookOpen size={16} />
@@ -125,7 +111,6 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
                     </span>
                   </div>
                 </div>
-
                 {data?.map(({ _id, category, lesson, title }) => (
                   <div key={_id} className="space-y-4">
                     <div
@@ -141,7 +126,6 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
                         <FiChevronDown size={20} />
                       </motion.span>
                     </div>
-
                     <AnimatePresence>
                       {expandedMainIds.includes(_id) && (
                         <motion.div
@@ -158,7 +142,7 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.5 }}
-                                className="flex justify-between items-center bg-gray-50 p-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-all duration-300 border border-gray-200"
+                                className="flex justify-between items-center bg-gray-200 p-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-all duration-300 border border-gray-200"
                                 onClick={() => toggleLesson(categoryId)}
                               >
                                 <h4 className="text-lg font-medium text-gray-700">{title}</h4>
@@ -180,7 +164,7 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
                                     className="py-2 space-y-0 pl-2 overflow-hidden"
                                   >
                                     {lesson.map(({ _id: lessonId, title }, index) => {
-                                      const isActive = currentVideo?.title === title;
+                                    const isActive = lessonId === ClickedIdLesson;
                                       return (
                                         <li key={lessonId} className="relative">
                                           {index > 0 && (
@@ -191,22 +175,23 @@ const Sidebar = ({ setSelectedVideo, currentVideo }: SidebarProps) => {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -20 }}
                                             transition={{ duration: 0.5 }}
-                                            onClick={() =>
-                                              setSelectedVideo({
-                                                videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
-                                                title: title,
-                                                duration: "2 hrs",
-                                              })
-                                            }
+                                            onClick={() => {
+                                                        setSelectedVideo({
+                                                        videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
+                                                        title: title,
+                                                        duration: "2 hrs",
+                                                    });
+                                              Dispatch(clickedIdLessonAction(lessonId));
+                                              }}
                                             className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 group relative
                                               ${isActive 
-                                                ? 'bg-purple-100 border-l-4 border-purple-600' 
+                                                ? 'bg-purple-100 border-l-4 border-[#5d3599]' 
                                                 : 'hover:bg-purple-50'}`}
                                             >
-                                            <CheckBox 
-                                              checked={checkedLessons[lessonId] || false}
-                                              onChange={() => handleCheckboxChange(lessonId)}
-                                            />
+                                          <CheckBox 
+                                                  checked={watchedLessonIds.includes(lessonId)}
+                                                  disabled
+                                          />
                                             <div className="flex-1">
                                               <h5 className={`text-md font-medium transition-colors
                                                 ${isActive 
