@@ -1,9 +1,8 @@
 import LargeLoadingSpinner from "@/Ui/LargeLoadingSpinner/LargeLoadingSpinner";
 import { Clock, Globe, OctagonAlert } from "lucide-react";
 import YouTube from "react-youtube";
-import { useDispatch } from "react-redux";
-import { markLessonWatched } from "@/app/features/WatchedLesson";
 import { useMarkLessonCompletedMutation } from "@/app/services/userOperations";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Iprops {
   videoUrl: string;
@@ -15,22 +14,26 @@ interface Iprops {
   LastEdit: string;
   isloading: boolean;
   currentLessonId: string;
+  userId:string
 
 }
+
+interface ICompletedLesson {
+  _id: string;
+  completedby: string[];
+}
+
+export type ICompletedLessonResponse = ICompletedLesson[];
 
 // استخراج الـ videoId من أي رابط يوتيوب
 const extractVideoId = (url: string): string => {
   if (!url || typeof url !== "string") return "";
 
   try {
-
     const cleanUrl = url.split("?")[0];
-
     const parsedUrl = new URL(cleanUrl);
     const idFromParams = parsedUrl.searchParams.get("v");
-
     if (idFromParams) return idFromParams;
-
     const parts = parsedUrl.pathname.split("/");
     return parts[parts.length - 1]; 
   } catch (err) {
@@ -48,20 +51,43 @@ const ContentOfPage = ({
   description,
   LastEdit,
   isloading,
-  currentLessonId
+  currentLessonId,
+  userId
 }: Iprops) => {
-
+  
   // states
-  const dispatch = useDispatch();
-  const [MarkLessonCompleted ,{data}]=useMarkLessonCompletedMutation()
+  const [MarkLessonCompleted ]=useMarkLessonCompletedMutation()
   
   
   // if the user watch video
-  const onPlayerEnd = () => {
-    dispatch(markLessonWatched(currentLessonId));
-    MarkLessonCompleted(currentLessonId)
-    console.log(data)
-  };
+
+
+  const queryClient = useQueryClient();
+
+const onPlayerEnd = async () => {
+
+  // Send API request to backend to mark lesson as completed
+  await MarkLessonCompleted(currentLessonId);
+
+  //  Update React Query cache manually without refetch
+  queryClient.setQueryData<ICompletedLessonResponse>(["userCompletedLessons"], (old) => {
+    if (!old) return [];
+
+    // If the lesson is already marked as completed, don't add it again
+    const alreadyExists = old.some((lesson) => lesson._id === currentLessonId);
+    if (alreadyExists) return old;
+
+    // 4. Append the newly completed lesson to the cache
+    return [
+      ...old,
+      {
+        _id: currentLessonId,
+        completedby: [userId], 
+      },
+    ];
+  });
+};
+
 
   if (isloading)
     return (

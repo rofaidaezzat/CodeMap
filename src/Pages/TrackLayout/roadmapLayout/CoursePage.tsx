@@ -28,12 +28,15 @@ interface ILesson {
 
 
 const CoursePage = () => {
+    const userDataString = localStorage.getItem("loggedInUser");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const IdUser=userData.id
     const { ClickedIdLesson } = useSelector((state: RootState) => state.clickedIdLesson);
   
   const [selectedVideo, setSelectedVideo] = useState({
     videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
     title: "Html Introduction",
-    duration: "2h",
+    duration: 2,
   });
   console.log(selectedVideo)
 
@@ -63,6 +66,7 @@ const CoursePage = () => {
     titleofLesson={data?.title ?? ""}
     titleofStatge={data?.stage?.title ?? ""}
     isloading={isLoading}
+    userId={IdUser}
 />
     </div>
   );

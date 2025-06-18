@@ -15,12 +15,12 @@ interface SidebarProps {
   setSelectedVideo: (video: {
     videoUrl: string;
     title: string;
-    duration: string;
+    duration: number;
   }) => void;
   currentVideo?: {
     videoUrl: string;
     title: string;
-    duration: string;
+    duration: number;
   };
 }
 
@@ -32,6 +32,9 @@ interface Icategory {
 interface ILessons {
   _id: string;
   title: string;
+  link:string 
+  lesson_duration:number,
+  lecture_number:number
 }
 
 interface IRoadmap{
@@ -39,7 +42,7 @@ interface IRoadmap{
     title:string
 }
 
-export interface IStatges {
+interface IStatges {
   _id: string;
   title: string;
   category: Icategory[];
@@ -47,16 +50,29 @@ export interface IStatges {
   roadmap:IRoadmap;
 }
 
+interface ICompletedLesson {
+  _id: string;
+  lecture_number:number
+  completedby: string[];
+}
+
+export type ICompletedLessonResponse = ICompletedLesson[];
 export type IstatgesResponse = IStatges[];
 
-const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
+
+  const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
+    // user id
+    const userDataString = localStorage.getItem("loggedInUser");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const IdUser=userData.id
+  // states
   const { ClickedIdLesson } = useSelector((state: RootState) => state.clickedIdLesson);
   const { ClickedId } = useSelector((state: RootState) => state.clickedId);
-  const watchedLessonIds = useSelector((state: RootState) => state.watchedLessons.watched);
   const [open, setOpen] = useState(true);
   const [expandedMainIds, setExpandedMainIds] = useState<string[]>([]);
   const [expandedLessonIds, setExpandedLessonIds] = useState<string[]>([]);
   const Dispatch=useDispatch()
+
 
   const toggleMain = (id: string) => {
     setExpandedMainIds(prev =>
@@ -70,6 +86,10 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
     );
   };
 
+
+
+
+  // fetch all lesson 
   const getStatgesById = async (): Promise<IstatgesResponse> => {
     if (!ClickedId) throw new Error("No stage ID Provided");
     const { data } = await axiosInstance.get(`/stages/roadmap/${ClickedId}`);
@@ -81,6 +101,38 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
     queryFn: getStatgesById,
     enabled: !!ClickedId,
   });
+
+
+
+  
+  // fetch Completed Lesson
+  const getCompletedLessons = async (): Promise<ICompletedLessonResponse> => {
+    const { data } = await axiosInstance.get(`/lesson/completed`);
+    return data;
+  };
+  
+
+  const { data:watchedLessonIds } = useQuery({
+    queryKey: ["userCompletedLessons"],
+    queryFn: getCompletedLessons,
+  });
+
+// fetch completed lesson for user 
+const completedLessonIds = watchedLessonIds
+  ?.filter((lesson) => lesson.completedby.includes(IdUser))
+  ?.map((lesson) => lesson._id);
+
+
+  // Get the max lecture_number from completed lessons for user
+const maxCompletedLectureNumber = Math.max(
+  0,
+  ...watchedLessonIds
+    ?.filter((lesson) => lesson.completedby.includes(IdUser))
+    ?.map((lesson) => lesson.lecture_number) || []
+);
+
+
+
 
   return (
     <motion.nav
@@ -111,7 +163,7 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                     </span>
                   </div>
                 </div>
-                {data?.map(({ _id, category, lesson, title }) => (
+                {data?.map(({ _id, category, lesson, title}) => (
                   <div key={_id} className="space-y-4">
                     <div
                       className="flex justify-between items-center bg-gradient-to-r from-[#371F5A] to-[#5d3599] p-4 rounded-lg cursor-pointer hover:from-[#57318f] hover:to-[#6d3eb4] transition-all duration-300 shadow-md"
@@ -163,8 +215,9 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                                     transition={{ duration: 0.5 }}
                                     className="py-2 space-y-0 pl-2 overflow-hidden"
                                   >
-                                    {lesson.map(({ _id: lessonId, title }, index) => {
+                                    {lesson.map(({ _id: lessonId, title,lesson_duration,link,lecture_number }, index) => {
                                     const isActive = lessonId === ClickedIdLesson;
+                                    const isLockedLesson =lecture_number > maxCompletedLectureNumber + 1;
                                       return (
                                         <li key={lessonId} className="relative">
                                           {index > 0 && (
@@ -176,23 +229,29 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                                             exit={{ opacity: 0, y: -20 }}
                                             transition={{ duration: 0.5 }}
                                             onClick={() => {
+                                                      if (isLockedLesson) return; 
                                                         setSelectedVideo({
-                                                        videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
+                                                        videoUrl: link,
                                                         title: title,
-                                                        duration: "2 hrs",
+                                                        duration: lesson_duration,
                                                     });
                                               Dispatch(clickedIdLessonAction(lessonId));
                                               }}
                                             className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 group relative
-                                              ${isActive 
-                                                ? 'bg-purple-100 border-l-4 border-[#5d3599]' 
-                                                : 'hover:bg-purple-50'}`}
+                                              ${isLockedLesson
+                                              ? 'opacity-50 cursor-not-allowed'
+                                              : isActive
+                                              ? 'bg-purple-100 border-l-4 border-[#5d3599]'
+                                              : 'hover:bg-purple-50'
+                                              }`}
                                             >
-                                          <CheckBox 
-                                                  checked={watchedLessonIds.includes(lessonId)}
-                                                  disabled
-                                          />
-                                            <div className="flex-1">
+                                            {completedLessonIds && (
+                                              <CheckBox 
+                                              checked={completedLessonIds.includes(lessonId)} 
+                                              disabled 
+                                              />
+                                              )}                                            
+                                              <div className="flex-1">
                                               <h5 className={`text-md font-medium transition-colors
                                                 ${isActive 
                                                   ? 'text-black' 
@@ -223,7 +282,6 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
           </>
         )}
       </div>
-
       <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white">
         <ToggleClose open={open} setOpen={setOpen} />
       </div>
