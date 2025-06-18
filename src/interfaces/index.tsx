@@ -182,3 +182,9 @@ export interface IinfoChatbot {
   title: string;
   description: string;
 }
+export interface Idemodata {
+  title: string;
+  demo: string;
+  img: string;
+  tags: string[];
+}

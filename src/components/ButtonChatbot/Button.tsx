@@ -1,8 +1,11 @@
 import React from "react";
 import "./Button.css";
-const ButtonChatbot = () => {
+interface Props {
+  className: string;
+}
+const ButtonChatbot = ({ className }: Props) => {
   return (
-    <button className="cta">
+    <button className={`cta ${className}`}>
       <span className="span">GET STARTED</span>
       <span className="second">
         <svg

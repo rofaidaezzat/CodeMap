@@ -14,8 +14,7 @@ interface Iprops {
   LastEdit: string;
   isloading: boolean;
   currentLessonId: string;
-  userId:string
-
+  userId: string;
 }
 
 interface ICompletedLesson {
@@ -35,10 +34,10 @@ const extractVideoId = (url: string): string => {
     const idFromParams = parsedUrl.searchParams.get("v");
     if (idFromParams) return idFromParams;
     const parts = parsedUrl.pathname.split("/");
-    return parts[parts.length - 1]; 
+    return parts[parts.length - 1];
   } catch (err) {
     console.error("Invalid YouTube URL:", url);
-    console.log(err)
+    console.log(err);
     return "";
   }
 };
@@ -52,42 +51,42 @@ const ContentOfPage = ({
   LastEdit,
   isloading,
   currentLessonId,
-  userId
+  userId,
 }: Iprops) => {
-  
   // states
-  const [MarkLessonCompleted ]=useMarkLessonCompletedMutation()
-  
-  
-  // if the user watch video
+  const [MarkLessonCompleted] = useMarkLessonCompletedMutation();
 
+  // if the user watch video
 
   const queryClient = useQueryClient();
 
-const onPlayerEnd = async () => {
+  const onPlayerEnd = async () => {
+    // Send API request to backend to mark lesson as completed
+    await MarkLessonCompleted(currentLessonId);
 
-  // Send API request to backend to mark lesson as completed
-  await MarkLessonCompleted(currentLessonId);
+    //  Update React Query cache manually without refetch
+    queryClient.setQueryData<ICompletedLessonResponse>(
+      ["userCompletedLessons"],
+      (old) => {
+        if (!old) return [];
 
-  //  Update React Query cache manually without refetch
-  queryClient.setQueryData<ICompletedLessonResponse>(["userCompletedLessons"], (old) => {
-    if (!old) return [];
+        // If the lesson is already marked as completed, don't add it again
+        const alreadyExists = old.some(
+          (lesson) => lesson._id === currentLessonId
+        );
+        if (alreadyExists) return old;
 
-    // If the lesson is already marked as completed, don't add it again
-    const alreadyExists = old.some((lesson) => lesson._id === currentLessonId);
-    if (alreadyExists) return old;
-
-    // 4. Append the newly completed lesson to the cache
-    return [
-      ...old,
-      {
-        _id: currentLessonId,
-        completedby: [userId], 
-      },
-    ];
-  });
-};
-
+        // 4. Append the newly completed lesson to the cache
+        return [
+          ...old,
+          {
+            _id: currentLessonId,
+            completedby: [userId],
+          },
+        ];
+      }
+    );
+  };
 
   if (isloading)
     return (
@@ -100,7 +99,7 @@ const onPlayerEnd = async () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto">
-      <div className="p-3 text-black rounded-t-xl">
+      <div className="p-3 text-black rounded-t-xl pt-20">
         <h3 className="text-3xl font-bold">{titleofStatge}</h3>
         <p className="text-lg text-black">{titleofLesson}</p>
       </div>

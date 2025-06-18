@@ -11,10 +11,20 @@ interface IUser {
 }
 
 const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
-  if (!isOpen) return null;
   const userDataString = localStorage.getItem("loggedInUser");
   const userData = userDataString ? JSON.parse(userDataString) : null;
-
+  const IdUser = userData.id;
+  const getUserById = async (): Promise<IUser> => {
+    if (!IdUser) throw new Error("No User ID Provided");
+    const { data } = await axiosInstance.get(`users/${IdUser}`);
+    return data;
+  };
+  // fetch image from database
+  const { data } = useQuery({
+    queryKey: ["oneUser", IdUser],
+    queryFn: getUserById,
+    enabled: !!IdUser,
+  });
   const onLogout = async () => {
     try {
       await axiosInstance.post("/auth/logout");
@@ -31,19 +41,8 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
       location.replace("/login");
     }
   };
-  const IdUser = userData.id;
-  const getUserById = async (): Promise<IUser> => {
-    if (!IdUser) throw new Error("No User ID Provided");
-    const { data } = await axiosInstance.get(`users/${IdUser}`);
-    return data;
-  };
 
-  // fetch image from database
-  const { data } = useQuery({
-    queryKey: ["oneUser", IdUser],
-    queryFn: getUserById,
-    enabled: !!IdUser,
-  });
+  if (!isOpen) return null;
   return (
     <div className="relative inline-block text-left">
       <div

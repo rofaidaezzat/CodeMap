@@ -16,7 +16,7 @@ const CardChatbot = ({
 }: Iprops) => {
   return (
     <div
-      className={`h-auto w-[18em] rounded-2xl 
+      className={`h-auto rounded-2xl 
   bg-gradient-to-br from-purple-800 to-purple-900/10 text-white 
   font-nunito p-5 flex flex-col gap-3 shadow-lg backdrop-blur-md 
   transition-transform hover:scale-[1.02] duration-300 ${className}`}

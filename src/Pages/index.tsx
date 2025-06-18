@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Search from "@/components/Search/Search";
 import { useGetTracksQuery } from "@/app/services/GetTracks";
 import CardTrackSkeleton from "@/components/CardTrackSkeleton";
+import DemoCard from "@/components/DemoCardHome/DemoCard";
+import { demoData } from "@/data";
 
 const HomePage = () => {
   const texts = ["Course", "Video", "Track", "Mo2a"];
@@ -329,6 +331,38 @@ const HomePage = () => {
             className="w-11 h-11 hidden lg:flex"
           />
         </div>
+      </motion.div>
+      {/* ------------------------ section Demo Portfolio----------------------- */}
+      <motion.div
+        ref={refTestimonials}
+        initial="hidden"
+        animate={controlsTestimonials}
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+        }}
+        className="py-12"
+      >
+        <section className="py-10 bg-[#f9f9ff]">
+          <h2 className="text-2xl md:text-4xl text-[#2F174E] mb-4 text-center font-semibold">
+            What You Can Build
+          </h2>
+          <p className="text-center text-sm text-gray-600 mb-6">
+            Sample projects you'll be able to build
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-6 px-4">
+            {demoData.map((item, idx) => (
+              <DemoCard
+                key={idx}
+                img={item.img}
+                title={item.title}
+                tags={item.tags}
+                demo={item.demo}
+              />
+            ))}
+          </div>
+        </section>
       </motion.div>
     </>
   );

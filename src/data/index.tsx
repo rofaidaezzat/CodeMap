@@ -2,6 +2,7 @@ import {
   IAboutUsInfo,
   Icategories,
   IDataOfCardInfo,
+  Idemodata,
   IFROGETPASSWORD,
   IinfoChatbot,
   IinforamtionOfInfo,
@@ -924,5 +925,25 @@ export const InfoChatbot: IinfoChatbot[] = [
     title: "Custom Planner",
     description:
       "Design a roadmap that suits your schedule and aligns with your goals.",
+  },
+];
+export const demoData: Idemodata[] = [
+  {
+    title: "HTML Structure and Basic Elements",
+    demo: "https://www.youtube.com/embed/lG_mTu0wyZA",
+    img: "https://img.youtube.com/vi/lG_mTu0wyZA/0.jpg",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    title: "HTML Structure and Basic Elements",
+    demo: "https://www.youtube.com/embed/lG_mTu0wyZA",
+    img: "https://img.youtube.com/vi/lG_mTu0wyZA/0.jpg",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    title: "HTML Structure and Basic Elements",
+    demo: "https://www.youtube.com/embed/lG_mTu0wyZA",
+    img: "https://img.youtube.com/vi/lG_mTu0wyZA/0.jpg",
+    tags: ["HTML", "CSS", "JavaScript"],
   },
 ];
