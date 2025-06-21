@@ -21,7 +21,7 @@ const Tracks = () => {
   const renderTracks = data?.map(({ title, _id }) => (
     <Trackcard
       key={_id}
-      url="src/assets/Tracks img/Front-End.jpeg"
+      url="/assets/Tracks img/Front-End.jpeg"
       alt={title}
       title={title}
       path="InfoOfFrontend"
@@ -52,7 +52,7 @@ const Tracks = () => {
             {[...Array(3)].map((_, i) => (
               <div key={i} className="flex items-center gap-3">
                 <Image
-                  imageurl="src/assets/Tracks img/Front-End.jpeg"
+                  imageurl="/assets/Tracks img/Front-End.jpeg"
                   alt="error"
                   className="w-24 h-24 rounded-xl object-cover"
                 />
@@ -78,7 +78,7 @@ const Tracks = () => {
                 </Button>
                 <div className="absolute -right-12 bottom-2   hidden md:flex  md:w-[130px] md:h-[130]   lg:w-[150px]  lg:h-[150px]">
                   <Image
-                    imageurl="src/assets/Home/chat.png"
+                    imageurl="/assets/Home/chat.png"
                     alt="error"
                     className="w-full h-full object-contain"
                   />

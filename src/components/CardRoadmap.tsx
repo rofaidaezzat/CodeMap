@@ -17,7 +17,7 @@ const CardOfRoadmap = ({ numberOfStage, titleOfStage, category }: Iprops) => {
       <div className="flex items-center gap-10">
         <div className="flex gap-1 items-center">
           <Image
-            imageurl="src/assets/Roadmap-20250312T012925Z-001/Roadmap/video player.png"
+            imageurl="/assets/Roadmap-20250312T012925Z-001/Roadmap/video player.png"
             className="w-[70px] h-[70px]"
             alt="error"
           />

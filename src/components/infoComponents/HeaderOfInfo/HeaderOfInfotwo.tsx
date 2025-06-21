@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from '../../Image';
-import img1 from '../../../assets/wallpaper/imageFX3.png';
-import img2 from '../../../assets/wallpaper/imageFX2.png';
-import img3 from '../../../assets/wallpaper/imageFX1.png';
 import ButtonStart from '../ButtonStart/ButtonStart';
 
 interface IHeader{
@@ -17,7 +14,11 @@ interface Iprops{
 }
 
 const HeaderOfInfotwo = ({ header }: Iprops) => {
-    const imgArray = [img1, img2, img3];
+    const imgArray = [
+        "/assets/wallpaper/imageFX3.png",
+        "/assets/wallpaper/imageFX2.png",
+        "/assets/wallpaper/imageFX1.png"
+    ];
 
     const images = header?.map((item, index) => ({
     title: item.title,

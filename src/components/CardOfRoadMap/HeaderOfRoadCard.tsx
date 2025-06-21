@@ -1,5 +1,4 @@
 import Image from '../Image'
-import videoPlayer from "../../assets/Roadmap-20250312T012925Z-001/Roadmap/video player.png";
 
 interface Iprops {
     numberOfStage: number;
@@ -13,7 +12,7 @@ const HeaderOfRoadCard = ({ToggleCard,numberOfStage}:Iprops) => {
             <div className="flex gap-1 items-center transition-all duration-300 ease-in-out
                 hover:scale-105 cursor-pointer" onClick={ToggleCard}>
             <Image
-            imageurl={videoPlayer}
+            imageurl="/assets/Roadmap-20250312T012925Z-001/Roadmap/video player.png"
             className="w-[70px] h-[70px]"
             alt="error"
             />

@@ -1,6 +1,4 @@
-
 import Button from "@/Ui/Button";
-import React from "react";
 
 const DeleteAccount = () => {
   return (

@@ -150,28 +150,25 @@ const SignUp = () => {
           <br />
           Learning Platform
         </span>
-        <Image
-          imageurl="src/assets/SignUp/mainImage.png"
-          alt="error"
-          className="w-[400px] md:w-[460px]"
-        />
-        <Ellipsis color="#C2CEFF" size={50} />
+        <div className="flex flex-col items-center gap-7">
+          <Image
+            alt="error"
+            className="w-[400px] md:w-[460px] "
+            imageurl="/assets/SignUp/mainImage.png"
+          />
+          <Ellipsis color="#C2CEFF" size={50} />
+        </div>
       </div>
       <span className="hidden lg:block md:hidden bg-[#5D5A6F] w-1 h-96 rounded-2xl"></span>
 
-      <div className="flex flex-col w-full md:w-[450px]  lg:w-[550px] bg-white p-10 shadow-md rounded-md gap-2  ">
-        <div className="border-2 rounded-lg flex gap-3 justify-start">
+      <div className="flex flex-col w-full md:w-[550px] lg:w-[550px] bg-white p-10 shadow-md rounded-md gap-2 mt-6">
+        <div className="flex justify-center items-center">
           <Image
-            imageurl="src/assets/SignUp/icon.png"
+            imageurl="/assets/SignUp/icon.png"
             alt="error"
-            className="cursor-pointer"
+            className="w-16"
           />
-          <p
-            className="text-gray-700 font-medium py-4 cursor-pointer"
-            onClick={handleGoogleSignIn}
-          >
-            Signup with google
-          </p>
+          <p className="text-3xl font-bold  text-[#2F174E]">CodeMap</p>
         </div>
         <h2 className="text-center text-gray-600 text-lg mb-4">
           -or signup with your email-

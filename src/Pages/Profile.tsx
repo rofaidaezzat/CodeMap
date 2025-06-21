@@ -177,7 +177,7 @@ const Profile = () => {
                       <div className="w-64">
                         <CardofProfileOfCourses
                           DescriptionCard={requirments}
-                          ImageUrl={`src/assets/Tracks img/Front-End.jpeg`}
+                          ImageUrl={`/assets/Tracks img/Front-End.jpeg`}
                           TitleOfCard={title}
                         />
                       </div>

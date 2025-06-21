@@ -1,24 +1,26 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import Image from "@/components/Image";
-import chatbot5 from "../../assets/Chatbot/chatbot5.jpg";
 import { motion } from "framer-motion";
 import SearchChatbot from "@/components/SearchChatbot/SearchChatbot";
 import { axiosInstance } from "@/config/axios.config";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { IErrorResponse } from "@/interfaces";
+
 interface Message {
   type: "user" | "bot";
   text: string;
 }
+
 interface APISessionMessage {
   role: "user" | "assistant";
   content: string;
 }
+
 interface MainContentProps {
   sessionId: string | null;
 }
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -126,7 +128,7 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
         >
           <motion.div variants={itemVariants}>
             <Image
-              imageurl={chatbot5}
+              imageurl="/assets/Chatbot/chatbot5.jpg"
               alt=""
               className="w-32 h-32 mb-4 rounded-full bg-gray-200"
             />

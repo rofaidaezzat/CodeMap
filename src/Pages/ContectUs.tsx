@@ -81,51 +81,54 @@ const ContactUs = () => {
       <div className="w-full mb-5 bg-gradient-to-r from-[#2F174E] to-[#CFD8FF] lg:px-24 flex flex-col lg:flex-row justify-between lg:ml-8 lg:rounded-tl-3xl lg:rounded-bl-3xl">
         {/* ---------- left card (desktop only) ---------- */}
         <div className="hidden lg:block w-[35%] h-[600px] -mt-28 rounded-3xl p-4 border-2 bg-[#EAECFD] shadow-[0px_0px_30px_rgba(0,0,0,1)]">
-          <div className="flex justify-center items-center px-4">
-            <Image
-              imageurl="src/assets/Contact us-20250228T213828Z-001/Contact us/Customercareservice2_2-ezgif.com-gif-makerr1.gif"
-              alt="image contact"
-              className="w-40 mt-16"
-            />
-            <div className="flex flex-col -mt-14 items-center justify-center">
+          <div className="flex flex-col md:flex-row items-center justify-around gap-12 max-w-7xl mx-auto">
+            <div className="w-full md:w-2/5">
               <Image
-                imageurl="src/assets/Contact us-20250228T213828Z-001/Contact us/Rectangle 1938.png"
-                alt="roadmap image"
-                className="w-16 h-16"
+                imageurl="/assets/Contact us-20250228T213828Z-001/Contact us/Customercareservice2_2-ezgif.com-gif-makerr1.gif"
+                alt="error"
               />
+              <div className="hidden lg:flex justify-between w-full h-auto mt-2">
+                <Image
+                  imageurl="/assets/Contact us-20250228T213828Z-001/Contact us/Rectangle 1938.png"
+                  alt="error"
+                  className="w-1/3"
+                />
+                <Image
+                  imageurl="/assets/Contact us-20250228T213828Z-001/Contact us/Rectangle 1937.png"
+                  alt="error"
+                  className="w-1/3"
+                />
+              </div>
               <Image
-                imageurl="src/assets/Contact us-20250228T213828Z-001/Contact us/Rectangle 1937.png"
-                alt="roadmap image"
-                className="w-20"
+                imageurl="/assets/Contact us-20250228T213828Z-001/Contact us/Customercareservice2_2-ezgif.com-rotater2.gif"
+                alt="error"
+                className="mt-2"
               />
             </div>
-            <Image
-              imageurl="src/assets/Contact us-20250228T213828Z-001/Contact us/Customercareservice2_2-ezgif.com-rotater2.gif"
-              alt="contact us image"
-              className="w-40 mt-16"
-            />
-          </div>
-          <div className="space-y-3 mt-10">
-            <h3 className="font-bold text-3xl">Contact Us</h3>
-            <p className="leading-7">
-              An online programming platform provides courses, tutorials, and
-              exercises for learning programming languages. It offers a
-              user-friendly interface and can provide personalized learning
-              paths and certificates.
-            </p>
-          </div>
-          <div className="p-8 space-y-4 mt-7 pl-5">
-            <div className="flex space-x-3">
-              <Phone />
-              <p>0123456789</p>
-            </div>
-            <div className="flex space-x-2">
-              <Headset />
-              <p>info.CodeMap@hotmail.com</p>
-            </div>
-            <div className="flex space-x-2">
-              <MapPinHouse />
-              <p>Agami-Alex dawla & Elda5lawaya</p>
+            <div className="w-full md:w-3/5">
+              <div className="space-y-3 mt-10">
+                <h3 className="font-bold text-3xl">Contact Us</h3>
+                <p className="leading-7">
+                  An online programming platform provides courses, tutorials, and
+                  exercises for learning programming languages. It offers a
+                  user-friendly interface and can provide personalized learning
+                  paths and certificates.
+                </p>
+              </div>
+              <div className="p-8 space-y-4 mt-7 pl-5">
+                <div className="flex space-x-3">
+                  <Phone />
+                  <p>0123456789</p>
+                </div>
+                <div className="flex space-x-2">
+                  <Headset />
+                  <p>info.CodeMap@hotmail.com</p>
+                </div>
+                <div className="flex space-x-2">
+                  <MapPinHouse />
+                  <p>Agami-Alex dawla & Elda5lawaya</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

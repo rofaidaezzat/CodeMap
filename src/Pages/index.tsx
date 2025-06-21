@@ -89,12 +89,12 @@ const HomePage = () => {
             </h6>
             <div className="flex justify-between ">
               <Image
-                imageurl="src/assets/Home/Group7.png"
+                imageurl="/assets/Home/Group7.png"
                 alt="error"
                 className="w-10"
               />
               <Image
-                imageurl="src/assets/Home/Group8.png"
+                imageurl="/assets/Home/Group8.png"
                 alt="error"
                 className="w-10"
               />
@@ -108,7 +108,7 @@ const HomePage = () => {
             className="w-80 md:w-[450px]"
           >
             <Image
-              imageurl="src/assets/Home/OBJECTS.png"
+              imageurl="/assets/Home/OBJECTS.png"
               alt="error"
               className="w-full"
             />
@@ -116,12 +116,12 @@ const HomePage = () => {
         </div>
         <div className=" flex justify-between px-2 pb-2">
           <Image
-            imageurl="src/assets/Home/casual-life-3d-orange-planet-with-disk 1.png"
+            imageurl="/assets/Home/casual-life-3d-orange-planet-with-disk 1.png"
             alt="error"
             className="w-10"
           />
           <Image
-            imageurl="src/assets/Home/Group12.png"
+            imageurl="/assets/Home/Group12.png"
             alt="error"
             className="w-10"
           />
@@ -134,7 +134,7 @@ const HomePage = () => {
           <div className="w-16 h-16 md:w-24 md:h-24 relative">
             <div className="absolute inset-0 bg-[#545BE8]/20 rounded-full animate-ping"></div>
             <Image
-              imageurl="src/assets/Home/chat.png"
+              imageurl="/assets/Home/chat.png"
               alt="AI Chatbot Assistant"
               className="w-full h-full relative z-10 hover:scale-110 transition-transform duration-300"
             />
@@ -183,12 +183,12 @@ const HomePage = () => {
       >
         <div className="flex justify-between mx-10 px-10 w-auto h-11">
           <Image
-            imageurl="src/assets/Home/Group3.png"
+            imageurl="/assets/Home/Group3.png"
             alt="error"
             className="w-8 h-8"
           />
           <Image
-            imageurl="src/assets/Home/lamb.png"
+            imageurl="/assets/Home/lamb.png"
             alt="error"
             className="w-[80px] h-auto"
           />
@@ -200,12 +200,12 @@ const HomePage = () => {
         <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="src/assets/Home/Group2.png"
+              imageurl="/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto mb-20 ml-5"
             />
             <Image
-              imageurl="src/assets/Home/Group4.png"
+              imageurl="/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />
@@ -239,12 +239,12 @@ const HomePage = () => {
 
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="src/assets/Home/Group2.png"
+              imageurl="/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto"
             />
             <Image
-              imageurl="src/assets/Home/Group4.png"
+              imageurl="/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />
@@ -266,12 +266,12 @@ const HomePage = () => {
       >
         <div className="flex justify-between mx-10 px-10 w-auto h-11">
           <Image
-            imageurl="src/assets/Home/lamb.png"
+            imageurl="/assets/Home/lamb.png"
             alt="error"
             className="w-[80px] h-auto"
           />
           <Image
-            imageurl="src/assets/Home/Group3.png"
+            imageurl="/assets/Home/Group3.png"
             alt="error"
             className="w-8 h-8 "
           />
@@ -282,12 +282,12 @@ const HomePage = () => {
         <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="src/assets/Home/Group2.png"
+              imageurl="/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto mb-20 ml-5"
             />
             <Image
-              imageurl="src/assets/Home/Group4.png"
+              imageurl="/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />
@@ -312,12 +312,12 @@ const HomePage = () => {
 
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="src/assets/Home/Group2.png"
+              imageurl="/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto"
             />
             <Image
-              imageurl="src/assets/Home/Group4.png"
+              imageurl="/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />
@@ -383,7 +383,7 @@ const HomePage = () => {
             >
               <div className="p-4 bg-gradient-to-r from-[#545BE8]/10 to-[#7C3AED]/10 rounded-2xl group-hover:scale-110 transition-transform duration-300">
                 <Image
-                  imageurl="src/assets/Home/hearts 1.png"
+                  imageurl="/assets/Home/hearts 1.png"
                   alt="Structured Learning Icon"
                   className="w-8 h-8"
                 />
@@ -479,7 +479,7 @@ const HomePage = () => {
         </p>
         <div className="mt-10 mb-10 flex flex-col items-center lg:gap-0 gap-5 space-y-2 sm:flex-row sm:justify-center md:justify-around flex-wrap">
           <Image
-            imageurl="src/assets/Home/Group12.png"
+            imageurl="/assets/Home/Group12.png"
             alt="error"
             className="hidden lg:flex w-20 h-20"
           />
@@ -498,7 +498,7 @@ const HomePage = () => {
           />
 
           <Image
-            imageurl="src/assets/Home/casual-life-3d-orange-planet-with-disk 1.png"
+            imageurl="/assets/Home/casual-life-3d-orange-planet-with-disk 1.png"
             alt="error"
             className="w-11 h-11 hidden lg:flex"
           />

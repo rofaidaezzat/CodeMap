@@ -109,7 +109,7 @@ export const UpdatePasswordSchema = yup.object({
     .string()
     .oneOf([yup.ref('newPassword')], "Passwords must match")
     .required("Please confirm your new password"),
-}).required
+}).required();
 export const UpdateProfileSchema = yup.object({
     first_name: yup
     .string()

@@ -67,7 +67,7 @@ const RecoverPassword = () => {
           Learning Platform
         </span>
         <Image
-          imageurl="src/assets/SignUp/mainImage.png"
+          imageurl="/assets/SignUp/mainImage.png"
           alt="error"
           className="w-[400px] md:w-[460px]"
         />
@@ -114,7 +114,7 @@ const RecoverPassword = () => {
           <div className="text-center text-lg text-white bg-[#2F174E]  rounded-md px-10 py-6">
             A password reset email has been sent. Please check your inbox.
             <br />
-            If you don’t see the email, please check your{" "}
+            If you don't see the email, please check your{" "}
             <strong>spam or junk folder</strong>.
           </div>
         )}

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Play, BookOpen, Users, Award } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -92,7 +91,7 @@ const LearningPlatformHero: React.FC = () => {
                 >
                   <video
                     className="rounded-2xl shadow-lg w-90 h-60 object-cover"
-                    src="/src/assets/Home/CodeMap.mp4"
+                    src="/assets/Home/CodeMap.mp4"
                     autoPlay
                     loop
                     muted

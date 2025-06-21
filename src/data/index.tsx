@@ -14,20 +14,20 @@ import {
   IUpdatePassword,
   IUpdateUserProfile,
 } from "../interfaces";
-import HtmlIcon from "../assets/Info/html-5-svgrepo-com.svg?url";
-import CssIcon from "../assets/Info/css-document-extension-file-file-format-file-type-svgrepo-com.svg?url";
-import JavaScriptIcon from "../assets/Info/javascript.svg?url";
-import ReactIcon from "../assets/Info/react-svgrepo-com.svg?url";
-import VueIcon from "../assets/Info/vue-svgrepo-com.svg?url";
-import AngularIcon from "../assets/Info/angular-svgrepo-com.svg?url";
-import SvelteIcon from "../assets/Info/svelte-icon-svgrepo-com.svg?url";
-import VsCodeIcon from "../assets/Info/vs-code-svgrepo-com.svg?url";
-import WebStormIcon from "../assets/Info/webstorm-svgrepo-com.svg?url";
-import SublimeTextIcon from "../assets/Info/sublimetext-icon-svgrepo-com.svg?url";
-import chatbot1 from "../assets/Chatbot/chatbot1.jpg";
-import chatbot2 from "../assets/Chatbot/chatbot2.jpg?url";
-import chatbot3 from "../assets/Chatbot/chatbot3.jpg?url";
-import chatbot4 from "../assets/Chatbot/chatbot4.jpg?url";
+import HtmlIcon from "/assets/Info/html-5-svgrepo-com.svg?url";
+import CssIcon from "/assets/Info/css-document-extension-file-file-format-file-type-svgrepo-com.svg?url";
+import JavaScriptIcon from "/assets/Info/javascript.svg?url";
+import ReactIcon from "/assets/Info/react-svgrepo-com.svg?url";
+import VueIcon from "/assets/Info/vue-svgrepo-com.svg?url";
+import AngularIcon from "/assets/Info/angular-svgrepo-com.svg?url";
+import SvelteIcon from "/assets/Info/svelte-icon-svgrepo-com.svg?url";
+import VsCodeIcon from "/assets/Info/vs-code-svgrepo-com.svg?url";
+import WebStormIcon from "/assets/Info/webstorm-svgrepo-com.svg?url";
+import SublimeTextIcon from "/assets/Info/sublimetext-icon-svgrepo-com.svg?url";
+import chatbot1 from "/assets/Chatbot/chatbot1.jpg";
+import chatbot2 from "/assets/Chatbot/chatbot2.jpg?url";
+import chatbot3 from "/assets/Chatbot/chatbot3.jpg?url";
+import chatbot4 from "/assets/Chatbot/chatbot4.jpg?url";
 
 export const REGISTER_FORM: IRegisterInput[] = [
   {
@@ -369,67 +369,67 @@ export const DataOfCardInfo: IDataOfCardInfo[] = [
   },
 ];
 
-export const AboutUsCardInfo: IAboutUsInfo[] = [
+export const ABOUTUSINFO: IAboutUsInfo[] = [
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
   {
-    srcImage: "src/assets/Home/4bbc5c7f9365f56b36f3806bb40a1b9a.jpg",
-    name: "rofaida",
-    person_add: "",
-    srcfacebookimg: "",
-    srcinstgramim: "",
+    name: "Rofaida Ezzat",
+    person_add: "http://www.w3.org/2000/svg",
+    srcImage: "/assets/About us-20250305T145038Z-001/About us/33f85ae4b62c8bbaf20283852fa74655.jpg",
+    srcfacebookimg: "http://www.w3.org/2000/svg",
+    srcinstgramim: "http://www.w3.org/2000/svg",
     srctwitterimg: "",
     srcwhatsappimg: "",
   },
@@ -833,24 +833,6 @@ export const roadmapData: IsidebarData[] = [
         id: "3",
         title: "Attributes, Links, and Formatting",
         subLessons: [
-          {
-            id: "3.1",
-            title: "Introduction and What I Need To Learn",
-            videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
-            duration: "2 hrs",
-          },
-          {
-            id: "3.2",
-            title: "Elements And Browser",
-            videoUrl: "https://www.youtube.com/embed/video2",
-            duration: "2 hrs",
-          },
-          {
-            id: "3.3",
-            title: "First Project And First Page",
-            videoUrl: "https://www.youtube.com/embed/video3",
-            duration: "2 hrs",
-          },
           {
             id: "3.1",
             title: "Introduction and What I Need To Learn",

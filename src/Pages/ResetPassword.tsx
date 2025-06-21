@@ -140,7 +140,7 @@ const ResetPassword = () => {
           Learning Platform
         </span>
         <Image
-          imageurl="/src/assets/SignUp/mainImage.png" // Verify this image path
+          imageurl="/assets/SignUp/mainImage.png"
           alt="Platform illustration"
           className="w-[400px] md:w-[460px]"
         />

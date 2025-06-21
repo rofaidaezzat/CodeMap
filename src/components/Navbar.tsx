@@ -3,8 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Bell, CircleUserRound } from "lucide-react";
 import ProfileMenuModal from "./ProfileMenuModal";
-import Logo1 from "@/assets/Header/Rectangle 1938.png";
-import Logo2 from "@/assets/Header/Rectangle 1939.png";
 import { axiosInstance } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 interface INavbarProps {
@@ -57,8 +55,8 @@ const Navbar = ({ bg }: INavbarProps) => {
         <div className="flex items-center space-x-6">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <img src={Logo1} alt="Logo" className="h-10" />
-            <img src={Logo2} alt="Logo" className="h-10" />
+            <img src="/assets/Header/Rectangle 1938.png" alt="Logo" className="h-10" />
+            <img src="/assets/Header/Rectangle 1939.png" alt="Logo" className="h-10" />
           </Link>
           {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center space-x-4">
