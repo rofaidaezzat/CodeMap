@@ -348,8 +348,8 @@ const HomePage = () => {
           className="hidden w-full lg:w-[450px] min-h-[500px] lg:flex justify-center items-center relative z-10"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#545BE8]/10 to-transparent rounded-full blur-3xl"></div>
-          <img
-            src="src/assets/Home/OBJECTS2.png"
+          <Image
+            imageurl="src/assets/Home/OBJECTS2.png"
             alt="Premium Learning Experience Illustration"
             className="w-full max-w-[450px] h-auto object-contain relative z-10"
           />
@@ -504,8 +504,6 @@ const HomePage = () => {
           />
         </div>
       </motion.div>
-
-      
     </>
   );
 };
