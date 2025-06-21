@@ -12,8 +12,6 @@ import { IErrorResponse } from "../interfaces";
 import { useState } from "react";
 import Image from "../components/Image";
 import { Ellipsis, Eye, EyeOff } from "lucide-react";
-import { signInWithGoogle } from "../utils";
-import { axiosInstance } from "@/config/axios.config";
 
 interface IFormInput {
   first_name: string;
