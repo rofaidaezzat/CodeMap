@@ -89,7 +89,7 @@ const Notification = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2F174E] via-[#371F5A] to-[#DE00A5] lg:px-40 py-20 lg:pt-28 space-y-8 flex flex-col items-center">
       <h1 className="text-4xl font-extrabold font-serif text-white drop-shadow mb-6">
-        Notifications
+        Notificationsss
       </h1>
 
       <div className="border-b-2 border-[#b480cc] mb-6 w-full max-w-2xl mx-auto">
