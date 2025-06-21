@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Large video files
-src/assets/Home/CodeMap.mp4
+public/assets/Home/CodeMap.mp4
