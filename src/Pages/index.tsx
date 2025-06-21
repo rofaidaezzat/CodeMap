@@ -301,7 +301,7 @@ const HomePage = () => {
               : firstThreeTracks?.map((track) => (
                   <Card
                     key={track._id}
-                    url="src/assets/Tracks img/Front-End.jpeg"
+                    url="/assets/Tracks img/Front-End.jpeg"
                     alt={track.title}
                     requirments={track.requirments}
                     title={track.title}
@@ -349,7 +349,7 @@ const HomePage = () => {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#545BE8]/10 to-transparent rounded-full blur-3xl"></div>
           <Image
-            imageurl="src/assets/Home/OBJECTS2.png"
+            imageurl="/assets/Home/OBJECTS2.png"
             alt="Premium Learning Experience Illustration"
             className="w-full max-w-[450px] h-auto object-contain relative z-10"
           />
@@ -406,8 +406,8 @@ const HomePage = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="p-4 bg-gradient-to-r from-[#10B981]/10 to-[#059669]/10 rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                <img
-                  src="src/assets/Home/hearts 1.png"
+                <Image
+                  imageurl="/assets/Home/hearts 1.png"
                   className="w-8 h-8"
                   alt="Interactive Learning Icon"
                 />

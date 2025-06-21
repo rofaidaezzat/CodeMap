@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 const LearningPlatformHero: React.FC = () => {
   const [isPreviewHovered, setIsPreviewHovered] = useState(false);
+  const prodUrl = "https://codemapuser.netlify.app";
+  const videoSrc = import.meta.env.PROD ? `${prodUrl}/assets/Home/CodeMap.mp4` : "/assets/Home/CodeMap.mp4";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
@@ -91,7 +93,7 @@ const LearningPlatformHero: React.FC = () => {
                 >
                   <video
                     className="rounded-2xl shadow-lg w-90 h-60 object-cover"
-                    src="/assets/Home/CodeMap.mp4"
+                    src={videoSrc}
                     autoPlay
                     loop
                     muted

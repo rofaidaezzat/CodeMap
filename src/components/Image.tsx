@@ -8,7 +8,7 @@ interface Iprops extends ImgHTMLAttributes<HTMLImageElement>{
 
 const Image = ({imageurl,alt,className,...rest}:Iprops) => {
     const prodUrl = "https://codemapuser.netlify.app";
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = import.meta.env.PROD;
     const src = isProduction ? `${prodUrl}${imageurl}` : imageurl;
     return (
         <img src={src} alt={alt} className={className} {...rest}/>
