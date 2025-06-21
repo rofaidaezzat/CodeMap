@@ -22,7 +22,7 @@ interface ITasks {
 
 interface IAnswers{
   questionId:string,
-  answers:string[]
+  selectedOptionIds:string[]
 }
 
 interface IsubmitQuiz{

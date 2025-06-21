@@ -55,8 +55,16 @@ const Navbar = ({ bg }: INavbarProps) => {
         <div className="flex items-center space-x-6">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/assets/Header/Rectangle 1938.png" alt="Logo" className="h-10" />
-            <img src="/assets/Header/Rectangle 1939.png" alt="Logo" className="h-10" />
+            <img
+              src="/assets/Header/Rectangle 1938.png"
+              alt="Logo"
+              className="h-10"
+            />
+            <img
+              src="/assets/Header/Rectangle 1939.png"
+              alt="Logo"
+              className="h-10"
+            />
           </Link>
           {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center space-x-4">
@@ -149,7 +157,7 @@ const Navbar = ({ bg }: INavbarProps) => {
               <button onClick={() => setIsOpenModal(!isOpenModal)}>
                 {data && data.profile_image ? (
                   <img
-                    src={`https://b684-102-189-220-226.ngrok-free.app/${data.profile_image.replace(
+                    src={`https://codemap-wgjw.onrender.com/${data.profile_image.replace(
                       /\\/g,
                       "/"
                     )}`}

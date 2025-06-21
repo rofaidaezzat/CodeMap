@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom"; // Added useNavigate
 import { Eye, EyeOff } from "lucide-react";
 import Image from "@/components/Image";
-import { NEWPASSWORD } from "@/data"; // Ensure this data structure matches your needs
+import { NEWPASSWORD } from "@/data";
 import { IErrorResponse } from "@/interfaces";
 import Button from "@/Ui/Button";
 import Input from "@/Ui/Input";
 import InputErrorMessage from "@/Ui/InputErrorMessage";
-import { NewPasswordSchema } from "@/Validation"; // Ensure this schema matches your password rules
+import { NewPasswordSchema } from "@/Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios, { AxiosError } from "axios";
 import { Ellipsis } from "lucide-react";
@@ -34,30 +34,54 @@ const ResetPassword = () => {
   };
 
   const { token } = useParams<{ token: string }>();
-  console.log("token from useParams", token);
+  const navigate = useNavigate(); // Added for better navigation handling
+
+  // Add token validation
+  useEffect(() => {
+    if (!token) {
+      console.error("No token found in URL parameters");
+      toast.error("Invalid reset password link", {
+        position: "bottom-center",
+        duration: 4000,
+      });
+      // Redirect to login or home page
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } else {
+      console.log("Token from useParams:", token);
+    }
+  }, [token, navigate]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>({
-    resolver: yupResolver(NewPasswordSchema), // Use your password validation schema
+    resolver: yupResolver(NewPasswordSchema),
   });
 
   // ** Handler for form submission
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    if (!token) {
+      toast.error("Invalid reset token", {
+        position: "bottom-center",
+        duration: 4000,
+      });
+      return;
+    }
+
     console.log("Form Data:", data);
     console.log("Token from URL:", token);
     setIsLoading(true);
     try {
-      // --- CORRECTED API CALL ---
       const { status, data: resData } = await axios.post(
-        `https://b684-102-189-220-226.ngrok-free.app/reset-password/${token}`,
+        `https://codemap-wgjw.onrender.com/reset-password/${token}`,
         {
           newPassword: data.newPassword,
           confirmPassword: data.confirmPassword,
         }
       );
-      // --- END CORRECTION ---
 
       console.log("API Response:", resData);
       if (status === 200) {
@@ -70,15 +94,14 @@ const ResetPassword = () => {
             width: "fit-content",
           },
         });
-        // Redirect to login page or home page after success
+        // Use navigate instead of location.replace for better React Router integration
         setTimeout(() => {
-          location.replace("/"); // Adjust redirect destination if needed
+          navigate("/", { replace: true });
         }, 2000);
       }
     } catch (error) {
-      console.error("API Error:", error); // Log the full error for debugging
+      console.error("API Error:", error);
       const errorObj = error as AxiosError<IErrorResponse>;
-      // Attempt to extract a meaningful error message from the response
       const errorMessage =
         errorObj.response?.data?.error?.message ||
         errorObj.message ||
@@ -91,6 +114,22 @@ const ResetPassword = () => {
       setIsLoading(false);
     }
   };
+
+  // Don't render the form if there's no token
+  if (!token) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-red-600 mb-4">
+            Invalid Reset Link
+          </h2>
+          <p className="text-gray-600">
+            The reset password link is invalid or has expired.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // Render the form fields based on your NEWPASSWORD configuration
   const renderNewPasswordForm = NEWPASSWORD.map(
@@ -158,7 +197,7 @@ const ResetPassword = () => {
           <Button
             className="bg-[#2F174E] text-white py-2 rounded-md hover:bg-[#3C1765]"
             isLoading={isLoading}
-            type="submit" // Ensure button triggers form submission
+            type="submit"
           >
             <p>Reset Password</p>
           </Button>

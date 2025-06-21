@@ -42,10 +42,10 @@ const RoadMapOfFrontend = () => {
     enabled: !!ClickedId,
   });
 
-    if (isLoading)
+  if (isLoading)
     return (
       <div className="flex items-center w-full min-h-screen justify-center">
-        <GlobelLoading/>
+        <GlobelLoading />
       </div>
     );
 
@@ -68,7 +68,6 @@ const RoadMapOfFrontend = () => {
               key={_id}
               className="relative flex flex-col items-center md:grid md:grid-cols-3 md:items-start min-h-fit"
             >
-              {/* الكارت يظهر في النص في الموبايل */}
               <div
                 className={`flex justify-center w-full ${
                   order % 2 === 0 ? "md:invisible" : ""
@@ -84,7 +83,6 @@ const RoadMapOfFrontend = () => {
                 )}
               </div>
 
-              {/* النقطة للديسكتوب فقط */}
               <div className="hidden md:flex justify-center relative min-h-[350px]">
                 <CircleSmall
                   fill="#DE00A5"

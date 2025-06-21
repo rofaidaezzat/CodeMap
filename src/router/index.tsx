@@ -55,48 +55,52 @@ const router = createBrowserRouter(
         <Route path="settings" element={<Setting />} />
         <Route path="recoverpassword" element={<RecoverPassword />} />
         <Route path="/test" element={<Test />} />
+
         <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Tracks and Roadmaps nested here */}
         <Route path="Tracks" element={<TrackLayout />}>
           <Route index element={<Tracks />} />
-          <Route path="InfoOfFrontend" element={
-            
-          <ProtectedRoute
-              isAllowed={!!userData?.accessToken}
-              redirectPath="/login"
-              data={userData}
-            >
-            <InfoOfFrontend />
-            </ProtectedRoute>          
-          } 
-            />
           <Route
-            path="InfoOfFrontend/SecondPageOfRoadMap"
+            path="InfoOfFrontend"
+            element={
+              <ProtectedRoute
+                isAllowed={!!userData?.accessToken}
+                redirectPath="/login"
+                data={userData}
+              >
+                <InfoOfFrontend />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="InfoOfFrontend/roadMapoffrontend"
             element={<RoadmapLayout />}
           >
-            <Route index element={
-              <ProtectedRoute
-              isAllowed={!!userData?.accessToken}
-              redirectPath="/login"
-              data={userData}
-            >
-            <RoadMapOfFrontend />
-            </ProtectedRoute>
-              
-              } />
-            <Route path="coursefrontend" element={
+            <Route
+              index
+              element={
                 <ProtectedRoute
-              isAllowed={!!userData?.accessToken}
-              redirectPath="/login"
-              data={userData}
-            >
-                <CoursePage />         
-              </ProtectedRoute>
-              
-              } 
-              
-              />
+                  isAllowed={!!userData?.accessToken}
+                  redirectPath="/login"
+                  data={userData}
+                >
+                  <RoadMapOfFrontend />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="coursefrontend"
+              element={
+                <ProtectedRoute
+                  isAllowed={!!userData?.accessToken}
+                  redirectPath="/login"
+                  data={userData}
+                >
+                  <CoursePage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Route>
 
@@ -140,7 +144,7 @@ const router = createBrowserRouter(
           }
         />
 
-            <Route
+        <Route
           path="taskform"
           element={
             <ProtectedRoute
@@ -159,17 +163,20 @@ const router = createBrowserRouter(
       {/*---------------- chatbot-------------- */}
       <Route path="chatbot" element={<ChatbotLayout />}>
         <Route index element={<Welcome />} />
-        <Route path="services" element={
-          <ProtectedRoute
+        <Route
+          path="services"
+          element={
+            <ProtectedRoute
               isAllowed={!!userData?.accessToken}
               redirectPath="/login"
               data={userData}
             >
-            <ServicesPage />
+              <ServicesPage />
             </ProtectedRoute>
-          } />
+          }
+        />
       </Route>
-      <Route path="" element={<PageNotFound/>} />
+      <Route path="" element={<PageNotFound />} />
     </>
   )
 );

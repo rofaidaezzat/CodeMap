@@ -45,7 +45,7 @@ const SignUp = () => {
     try {
       // const{status}=await axiosInstance.post("auth/local/register",data)
       const { status } = await axios.post(
-        "https://b684-102-189-220-226.ngrok-free.app/auth/register",
+        "https://codemap-wgjw.onrender.com/auth/register",
         data,
         { withCredentials: true }
       );
