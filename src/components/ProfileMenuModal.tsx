@@ -1,6 +1,11 @@
+import { resetIdLessonSlice } from "@/app/features/clickedIdLessonSlice";
+import { resetclickedId } from "@/app/features/clickedIdSlice";
+import { resetCurrentTaskId } from "@/app/features/CurrentTaskIdSlice";
+import { resetwatchedLessons } from "@/app/features/WatchedLesson";
 import { axiosInstance } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import { CircleUserRound } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 type IProfileMenuModalProps = {
   isOpen: boolean;
@@ -14,6 +19,7 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
   const userDataString = localStorage.getItem("loggedInUser");
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const IdUser = userData.id;
+  const Dispach =useDispatch()
   const getUserById = async (): Promise<IUser> => {
     if (!IdUser) throw new Error("No User ID Provided");
     const { data } = await axiosInstance.get(`users/${IdUser}`);
@@ -30,6 +36,11 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
       await axiosInstance.post("/auth/logout");
       localStorage.removeItem("loggedInUser");
       localStorage.removeItem("accessToken");
+      Dispach(resetwatchedLessons())
+      Dispach(resetCurrentTaskId())
+      Dispach(resetclickedId())
+      Dispach(resetIdLessonSlice())
+
 
       setTimeout(() => {
         location.replace("/");
@@ -38,6 +49,10 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
       console.error("Logout failed", err);
       localStorage.removeItem("loggedInUser");
       localStorage.removeItem("accessToken");
+      Dispach(resetwatchedLessons())
+      Dispach(resetCurrentTaskId())
+      Dispach(resetclickedId())
+      Dispach(resetIdLessonSlice())
       location.replace("/login");
     }
   };

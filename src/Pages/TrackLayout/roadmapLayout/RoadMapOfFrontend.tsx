@@ -6,7 +6,7 @@ import { axiosInstance } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import LoadingTaskForm from "@/components/TaskFormComponents/LoadingTaskForm/LoadingTaskForm";
+import GlobelLoading from "@/Ui/LoadingGlable/LoadingGlable";
 
 interface Icategory {
   _id: string;
@@ -22,7 +22,7 @@ export interface IStatges {
 }
 export type IstatgesResponse = IStatges[];
 
-const SecondPageOfRoadMap = () => {
+const RoadMapOfFrontend = () => {
   const { ClickedId } = useSelector((state: RootState) => state.clickedId);
   const [dotPositions, setDotPositions] = useState<Record<number, number>>({});
   const updateDotPosition = (id: number, pos: number) => {
@@ -42,10 +42,10 @@ const SecondPageOfRoadMap = () => {
     enabled: !!ClickedId,
   });
 
-  if (isLoading)
+    if (isLoading)
     return (
       <div className="flex items-center w-full min-h-screen justify-center">
-        <LoadingTaskForm />
+        <GlobelLoading/>
       </div>
     );
 
@@ -59,7 +59,7 @@ const SecondPageOfRoadMap = () => {
       </div>
       <div className="relative">
         {/* Vertical Line  */}
-        <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-[#b480cc] z-0" />
+        <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-[#b480cc] z-0" />
         {/* RoadMap Components */}
 
         <div className="flex flex-col  gap-10 mt-20 px-10">
@@ -68,13 +68,6 @@ const SecondPageOfRoadMap = () => {
               key={_id}
               className="relative flex flex-col items-center md:grid md:grid-cols-3 md:items-start min-h-fit"
             >
-              {/* للموبايل فقط: النقطة */}
-              <div className="md:hidden relative h-[50px] w-full">
-                <div className="absolute left-1/2 -translate-x-1/2 top-1/2 z-10">
-                  <CircleSmall fill="#DE00A5" color="#FFFFFF" size={30} />
-                </div>
-              </div>
-
               {/* الكارت يظهر في النص في الموبايل */}
               <div
                 className={`flex justify-center w-full ${
@@ -124,4 +117,4 @@ const SecondPageOfRoadMap = () => {
   );
 };
 
-export default SecondPageOfRoadMap;
+export default RoadMapOfFrontend;

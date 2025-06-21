@@ -3,6 +3,8 @@ import { Clock, Globe, OctagonAlert } from "lucide-react";
 import YouTube from "react-youtube";
 import { useMarkLessonCompletedMutation } from "@/app/services/userOperations";
 import { useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setTaskForCategory } from "@/app/features/taskSlice";
 
 interface Iprops {
   videoUrl: string;
@@ -53,16 +55,33 @@ const ContentOfPage = ({
   currentLessonId,
   userId,
 }: Iprops) => {
+
   // states
-  const [MarkLessonCompleted] = useMarkLessonCompletedMutation();
+  const [MarkLessonCompleted ] = useMarkLessonCompletedMutation();
+  const Dispatch=useDispatch()
 
   // if the user watch video
-
   const queryClient = useQueryClient();
-
   const onPlayerEnd = async () => {
     // Send API request to backend to mark lesson as completed
-    await MarkLessonCompleted(currentLessonId);
+  const response = await MarkLessonCompleted(currentLessonId);
+    // Log full structure
+    console.log("Full response from mutation:", response);
+
+    // Just data
+    console.log("Completed lesson data:", response?.data);
+
+  if (response?.data?.taskGenerated && response.data.task?._id) {
+  console.log(response.data.task?._id);
+  Dispatch(
+    setTaskForCategory({
+      userId: userId, 
+      categoryId: response.data.task.category,
+      taskId: response.data.task._id,
+    })
+  );
+}
+
 
     //  Update React Query cache manually without refetch
     queryClient.setQueryData<ICompletedLessonResponse>(

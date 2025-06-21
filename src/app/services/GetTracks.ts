@@ -4,6 +4,19 @@ import { baseQueryWithReauth } from "./customBaseQuery";
 
 
 
+interface Iheader{
+    title:string
+    subTitle:string
+    
+}
+
+interface Iglabel{
+    name:string
+    icon:string
+}
+
+
+
 export interface ITracks {
     _id: string;
     title: string;
@@ -12,8 +25,19 @@ export interface ITracks {
     assignedTo:string
     user:string[]
     image:string
+    header:Iheader[]
+    description:string
+    core_languages:Iglabel[]
+    popular_frameworks:Iglabel[]
+    development_tools:Iglabel[]
+    career_opportunities:string
+    advanced_topics:string
+    project_based_learning:string
+    testimonials:string
 }
 
+
+export type IInfoResponeResponse =ITracks;
 
 
 export type ITracksResponse =ITracks[];
@@ -41,12 +65,20 @@ export const TracksApiSlice=createApi({
                     ]
                     : [{ type: 'Getstatges', id: 'LIST' }],
         }),
+        getInfoTrack:builder.query<IInfoResponeResponse, string | null>({
+                    query:(_id)=>{
+                        return{
+                            url:`/roadmaps/${_id}`
+                        }
+                    },
+            
+                }),
             
 
     })
 
 })
 
-export const {useGetTracksQuery}=TracksApiSlice
+export const {useGetTracksQuery,useGetInfoTrackQuery}=TracksApiSlice
 
 

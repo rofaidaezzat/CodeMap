@@ -1,60 +1,72 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./customBaseQuery";
 
-
-
-
 interface Option {
-    text: string;
-    id: string;
-
+  text: string;
+  id: string;
 }
 
 interface QuestionType {
-    questionText: string;
-    options: Option[];
-    correctAnswers: string[];
-} 
-
-interface ITasks {
-    _id: string;
-    title: string;
-    description: string;
-    questions:QuestionType[]
+  questionText: string;
+  options: Option[];
+  correctAnswers: string[];
+  questionId:string
 }
 
-export type ITasksResponse =ITasks[];
+interface ITasks {
+  _id: string;
+  title: string;
+  description: string;
+  questions: QuestionType[];
+}
 
+interface IAnswers{
+  questionId:string,
+  answers:string[]
+}
 
+interface IsubmitQuiz{
+  answers:IAnswers[]
+}
 
-export const TaskApiSlice=createApi({
-    reducerPath:'ApiTask',
-    tagTypes:['TaskForm'],
-    baseQuery: baseQueryWithReauth,   
-        endpoints:(builder)=>({
+export type ITasksResponse = ITasks; // 
 
-          // Get =>get
-        getTasks:builder.query<ITasksResponse, void>({
-            query:()=>{
-                return{
-                    url:"/tasks"
-                }
-            },
-            providesTags: (result) =>
-                result
-                    ? [
-                        ...result.map(({ _id }) => ({
-                        type: 'TaskForm' as const,
-                        id: _id,
-                        })),
-                        { type: 'TaskForm', id: 'LIST' },
-                    ]
-                    : [{ type: 'TaskForm', id: 'LIST' }],
+export const TaskApiSlice = createApi({
+    reducerPath: "ApiTask",
+    tagTypes: ["TaskForm"],
+    baseQuery: baseQueryWithReauth,
+    endpoints: (builder) => ({
+    getTasks: builder.query<ITasksResponse, string | null>({
+        query: (_id) => ({
+        url: `/tasks/${_id}`,
         }),
+        providesTags: (result) =>
+        result
+            ? [{ type: "TaskForm", id: result._id }]
+            : [{ type: "TaskForm", id: "LIST" }],
+    }),
 
-    })
+        //Create=>post
+                StartQuize: builder.mutation({
+                query: (_id:string|null) => ({
+                    url: `/tasks/start/${_id}`,
+                    method: "POST",
+                }),
+                    invalidatesTags: [{ type: "TaskForm", id: "LIST" }]
+            }),
+            
+        //Create=>post
+            //--------------------------update--------------------
 
-})
+            submitQuiz: builder.mutation({
+                    query: ({ _id, body }: { _id:string|null; body:IsubmitQuiz }) => ({
+                    url: `/submissions/submit-quiz/${_id}`,
+                        method: "POST",
+                        body: body
+                        }),
+                        invalidatesTags: [{ type: "TaskForm", id: "LIST" }]
+                    }),
+    }),
+});
 
-export const {useGetTasksQuery}=TaskApiSlice
-
+export const { useGetTasksQuery,useStartQuizeMutation,useSubmitQuizMutation} = TaskApiSlice;

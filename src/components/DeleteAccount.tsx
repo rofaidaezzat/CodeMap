@@ -1,6 +1,6 @@
 import Button from "@/Ui/Button";
 import  { useEffect, useState } from "react";
-import DeleteModal from "./DeleteModal";
+import GlobalModal from "./DeleteModal";
 import Spinner from "@/Ui/LoadingSpinner";
 import { useDeleteAccountMutation, useRequestForDeleteAccountMutation } from "@/app/services/DeleteAccountForUser";
 import toast from "react-hot-toast";
@@ -97,9 +97,9 @@ const DeleteAccount = ({isOpenDeleteModal,setIsOpenDeleteModal}:Iprops) => {
       {/* Delete modal */}
       {
         isOpenDeleteModal&&
-        <DeleteModal
+        <GlobalModal
         title="Delete Acount"
-        description="Are you sure you want to delete this Account"
+        description="Are you sure you want to delete this Account?"
         isOpen={isOpenDeleteModal}
         setIsOpen={setIsOpenDeleteModal}
         >
@@ -124,7 +124,7 @@ const DeleteAccount = ({isOpenDeleteModal,setIsOpenDeleteModal}:Iprops) => {
               "Get OTP Code"
             )}
           </button>
-          </DeleteModal>
+          </GlobalModal>
       }
       {/* OTP Form */}
       {

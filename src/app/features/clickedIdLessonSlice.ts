@@ -16,9 +16,12 @@ const clickedIdLessonSlice=createSlice({
     reducers:{
         clickedIdLessonAction:(state,action:PayloadAction<string|null>)=>{
             state.ClickedIdLesson=action.payload
-        }
+        },
+        resetIdLessonSlice: () => {
+        return initialState;
+    }
     }
 })
 
-export const {clickedIdLessonAction}=clickedIdLessonSlice.actions
+export const {clickedIdLessonAction,resetIdLessonSlice}=clickedIdLessonSlice.actions
 export default  clickedIdLessonSlice.reducer

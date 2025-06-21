@@ -1,6 +1,5 @@
 import { CalendarDays } from 'lucide-react';
-import Button from '../../Ui/Button';
-import { DataOfCardInfo, InformationOfInfo } from '../../data';
+import {  InformationOfInfo } from '../../data';
 import CardOfInfo from '../../components/Course Overview Of info/CardOfInfo';
 import HeaderOfInfotwo from '@/components/infoComponents/HeaderOfInfo/HeaderOfInfotwo';
 import LastCardOfInfo from '@/components/infoComponents/LastCardOfInfo';
@@ -8,9 +7,43 @@ import { useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import {motion} from 'framer-motion'
+import { useGetInfoTrackQuery } from '@/app/services/GetTracks';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+import GlobelLoading from '@/Ui/LoadingGlable/LoadingGlable';
+import ButtonStart from '@/components/infoComponents/ButtonStart/ButtonStart';
 
 
 const InfoOfFrontend = () => {
+
+  const { ClickedId } = useSelector((state: RootState) => state.clickedId);
+const { data, isLoading } = useGetInfoTrackQuery(ClickedId);
+
+const convertedData = data ? [
+  {
+    title: "Core Languages",
+    content: data.core_languages.map(lang => ({
+      imagurl: lang.icon,
+      imagetitle: lang.name,
+    })),
+  },
+  {
+    title: "Popular Frameworks",
+    content: data.popular_frameworks.map(fw => ({
+      imagurl: fw.icon,
+      imagetitle: fw.name,
+    })),
+  },
+  {
+    title: "Development Tools",
+    content: data.development_tools.map(tool => ({
+      imagurl: tool.icon,
+      imagetitle: tool.name,
+    })),
+  },
+] : [];
+
+
 
   // animation for second dev
   const controlsText = useAnimation();
@@ -51,12 +84,25 @@ const InfoOfFrontend = () => {
                 controlsTracks.start('visible');
                 }
             }, [inViewCards]);
+        if (isLoading) {
+        return (
+    <div className='flex items-center justify-center w-full h-screen'>
+      <GlobelLoading />
+    </div>
+  );
+}
+
 
   return (
     <div className='min-h-screen pt-20 m-5 flex flex-col gap-10 items-center'>
       {/* first section  */}
       <div  className="w-full ">
-        <HeaderOfInfotwo/>
+        {data?.header && (
+        <div className="w-full">
+        <HeaderOfInfotwo header={data.header} />
+        </div>
+        )}
+
       </div>
 
       {/*  second dev */}
@@ -70,13 +116,10 @@ const InfoOfFrontend = () => {
         }}
         className='w-full mt-5  flex flex-col gap-3'>
         <h3 className='font-bold  text-[#371F5A] lg:text-3xl md:text-2xl text-lg '>
-        Introduction to Front-End Development
+        {data?.title}
         </h3>
         <p className='lg:text-[22px]  md:text-xl text-lg'>
-        Front-end development is the practice of producing HTML, CSS, and JavaScript for a website or Web Application so
-        that a user can see and interact with them directly. The challenge associated with front-end development is that the
-        tools and techniques used to create the front end of a website change constantly and so the developer needs to
-        constantly be aware of how the field is developing.
+        {data?.description}
         </p>
       </motion.div>
        {/* calander */} 
@@ -98,29 +141,27 @@ const InfoOfFrontend = () => {
               </h3>
               <p className=' lg:block hidden lg:text-[20px]  text-[#888080]'>Start straight away and join a global classroom of learners.<br/> If the course
                         hasn’t started yet you’ll see the future date listed below.</p>
-      </motion.div>
-      <motion.div
+          </motion.div>
+          <motion.div
                 initial={{ x: 100, opacity: 0 }}
                 animate={controlsPremium}
                 variants={{
                 hidden: { x: 100, opacity: 0 },
                 visible: { x: 0, opacity: 1, transition: { duration: 1 } },
                 }} 
-                className='border-2  border-l-4 border-[#888080] border-l-[#DE00A5] lg:w-[600px] md:w-[400px] w-[300px] h-[75px] p-2 flex justify-between'>
+                className='border-2  border-l-4 border-[#888080] border-l-[#DE00A5] lg:w-[600px] md:w-[400px] w-[300px] h-[75px] p-2 flex items-center justify-between'>
         <div className='flex gap-2 items-center justify-center cursor-pointer'>
         <CalendarDays color='black' size={40} />
-        <p className='text-black  md:text-[20px] text-[18px]'>Available now</p>
+            <p className='text-black  md:text-[20px] text-[18px]'>Available now</p>
         </div>
-        <Button className=' w-fit  bg-[#DE00A5] px-4  md:px-6 py-2 rounded-md flex items-center justify-center font-semibold text-sm md:text-base'>
-                  Join today
-        </Button>
+        <ButtonStart typeofenroll='Join today'/>
     </motion.div>
     </motion.div>
 
       {/* fourth section */}
     <div className='w-full flex flex-wrap overflow-hidden lg:gap-0 gap-7 justify-around  mt-5'>
     {
-      DataOfCardInfo.map((data,idx)=>(
+      convertedData.map((data,idx)=>(
         <motion.div
                 ref={refCards}
                 initial="hidden"

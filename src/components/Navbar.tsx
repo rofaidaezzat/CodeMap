@@ -175,7 +175,6 @@ const Navbar = ({ bg }: INavbarProps) => {
                 </div>
               )}
             </div>
-
             {/* <Button className="cursor-pointer" onClick={onLogout}>
               {" "}
               Logout

@@ -15,9 +15,13 @@ const clickedIdSlice=createSlice({
     reducers:{
         clickedIdAction:(state,action:PayloadAction<string|null>)=>{
             state.ClickedId=action.payload
-        }
+        },
+        resetclickedId: () => {
+        return initialState;
     }
+    }
+
 })
 
-export const {clickedIdAction}=clickedIdSlice.actions
+export const {clickedIdAction,resetclickedId}=clickedIdSlice.actions
 export default  clickedIdSlice.reducer

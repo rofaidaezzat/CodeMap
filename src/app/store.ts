@@ -12,6 +12,9 @@ import clickedIdSlice from './features/clickedIdSlice';
 import clickedIdLessonSlice from './features/clickedIdLessonSlice'
 import { UserOperationApiSlice } from './services/userOperations';
 import watchedLessonsSlice from './features/WatchedLesson'
+import taskSlice from './features/taskSlice'
+import currentTaskIdSlice from './features/CurrentTaskIdSlice'
+import enrolledTracksSlice from './features/enrolledTracksSlice'
 
 const persistAccessTokenConfig = {
     key: "accessToken",
@@ -31,26 +34,47 @@ const persistwatchedLessonsConfig = {
     storage,
 };
 
+const persistTasks = {
+    key: "TaskId",
+    storage,
+};
+
+const persistCuurentTaskId = {
+    key: "CuurentTaskId",
+    storage,
+};
+
+const persistenrolledTracks = {
+    key: "enrolledTracks",
+    storage,
+};
+
 const persistedaccessToken=persistReducer(persistAccessTokenConfig,AccessTokenSlice)
 const persistedclickedId=persistReducer(persistclickedIdConfig,clickedIdSlice)
 const persistedclickedIdLesson=persistReducer(persistclickedIdLessonConfig,clickedIdLessonSlice)
 const persistedwatchedLessons=persistReducer(persistwatchedLessonsConfig,watchedLessonsSlice)
+const persistedTasks=persistReducer(persistTasks,taskSlice)
+const persistedCurrentTaskId=persistReducer(persistCuurentTaskId,currentTaskIdSlice)
+const persistedenrolledTracks=persistReducer(persistenrolledTracks,enrolledTracksSlice)
 
 
 
 export const store = configureStore({
     reducer: {
         watchedLessons: persistedwatchedLessons,
+        enrolledTracks:persistedenrolledTracks,
+        tasks:persistedTasks,
         accessToken:persistedaccessToken,
         clickedId:persistedclickedId,
         clickedIdLesson:persistedclickedIdLesson,
+        CurrentTaskId:persistedCurrentTaskId,
         [ProfileApiSlice.reducerPath]:ProfileApiSlice.reducer,
         [DeleteAcountApiSlice.reducerPath]:DeleteAcountApiSlice.reducer,
         [TaskApiSlice.reducerPath]:TaskApiSlice.reducer,
         [TracksApiSlice.reducerPath]:TracksApiSlice.reducer,
         [statgesApiSlice.reducerPath]:statgesApiSlice.reducer,
         [UserOperationApiSlice.reducerPath]:UserOperationApiSlice.reducer
-    }, 
+    },
 
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware({

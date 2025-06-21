@@ -11,15 +11,32 @@ import { Link } from "react-router-dom";
 import Search from "@/components/Search/Search";
 import { useGetTracksQuery } from "@/app/services/GetTracks";
 import CardTrackSkeleton from "@/components/CardTrackSkeleton";
-import DemoCard from "@/components/DemoCardHome/DemoCard";
-import { demoData } from "@/data";
+import Hero from "@/components/Hero";
 
 const HomePage = () => {
-  const texts = ["Course", "Video", "Track", "Mo2a"];
+  const texts = ["Course", "Video", "Track"];
 
-  // Animation statemangment
   const controlsTracks = useAnimation();
   const { ref: refTracks, inView: inViewTracks } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
+  const controlsTestimonials = useAnimation();
+  const { ref: refTestimonials, inView: inViewTestimonials } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
+  const controlsPremium = useAnimation();
+  const { ref: refPremium, inView: inViewPremium } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
+  // Add missing controls for stats section
+  const controlsStats = useAnimation();
+  const { ref: refStats, inView: inViewStats } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
@@ -28,35 +45,28 @@ const HomePage = () => {
     if (inViewTracks) {
       controlsTracks.start("visible");
     }
-  }, [inViewTracks]);
-
-  const controlsTestimonials = useAnimation();
-  const { ref: refTestimonials, inView: inViewTestimonials } = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  });
+  }, [inViewTracks, controlsTracks]);
 
   useEffect(() => {
     if (inViewTestimonials) {
       controlsTestimonials.start("visible");
     }
-  }, [inViewTestimonials]);
-
-  const controlsPremium = useAnimation();
-  const { ref: refPremium, inView: inViewPremium } = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  });
+  }, [inViewTestimonials, controlsTestimonials]);
 
   useEffect(() => {
     if (inViewPremium) {
       controlsPremium.start("visible");
     }
-  }, [inViewPremium]);
-  // section ourtrack fetch only three tracks They are available to me
-  const { data, isLoading } = useGetTracksQuery();
+  }, [inViewPremium, controlsPremium]);
 
-  // Get first three tracks
+  useEffect(() => {
+    if (inViewStats) {
+      controlsStats.start("visible");
+    }
+  }, [inViewStats, controlsStats]);
+
+  // Fetch tracks data
+  const { data, isLoading } = useGetTracksQuery();
   const firstThreeTracks = data?.slice(0, 3);
 
   return (
@@ -89,7 +99,6 @@ const HomePage = () => {
                 className="w-10"
               />
             </div>
-            {/* ---------search bar----------------------- */}
             <Search />
           </motion.div>
           <motion.div
@@ -118,29 +127,133 @@ const HomePage = () => {
           />
         </div>
       </div>
-      {/* ------------------------chatboot section------------------------- */}
-      <div className="bg-[#2F174E] flex justify-center  -mt-5 md:-mt-10   mx-auto w-5/6 md:w-4/6  py-10  rounded-3xl spin">
-        <div className="bg-white flex items-center justify-between md:justify-around w-11/12 mx-auto p-6 md:p-8 rounded-xl shadow-lg flex-wrap gap-6 min-h-[2px] md:min-h-[2px]">
-          <div className="w-16 h-16 md:w-24 md:h-24">
+
+      {/* Chatbot section */}
+      <div className="bg-gradient-to-r from-[#2F174E] to-[#4A2B6B] flex justify-center -mt-5 md:-mt-10 mx-auto w-5/6 md:w-4/6 py-10 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+        <div className="bg-white flex items-center justify-between md:justify-around w-11/12 mx-auto p-6 md:p-8 rounded-xl shadow-lg flex-wrap gap-6 min-h-[80px] backdrop-blur-sm">
+          <div className="w-16 h-16 md:w-24 md:h-24 relative">
+            <div className="absolute inset-0 bg-[#545BE8]/20 rounded-full animate-ping"></div>
             <Image
               imageurl="src/assets/Home/chat.png"
-              alt="Chatbot"
-              className="w-full h-full image-container"
+              alt="AI Chatbot Assistant"
+              className="w-full h-full relative z-10 hover:scale-110 transition-transform duration-300"
             />
           </div>
 
-          <h6 className="text-xl md:text-3xl font-bold text-gray-900 text-center md:text-left">
-            Not sure where to start? <br className="hidden md:block" />
-            Talk to our chatbot
-          </h6>
+          <div className="text-center md:text-left">
+            <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
+              Not sure where to start?
+            </h2>
+            <p className="text-gray-600 font-medium">
+              Get personalized recommendations from our AI assistant
+            </p>
+          </div>
+
           <Link to="/chatbot">
-            <Button className="bg-[#2F174E] text-white px-4 md:px-6 py-2 rounded-full flex items-center justify-center font-semibold text-sm md:text-base">
+            <Button className="bg-gradient-to-r from-[#2F174E] to-[#545BE8] text-white px-6 md:px-8 py-3 rounded-full flex items-center justify-center font-semibold text-sm md:text-base hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               Start Chatting
+              <svg
+                className="ml-2 w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
             </Button>
           </Link>
         </div>
       </div>
-      {/* --------------Section ourTracks------------------ */}
+
+      {/* Success Statistics */}
+      <motion.div
+        ref={refStats}
+        initial="hidden"
+        animate={controlsStats}
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+        }}
+        className="my-10 py-12"
+      >
+        <div className="flex justify-between mx-10 px-10 w-auto h-11">
+          <Image
+            imageurl="src/assets/Home/Group3.png"
+            alt="error"
+            className="w-8 h-8"
+          />
+          <Image
+            imageurl="src/assets/Home/lamb.png"
+            alt="error"
+            className="w-[80px] h-auto"
+          />
+        </div>
+
+        <h3 className="text-center font-semibold text-4xl">Our Impact</h3>
+        <p className="text-center">Real numbers from our learning community</p>
+
+        <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
+          <div className="hidden lg:flex flex-col justify-between h-full gap-10">
+            <Image
+              imageurl="src/assets/Home/Group2.png"
+              alt="error"
+              className="w-[40px] h-auto mb-20 ml-5"
+            />
+            <Image
+              imageurl="src/assets/Home/Group4.png"
+              alt="error"
+              className="w-[50px] h-auto"
+            />
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-10 justify-center items-center flex-wrap">
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center w-64 h-48 flex flex-col justify-center border-2 border-[#CFD8FF]">
+              <h4 className="text-4xl font-bold text-[#545BE8] mb-2">50K+</h4>
+              <h5 className="text-xl font-semibold text-gray-900 mb-2">
+                Students
+              </h5>
+              <p className="text-slate-400">Active learners worldwide</p>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center w-64 h-48 flex flex-col justify-center border-2 border-[#CFD8FF]">
+              <h4 className="text-4xl font-bold text-[#545BE8] mb-2">95%</h4>
+              <h5 className="text-xl font-semibold text-gray-900 mb-2">
+                Success Rate
+              </h5>
+              <p className="text-slate-400">Complete their chosen tracks</p>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center w-64 h-48 flex flex-col justify-center border-2 border-[#CFD8FF]">
+              <h4 className="text-4xl font-bold text-[#545BE8] mb-2">200+</h4>
+              <h5 className="text-xl font-semibold text-gray-900 mb-2">
+                Companies
+              </h5>
+              <p className="text-slate-400">Hire our graduates</p>
+            </div>
+          </div>
+
+          <div className="hidden lg:flex flex-col justify-between h-full gap-10">
+            <Image
+              imageurl="src/assets/Home/Group2.png"
+              alt="error"
+              className="w-[40px] h-auto"
+            />
+            <Image
+              imageurl="src/assets/Home/Group4.png"
+              alt="error"
+              className="w-[50px] h-auto"
+            />
+          </div>
+        </div>
+      </motion.div>
+      {/* seaction learn without limits */}
+      <Hero />
+      {/* Our Tracks section */}
       <motion.div
         ref={refTracks}
         initial="hidden"
@@ -167,7 +280,6 @@ const HomePage = () => {
         <h3 className="text-center font-semibold text-4xl">Our Tracks</h3>
         <p className="text-center">Most popular tracks suggested for you</p>
         <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
-          {/* صور اليسار */}
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
               imageurl="src/assets/Home/Group2.png"
@@ -180,7 +292,7 @@ const HomePage = () => {
               className="w-[50px] h-auto"
             />
           </div>
-          {/* الكروت في المنتصف */}
+
           <div className="flex flex-col md:flex-row gap-10 justify-center items-center flex-wrap">
             {isLoading
               ? Array.from({ length: 3 }).map((_, index) => (
@@ -197,7 +309,7 @@ const HomePage = () => {
                   />
                 ))}
           </div>
-          {/* صور اليمين */}
+
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
               imageurl="src/assets/Home/Group2.png"
@@ -212,14 +324,20 @@ const HomePage = () => {
           </div>
         </div>
       </motion.div>
-      {/* --------------------premium learing------------------------------- */}
-      <motion.div
+
+      {/* Premium Learning section */}
+      <motion.section
         ref={refPremium}
         initial="hidden"
         animate={controlsPremium}
-        className="my-10 p-5 flex flex-col md:flex-row md:h-[500px] h-[400px] lg:flex-row bg-[#CFD8FF] lg:justify-around gap-5"
+        variants={{
+          hidden: { x: 100, opacity: 0 },
+          visible: { x: 0, opacity: 1, transition: { duration: 1 } },
+        }}
+        className="my-16 p-8 flex flex-col md:flex-row md:min-h-[500px] bg-gradient-to-br from-[#CFD8FF] to-[#E8EFFF] lg:justify-around gap-8 rounded-3xl mx-4 relative overflow-hidden"
       >
-        {/* image  */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           animate={controlsPremium}
@@ -227,14 +345,16 @@ const HomePage = () => {
             hidden: { x: -100, opacity: 0 },
             visible: { x: 0, opacity: 1, transition: { duration: 1 } },
           }}
-          className="hidden w-full lg:w-[450px] h-[500px] lg:flex justify-center ml-11"
+          className="hidden w-full lg:w-[450px] min-h-[500px] lg:flex justify-center items-center relative z-10"
         >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#545BE8]/10 to-transparent rounded-full blur-3xl"></div>
           <img
-            src="src\assets\Home\OBJECTS2.png"
-            alt="Premium LearningExperience"
-            className="sm:w-3/4 lg:w-full w-[516px] h-[500px]"
+            src="src/assets/Home/OBJECTS2.png"
+            alt="Premium Learning Experience Illustration"
+            className="w-full max-w-[450px] h-auto object-contain relative z-10"
           />
         </motion.div>
+
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={controlsPremium}
@@ -242,52 +362,104 @@ const HomePage = () => {
             hidden: { x: 100, opacity: 0 },
             visible: { x: 0, opacity: 1, transition: { duration: 1 } },
           }}
-          className="w-full lg:w-1/2 flex flex-col items-start justify-center gap-10"
+          className="w-full lg:w-1/2 flex flex-col items-start justify-center gap-8 relative z-10"
         >
-          {/* header */}
-          <div className="flex">
-            <h3 className="font-bold text-[40px] w-full">
-              Premium <span>Learning</span>
+          <div>
+            <h2 className="font-bold text-3xl md:text-5xl text-gray-900 leading-tight">
+              Premium <span className="text-[#545BE8]">Learning</span>
               <br /> Experience
-            </h3>
+            </h2>
+            <p className="text-gray-600 text-lg mt-4">
+              Unlock your potential with our comprehensive learning ecosystem
+              designed for success
+            </p>
           </div>
-          <div className="space-y-5">
-            {/* heart1  */}
-            <div className="flex items-center justify-center space-x-2">
-              <div className="p-4 heart">
+
+          <div className="space-y-6">
+            <motion.div
+              className="flex items-start space-x-4 group"
+              whileHover={{ x: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="p-4 bg-gradient-to-r from-[#545BE8]/10 to-[#7C3AED]/10 rounded-2xl group-hover:scale-110 transition-transform duration-300">
                 <Image
-                  imageurl="src\assets\Home\hearts 1.png"
-                  alt="error"
+                  imageurl="src/assets/Home/hearts 1.png"
+                  alt="Structured Learning Icon"
                   className="w-8 h-8"
                 />
               </div>
-              <div>
-                <h3 className="font-semibold text-2xl">
+              <div className="flex-1">
+                <h3 className="font-semibold text-xl md:text-2xl text-gray-900 mb-2">
                   Structured Learning Path
                 </h3>
-                <p className="text-slate-400">
+                <p className="text-gray-600 leading-relaxed">
                   Follow our carefully designed roadmaps to master programming
-                  skills step by step, from basics to advanced concepts.
+                  skills step by step, from basics to advanced concepts with
+                  clear milestones and checkpoints.
                 </p>
               </div>
-            </div>
-            {/* heart2 */}
-            <div className="flex items-center justify-center space-x-2">
-              <div className="p-4 heart">
-                <img src="src\assets\Home\hearts 1.png" className="w-8 h-8" />
+            </motion.div>
+
+            <motion.div
+              className="flex items-start space-x-4 group"
+              whileHover={{ x: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="p-4 bg-gradient-to-r from-[#10B981]/10 to-[#059669]/10 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                <img
+                  src="src/assets/Home/hearts 1.png"
+                  className="w-8 h-8"
+                  alt="Interactive Learning Icon"
+                />
               </div>
-              <div>
-                <h3 className="font-semibold text-2xl">Interactive Learning</h3>
-                <p className="text-slate-400">
+              <div className="flex-1">
+                <h3 className="font-semibold text-xl md:text-2xl text-gray-900 mb-2">
+                  Interactive Learning
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
                   Engage with practical exercises, real-world projects, and
-                  community support to enhance your learning journey.
+                  community support to enhance your learning journey with
+                  hands-on experience and peer collaboration.
                 </p>
               </div>
-            </div>
+            </motion.div>
+
+            <motion.div
+              className="flex items-start space-x-4 group"
+              whileHover={{ x: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="p-4 bg-gradient-to-r from-[#F59E0B]/10 to-[#D97706]/10 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                <svg
+                  className="w-8 h-8 text-[#F59E0B]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-xl md:text-2xl text-gray-900 mb-2">
+                  Instant Feedback & Support
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Get immediate feedback on your progress with AI-powered
+                  assessments and 24/7 access to expert mentors and community
+                  support when you need help.
+                </p>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
-      </motion.div>
-      {/* ------------------------Section what student say----------------------- */}
+      </motion.section>
+
+      {/* Testimonials section */}
       <motion.div
         ref={refTestimonials}
         initial="hidden"
@@ -307,7 +479,7 @@ const HomePage = () => {
         </p>
         <div className="mt-10 mb-10 flex flex-col items-center lg:gap-0 gap-5 space-y-2 sm:flex-row sm:justify-center md:justify-around flex-wrap">
           <Image
-            imageurl="src\assets\Home\Group12.png"
+            imageurl="src/assets/Home/Group12.png"
             alt="error"
             className="hidden lg:flex w-20 h-20"
           />
@@ -326,44 +498,14 @@ const HomePage = () => {
           />
 
           <Image
-            imageurl="src\assets\Home\casual-life-3d-orange-planet-with-disk 1.png"
+            imageurl="src/assets/Home/casual-life-3d-orange-planet-with-disk 1.png"
             alt="error"
             className="w-11 h-11 hidden lg:flex"
           />
         </div>
       </motion.div>
-      {/* ------------------------ section Demo Portfolio----------------------- */}
-      <motion.div
-        ref={refTestimonials}
-        initial="hidden"
-        animate={controlsTestimonials}
-        variants={{
-          hidden: { opacity: 0, y: 50 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-        }}
-        className="py-12"
-      >
-        <section className="py-10 bg-[#f9f9ff]">
-          <h2 className="text-2xl md:text-4xl text-[#2F174E] mb-4 text-center font-semibold">
-            What You Can Build
-          </h2>
-          <p className="text-center text-sm text-gray-600 mb-6">
-            Sample projects you'll be able to build
-          </p>
 
-          <div className="flex flex-wrap justify-center gap-6 px-4">
-            {demoData.map((item, idx) => (
-              <DemoCard
-                key={idx}
-                img={item.img}
-                title={item.title}
-                tags={item.tags}
-                demo={item.demo}
-              />
-            ))}
-          </div>
-        </section>
-      </motion.div>
+      
     </>
   );
 };

@@ -1,15 +1,18 @@
-import { ButtonHTMLAttributes } from 'react'
+import { ButtonHTMLAttributes, ReactNode } from 'react'
 import './ButtonTask.css'
+
 interface Iprops extends ButtonHTMLAttributes<HTMLButtonElement>{
-    title:string
+    children: ReactNode
 }
 
-const ButtonTask = ({title,...rest}:Iprops) => {
-    return (
-    <button className="btn-task" {...rest}>
-    <span>{title}</span>
+const ButtonTask = ({ children, className = "", ...rest }: Iprops) => {
+  return (
+    <button className={`btn-task ${className} `} {...rest}>
+      <div className="btn-task-content">
+        {children}
+      </div>
     </button>
-    )
+  )
 }
 
 export default ButtonTask

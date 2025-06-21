@@ -9,9 +9,8 @@ interface Iprops {
 }
 
 
-const DeleteModal = ({ isOpen, setIsOpen,children,description,title }: Iprops) => {
+const GlobalModal = ({ isOpen, setIsOpen,children,description,title }: Iprops) => {
     
-
     if (!isOpen) return null;
 
     return (
@@ -34,4 +33,4 @@ const DeleteModal = ({ isOpen, setIsOpen,children,description,title }: Iprops) =
     );
 };
 
-export default DeleteModal;
+export default GlobalModal;

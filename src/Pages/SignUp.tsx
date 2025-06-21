@@ -11,7 +11,7 @@ import axios, { AxiosError } from "axios";
 import { IErrorResponse } from "../interfaces";
 import { useState } from "react";
 import Image from "../components/Image";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Eye, EyeOff } from "lucide-react";
 import { signInWithGoogle } from "../utils";
 import { axiosInstance } from "@/config/axios.config";
 
@@ -26,7 +26,10 @@ interface IFormInput {
 const SignUp = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
+  const toggleShowPassword = (name: string) => {
+    setShowPassword((prev) => ({ ...prev, [name]: !prev[name] }));
+  };
   const {
     register,
     handleSubmit,
@@ -112,14 +115,27 @@ const SignUp = () => {
   }
   const renderSignUpForm = REGISTER_FORM.map(
     ({ name, Label, placeholder, type, validation }, idx) => (
-      <div key={idx} className="flex flex-col gap-2 ">
+      <div key={idx} className="flex flex-col gap-2 relative">
         <label className="text-gray-700 font-medium">{Label}</label>
-        <Input
-          type={type}
-          placeholder={placeholder}
-          {...register(name, validation)}
-          className="border-[1px] border-gray-300 shadow-lg focus:border-[#FFFFFF] focus:outline-none focus:ring-1 focus:ring-[#FFFFFF] rounded-lg px-3 py-3 text-md bg-[#FFFFFF]"
-        />
+
+        <div className="relative">
+          <Input
+            type={type === "password" && showPassword[name] ? "text" : type}
+            placeholder={placeholder}
+            {...register(name, validation)}
+            className="border-[1px] border-gray-300 shadow-lg focus:border-[#FFFFFF] focus:outline-none focus:ring-1 focus:ring-[#FFFFFF] rounded-lg px-3 py-3 text-md bg-[#FFFFFF] w-full"
+          />
+
+          {type === "password" && (
+            <span
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer text-gray-500"
+              onClick={() => toggleShowPassword(name)}
+            >
+              {showPassword[name] ? <EyeOff size={20} /> : <Eye size={20} />}
+            </span>
+          )}
+        </div>
+
         {errors[name] && <InputErrorMessage msg={errors[name]?.message} />}
       </div>
     )

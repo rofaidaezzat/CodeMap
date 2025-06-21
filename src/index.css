@@ -4,7 +4,6 @@
 
 
 
-
 .navbar{
     background: linear-gradient(to right,#000000 0%,#371F5A 100%);
 }
@@ -74,5 +73,9 @@ span{
 .bgOfPhotoOfProfile{
     background: linear-gradient(to right,#371F5A 0%,#6f44af 100%);
 }
-
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 6s linear infinite;
+  }
+}
 

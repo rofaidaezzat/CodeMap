@@ -19,10 +19,10 @@ import CookiesPolicy from "../Pages/CookiesPolicy";
 import InfoOfFrontend from "../Pages/TrackLayout/InfoOfFrontend";
 import Profile from "@/Pages/Profile";
 import Notification from "@/Pages/Notification";
-import Tasks from "@/Pages/Tasks";
+import Tasks from "@/Pages/TasksPage";
 import TrackLayout from "@/Pages/TrackLayout/TrackLayout";
 import RoadmapLayout from "@/Pages/TrackLayout/roadmapLayout/RoadmapLayout";
-import SecondPageOfRoadMap from "@/Pages/TrackLayout/roadmapLayout/SecondPageOfRoadMap";
+import RoadMapOfFrontend from "@/Pages/TrackLayout/roadmapLayout/RoadMapOfFrontend";
 import CoursePage from "@/Pages/TrackLayout/roadmapLayout/CoursePage";
 import Setting from "@/Pages/Setting";
 
@@ -32,6 +32,8 @@ import ChatbotLayout from "@/Pages/Chatbot/ChatbotLayout";
 import Welcome from "@/Pages/Chatbot/Welcome";
 import ServicesPage from "@/Pages/Chatbot/ServicesPage";
 import TaskForm from "@/Pages/TaskForm";
+import ResetPassword from "@/Pages/ResetPassword";
+import PageNotFound from "@/components/PageNotFound/PageNotFound";
 
 const storageKey = "loggedInUser";
 const userDataString = localStorage.getItem(storageKey);
@@ -53,17 +55,48 @@ const router = createBrowserRouter(
         <Route path="settings" element={<Setting />} />
         <Route path="recoverpassword" element={<RecoverPassword />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Tracks and Roadmaps nested here */}
         <Route path="Tracks" element={<TrackLayout />}>
           <Route index element={<Tracks />} />
-          <Route path="InfoOfFrontend" element={<InfoOfFrontend />} />
+          <Route path="InfoOfFrontend" element={
+            
+          <ProtectedRoute
+              isAllowed={!!userData?.accessToken}
+              redirectPath="/login"
+              data={userData}
+            >
+            <InfoOfFrontend />
+            </ProtectedRoute>          
+          } 
+            />
           <Route
             path="InfoOfFrontend/SecondPageOfRoadMap"
             element={<RoadmapLayout />}
           >
-            <Route index element={<SecondPageOfRoadMap />} />
-            <Route path="coursefrontend" element={<CoursePage />} />
+            <Route index element={
+              <ProtectedRoute
+              isAllowed={!!userData?.accessToken}
+              redirectPath="/login"
+              data={userData}
+            >
+            <RoadMapOfFrontend />
+            </ProtectedRoute>
+              
+              } />
+            <Route path="coursefrontend" element={
+                <ProtectedRoute
+              isAllowed={!!userData?.accessToken}
+              redirectPath="/login"
+              data={userData}
+            >
+                <CoursePage />         
+              </ProtectedRoute>
+              
+              } 
+              
+              />
           </Route>
         </Route>
 
@@ -126,8 +159,17 @@ const router = createBrowserRouter(
       {/*---------------- chatbot-------------- */}
       <Route path="chatbot" element={<ChatbotLayout />}>
         <Route index element={<Welcome />} />
-        <Route path="services" element={<ServicesPage />} />
+        <Route path="services" element={
+          <ProtectedRoute
+              isAllowed={!!userData?.accessToken}
+              redirectPath="/login"
+              data={userData}
+            >
+            <ServicesPage />
+            </ProtectedRoute>
+          } />
       </Route>
+      <Route path="" element={<PageNotFound/>} />
     </>
   )
 );

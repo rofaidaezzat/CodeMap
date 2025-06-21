@@ -17,8 +17,11 @@ export const watchedLessonsSlice = createSlice({
         state.watched.push(action.payload);
         }
     },
+    resetwatchedLessons: () => {
+    return initialState;
+    }
     },
 });
 
-export const { markLessonWatched } = watchedLessonsSlice.actions;
+export const { markLessonWatched,resetwatchedLessons } = watchedLessonsSlice.actions;
 export default watchedLessonsSlice.reducer;

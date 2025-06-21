@@ -10,9 +10,10 @@
   overflow: hidden;
   cursor: pointer;
   border: none;
-  min-width: 120px;
-  width: 130px;
+  min-width: 130px;
   height: 48px;
+  padding: 0 16px; /* تضمن وجود مسافة داخلية حتى مع نص صغير */
+  transition: all 0.3s ease-in-out;
 }
 
 .btn-task:after {
@@ -23,6 +24,8 @@
   position: absolute;
   transition: all 0.4s ease-in-out;
   right: 0;
+  top: 0;
+  z-index: 1;
 }
 
 .btn-task:hover::after {
@@ -31,20 +34,24 @@
   width: 100%;
 }
 
-.btn-task span {
+.btn-task .btn-task-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   text-align: center;
   text-decoration: none;
-  /* width: 100%; */
-  padding: 18px 15px;
   color: #fff;
   font-size: 1.125em;
   font-weight: 700;
   letter-spacing: 0.1em;
-  z-index: 20;
+  z-index: 2;
   transition: all 0.3s ease-in-out;
+  padding: 10px 0;
+  gap: 8px;
 }
 
-.btn-task:hover span {
+.btn-task:hover .btn-task-content {
   color: #183153;
   animation: scaleUp 0.3s ease-in-out;
 }
@@ -62,3 +69,28 @@
     transform: scale(1);
   }
 }
+
+/* Optional: for disabled button visual */
+.btn-task:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* لما يكون الزر فيه validation error، نلغي الـ after */
+.btn-task.btn-error::after {
+  display: none !important;
+}
+
+.btn-task.btn-error:hover::after {
+  display: none !important;
+}
+
+.btn-task.btn-error {
+  background-color: #dc2626  !important; /* red-600 */
+
+}
+
+.btn-task.btn-error:hover {
+  background-color: #b91c1c !important; /* red-700 */
+}
+

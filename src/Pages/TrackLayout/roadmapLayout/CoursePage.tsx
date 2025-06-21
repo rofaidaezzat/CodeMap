@@ -32,11 +32,11 @@ const CoursePage = () => {
   );
 
   const [selectedVideo, setSelectedVideo] = useState({
-    videoUrl: "https://www.youtube.com/embed/lG_mTu0wyZA",
-    title: "Html Introduction",
-    duration: 2,
+    videoUrl: "",
+    title: "",
+    duration: 0,
   });
-  console.log(selectedVideo);
+  console.log(selectedVideo)
 
   const getLessonById = async (): Promise<ILessonResponse> => {
     if (!ClickedIdLesson) throw new Error("No Lesson ID Provided");

@@ -4,13 +4,14 @@ import Trackcard from "../../components/Trackcard";
 import Button from "../../Ui/Button";
 import { useGetTracksQuery } from "@/app/services/GetTracks";
 import CardTrackSkeleton from "@/components/CardTrackSkeleton";
+import "@/index.css";
 
 const Tracks = () => {
   const { data, isLoading } = useGetTracksQuery();
 
   if (isLoading)
     return (
-      <div className="pt-20 mt-5 mb-5 px-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
+      <div className="pt-20 mt-5 mb-5 px-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-10 justify-center max-w-screen-xl mx-auto">
         {Array.from({ length: 8 }).map((_, index) => (
           <CardTrackSkeleton key={index} />
         ))}
@@ -27,72 +28,44 @@ const Tracks = () => {
       _id={_id}
     />
   ));
+
   return (
-    <>
-      <div className="pt-20 mt-5  flex overflow-x-hidden">
-        {/* left section */}
-        <div className="flex flex-col  space-y-5 justify-start p-8 gap-8 w-full lg:w-4/6 ">
+    <div className="pt-20 mt-5 px-4 overflow-x-hidden w-full">
+      <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-10">
+        {/* Left Section */}
+        <div className="w-full lg:w-3/4 space-y-8">
           <LetterPullUp
             className="text-black font-display text-start text-2xl font-bold tracking-wide md:text-4xl"
             text="Choose your learning track"
           />
-          <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:justify-center  gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
             {renderTracks}
           </div>
         </div>
 
-        {/* right section  */}
+        {/* Right Section */}
+        <div className="hidden lg:flex flex-col w-full max-w-sm h-fit shadow-2xl rounded-xl p-4 space-y-4">
+          <h3 className="text-2xl lg:text-3xl font-semibold">
+            Upcoming Courses
+          </h3>
+          <div className="flex flex-col gap-6">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <Image
+                  imageurl="src/assets/Tracks img/Front-End.jpeg"
+                  alt="error"
+                  className="w-24 h-24 rounded-xl object-cover"
+                />
+                <div>
+                  <p className="text-lg font-bold text-[#565656] leading-snug">
+                    Mastering Frontend HTML/CSS/JS
+                  </p>
+                  <p className="text-sm text-slate-500">2h 15m</p>
+                </div>
+              </div>
+            ))}
 
-        <div className="hidden lg:flex lg:flex-col w-[380px] md:w-[400px]  lg:w-[440px] h-screen shadow-2xl mx-auto rounded-xl  p-3 mr-0 space-y-2">
-          <h3 className="text-2xl pb-4 lg:text-3xl">Upcoming Courses</h3>
-          <div className="flex flex-col  gap-12">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center  space-x-2">
-                <Image
-                  imageurl="src/assets/Tracks img/Front-End.jpeg"
-                  alt="error"
-                  className="w-28 h-28 rounded-xl"
-                />
-                <div>
-                  <p className=" pb-4 text-xl text-[#565656] font-bold">
-                    Mastering Frontend HTML/CSS/JS
-                  </p>
-                  <p className="text-slate-400 text-xs lg:text-[15px]">
-                    2h 15m
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Image
-                  imageurl="src/assets/Tracks img/Front-End.jpeg"
-                  alt="error"
-                  className="w-28 h-28 rounded-xl"
-                />
-                <div>
-                  <p className=" pb-4 text-xl text-[#565656] font-bold">
-                    Mastering Frontend HTML/CSS/JS
-                  </p>
-                  <p className="text-slate-400 text-xs lg:text-[15px]">
-                    2h 15m
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Image
-                  imageurl="src/assets/Tracks img/Front-End.jpeg"
-                  alt="error"
-                  className="w-28 h-28 rounded-xl"
-                />
-                <div>
-                  <p className=" pb-4 text-xl text-[#565656] font-bold">
-                    Mastering Frontend HTML/CSS/JS
-                  </p>
-                  <p className="text-slate-400 text-xs lg:text-[15px]">
-                    2h 15m
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Chatbot */}
             <div className="relative">
               <div className="absolute -right-7  bg-white border-4 border-[#2F174E] rounded-3xl p-6 flex flex-col items-start text-left shadow-lg w-[270px] md:w-[340px] lg:w-[400px]">
                 <h3 className="font-bold text-lg text-gray-900">
@@ -115,7 +88,7 @@ const Tracks = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -200,7 +200,6 @@ const Setting = () => {
       </div>
     );
   };
-
   const renderPasswordChangeForm = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -226,13 +225,11 @@ const Setting = () => {
       </div>
     );
   };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-[#f3f0ff] via-[#e9e6fa] to-[#f7f7fb] py-20 px-2 relative">
       <h1 className="text-4xl md:text-5xl font-extrabold text-[#413198] text-center mb-10 drop-shadow-sm tracking-tight">
         Account Settings
       </h1>
-
       <div className="space-y-12 w-full max-w-4xl">
         {/* User Info */}
         <form

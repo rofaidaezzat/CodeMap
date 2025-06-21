@@ -7,7 +7,7 @@
 
   /* Button Base Styles */
     .buttons-startInfo button {
-    @apply w-[150px] h-[50px] bg-[#b43c96] m-5 text-[#ffffff] relative overflow-hidden 
+    @apply w-[150px] h-[50px] bg-[#DE00A5] m-5 text-[#ffffff] relative overflow-hidden 
             text-sm tracking-wider font-medium uppercase transition-all duration-300 
             ease-in-out cursor-pointer border-0 flex items-center justify-center rounded;
     }

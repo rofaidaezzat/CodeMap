@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
-
+import { Eye, EyeOff } from "lucide-react";
 import Image from "@/components/Image";
 import { NEWPASSWORD } from "@/data"; // Ensure this data structure matches your needs
 import { IErrorResponse } from "@/interfaces";
@@ -21,11 +21,20 @@ interface IFormInput {
 }
 
 const ResetPassword = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  // --- ADDED: Get token from URL parameter ---
-  // Assumes your route is defined like '/reset-password/:token'
-  const { token } = useParams<{ token: string }>();
+  const [showPasswords, setShowPasswords] = useState<Record<string, boolean>>(
+    {}
+  );
 
+  const [isLoading, setIsLoading] = useState(false);
+  const toggleVisibility = (fieldName: string) => {
+    setShowPasswords((prev) => ({
+      ...prev,
+      [fieldName]: !prev[fieldName],
+    }));
+  };
+
+  const { token } = useParams<{ token: string }>();
+  console.log("token from useParams", token);
   const {
     register,
     handleSubmit,
@@ -42,11 +51,11 @@ const ResetPassword = () => {
     try {
       // --- CORRECTED API CALL ---
       const { status, data: resData } = await axios.post(
-        // Construct the URL with the token from useParams
-        // Adjust '/auth' prefix if it's already in your axiosInstanceNew baseURL
-        `https://bcad-102-189-220-41.ngrok-free.app/reset-password/${token}`,
-        // Send the new password in the format expected by the backend
-        { password: data.newPassword }
+        `https://b684-102-189-220-226.ngrok-free.app/reset-password/${token}`,
+        {
+          newPassword: data.newPassword,
+          confirmPassword: data.confirmPassword,
+        }
       );
       // --- END CORRECTION ---
 
@@ -85,21 +94,37 @@ const ResetPassword = () => {
 
   // Render the form fields based on your NEWPASSWORD configuration
   const renderNewPasswordForm = NEWPASSWORD.map(
-    ({ name, Label, placeholder, type }, idx) => (
-      <div key={idx} className="flex flex-col gap-2 ">
-        <label className="text-gray-700 font-medium">{Label}</label>
-        <Input
-          type={type}
-          placeholder={placeholder}
-          {...register(name as keyof IFormInput)} // Register the input field
-          className="border-[1px] border-gray-300 shadow-lg focus:border-[#FFFFFF] focus:outline-none focus:ring-1 focus:ring-[#FFFFFF] rounded-lg px-3 py-3 text-md bg-[#FFFFFF]"
-        />
-        {/* Display validation errors */}
-        {errors[name as keyof IFormInput] && (
-          <InputErrorMessage msg={errors[name as keyof IFormInput]?.message} />
-        )}
-      </div>
-    )
+    ({ name, Label, placeholder, type }, idx) => {
+      const isPasswordField = type === "password";
+      const isVisible = showPasswords[name];
+
+      return (
+        <div key={idx} className="flex flex-col gap-2 relative">
+          <label className="text-gray-700 font-medium">{Label}</label>
+          <div className="relative">
+            <Input
+              type={isPasswordField ? (isVisible ? "text" : "password") : type}
+              placeholder={placeholder}
+              {...register(name as keyof IFormInput)}
+              className="w-full border-[1px] border-gray-300 shadow-lg focus:border-[#FFFFFF] focus:outline-none focus:ring-1 focus:ring-[#FFFFFF] rounded-lg px-3 py-3 text-md bg-[#FFFFFF] pr-10"
+            />
+            {isPasswordField && (
+              <span
+                onClick={() => toggleVisibility(name)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+              >
+                {isVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
+            )}
+          </div>
+          {errors[name as keyof IFormInput] && (
+            <InputErrorMessage
+              msg={errors[name as keyof IFormInput]?.message}
+            />
+          )}
+        </div>
+      );
+    }
   );
 
   // JSX for the component layout
@@ -115,7 +140,7 @@ const ResetPassword = () => {
           Learning Platform
         </span>
         <Image
-          imageurl="src/assets/SignUp/mainImage.png" // Verify this image path
+          imageurl="/src/assets/SignUp/mainImage.png" // Verify this image path
           alt="Platform illustration"
           className="w-[400px] md:w-[460px]"
         />

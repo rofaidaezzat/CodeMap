@@ -8,8 +8,10 @@ import { axiosInstance } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import LargeLoadingSpinner from "@/Ui/LargeLoadingSpinner/LargeLoadingSpinner";
 import CheckBox from "../TaskFormComponents/checkbox/CheckBox";
-import { Youtube, Clock, BookOpen } from "lucide-react";
+import { Youtube, Clock, BookOpen, BookOpenCheck } from "lucide-react";
 import { clickedIdLessonAction } from "@/app/features/clickedIdLessonSlice";
+import { useNavigate } from "react-router-dom";
+import { addCurrentTaskIdAction } from "@/app/features/CurrentTaskIdSlice";
 
 interface SidebarProps {
   setSelectedVideo: (video: {
@@ -32,14 +34,14 @@ interface Icategory {
 interface ILessons {
   _id: string;
   title: string;
-  link:string 
-  lesson_duration:number,
-  lecture_number:number
+  link: string;
+  lesson_duration: number;
+  lecture_number: number;
 }
 
-interface IRoadmap{
-    _id: string;
-    title:string
+interface IRoadmap {
+  _id: string;
+  title: string;
 }
 
 interface IStatges {
@@ -47,49 +49,49 @@ interface IStatges {
   title: string;
   category: Icategory[];
   lesson: ILessons[];
-  roadmap:IRoadmap;
+  roadmap: IRoadmap;
 }
 
 interface ICompletedLesson {
   _id: string;
-  lecture_number:number
+  lecture_number: number;
   completedby: string[];
 }
 
 export type ICompletedLessonResponse = ICompletedLesson[];
 export type IstatgesResponse = IStatges[];
 
+const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
+  // user id
+  const userDataString = localStorage.getItem("loggedInUser");
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const IdUser = userData.id;
 
-  const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
-    // user id
-    const userDataString = localStorage.getItem("loggedInUser");
-    const userData = userDataString ? JSON.parse(userDataString) : null;
-    const IdUser=userData.id
   // states
-  const { ClickedIdLesson } = useSelector((state: RootState) => state.clickedIdLesson);
+  const { ClickedIdLesson } = useSelector(
+    (state: RootState) => state.clickedIdLesson
+  );
   const { ClickedId } = useSelector((state: RootState) => state.clickedId);
+  const {categoryTasks} = useSelector((state: RootState) => state.tasks);
   const [open, setOpen] = useState(true);
   const [expandedMainIds, setExpandedMainIds] = useState<string[]>([]);
   const [expandedLessonIds, setExpandedLessonIds] = useState<string[]>([]);
-  const Dispatch=useDispatch()
-
+  const Dispatch = useDispatch();
+  const navigate=useNavigate()
 
   const toggleMain = (id: string) => {
-    setExpandedMainIds(prev =>
-      prev.includes(id) ? prev.filter(openId => openId !== id) : [...prev, id]
+    setExpandedMainIds((prev) =>
+      prev.includes(id) ? prev.filter((openId) => openId !== id) : [...prev, id]
     );
   };
 
   const toggleLesson = (id: string) => {
-    setExpandedLessonIds(prev =>
-      prev.includes(id) ? prev.filter(openId => openId !== id) : [...prev, id]
+    setExpandedLessonIds((prev) =>
+      prev.includes(id) ? prev.filter((openId) => openId !== id) : [...prev, id]
     );
   };
 
-
-
-
-  // fetch all lesson 
+  // fetch all lesson
   const getStatgesById = async (): Promise<IstatgesResponse> => {
     if (!ClickedId) throw new Error("No stage ID Provided");
     const { data } = await axiosInstance.get(`/stages/roadmap/${ClickedId}`);
@@ -102,35 +104,21 @@ export type IstatgesResponse = IStatges[];
     enabled: !!ClickedId,
   });
 
-
-
-  
   // fetch Completed Lesson
   const getCompletedLessons = async (): Promise<ICompletedLessonResponse> => {
     const { data } = await axiosInstance.get(`/lesson/completed`);
     return data;
   };
-  
 
-  const { data:watchedLessonIds } = useQuery({
+  const { data: watchedLessonIds } = useQuery({
     queryKey: ["userCompletedLessons"],
     queryFn: getCompletedLessons,
   });
 
-// fetch completed lesson for user 
-const completedLessonIds = watchedLessonIds
-  ?.filter((lesson) => lesson.completedby.includes(IdUser))
-  ?.map((lesson) => lesson._id);
-
-
-  // Get the max lecture_number from completed lessons for user
-const maxCompletedLectureNumber = Math.max(
-  0,
-  ...watchedLessonIds
+  // fetch completed lesson for user
+  const completedLessonIds = watchedLessonIds
     ?.filter((lesson) => lesson.completedby.includes(IdUser))
-    ?.map((lesson) => lesson.lecture_number) || []
-);
-
+    ?.map((lesson) => lesson._id);
 
 
 
@@ -145,13 +133,14 @@ const maxCompletedLectureNumber = Math.max(
           <div className="flex items-center justify-center h-full">
             <LargeLoadingSpinner />
           </div>
-        ) : (
+          ) : (
           <>
-          
             {open && (
-              <div className="flex flex-col gap-4 p-4">
+              <div className="flex pt-20 flex-col gap-4 p-4">
                 <div className="space-y-4 pt-2">
-                        <h3 className="text-2xl font-bold text-gray-800">{data?.[0]?.roadmap?.title}</h3>
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    {data?.[0]?.roadmap?.title}
+                  </h3>
                   <div className="flex items-center gap-4 text-sm text-gray-600">
                     <span className="flex items-center gap-1">
                       <BookOpen size={16} />
@@ -163,15 +152,19 @@ const maxCompletedLectureNumber = Math.max(
                     </span>
                   </div>
                 </div>
-                {data?.map(({ _id, category, lesson, title}) => (
+                {data?.map(({ _id, category, lesson, title }) => (
                   <div key={_id} className="space-y-4">
                     <div
                       className="flex justify-between items-center bg-gradient-to-r from-[#371F5A] to-[#5d3599] p-4 rounded-lg cursor-pointer hover:from-[#57318f] hover:to-[#6d3eb4] transition-all duration-300 shadow-md"
                       onClick={() => toggleMain(_id)}
                     >
-                      <h3 className="text-xl font-semibold text-white">{title}</h3>
+                      <h3 className="text-xl font-semibold text-white">
+                        {title}
+                      </h3>
                       <motion.span
-                        animate={{ rotate: expandedMainIds.includes(_id) ? 180 : 0 }}
+                        animate={{
+                          rotate: expandedMainIds.includes(_id) ? 180 : 0,
+                        }}
                         transition={{ duration: 0.2 }}
                         className="text-white"
                       >
@@ -181,10 +174,10 @@ const maxCompletedLectureNumber = Math.max(
                     <AnimatePresence>
                       {expandedMainIds.includes(_id) && (
                         <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.5 }}
                           className="space-y-3 pl-3 overflow-hidden"
                         >
                           {category.map(({ _id: categoryId, title }) => (
@@ -194,17 +187,27 @@ const maxCompletedLectureNumber = Math.max(
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.5 }}
-                                className="flex justify-between items-center bg-gray-200 p-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-all duration-300 border border-gray-200"
+                                className="flex justify-between items-center gap-2 bg-gray-200 p-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-all duration-300 border border-gray-200"
                                 onClick={() => toggleLesson(categoryId)}
                               >
-                                <h4 className="text-lg font-medium text-gray-700">{title}</h4>
+                                <h4 className="text-lg font-medium text-gray-700">
+                                  {title}
+                                </h4>
                                 <motion.span
-                                  animate={{ rotate: expandedLessonIds.includes(categoryId) ? 90 : 0 }}
+                                  animate={{
+                                    rotate: expandedLessonIds.includes(
+                                      categoryId
+                                    )
+                                      ? 90
+                                      : 0,
+                                  }}
                                   transition={{ duration: 0.2 }}
                                   className="text-gray-500"
                                 >
                                   <FiChevronRight size={20} />
                                 </motion.span>
+                                
+                                
                               </motion.div>
                               <AnimatePresence>
                                 {expandedLessonIds.includes(categoryId) && (
@@ -215,61 +218,100 @@ const maxCompletedLectureNumber = Math.max(
                                     transition={{ duration: 0.5 }}
                                     className="py-2 space-y-0 pl-2 overflow-hidden"
                                   >
-                                    {lesson.map(({ _id: lessonId, title,lesson_duration,link,lecture_number }, index) => {
-                                    const isActive = lessonId === ClickedIdLesson;
-                                    const isLockedLesson =lecture_number > maxCompletedLectureNumber + 1;
-                                      return (
-                                        <li key={lessonId} className="relative">
-                                          {index > 0 && (
-                                            <div className="absolute left-0 right-0 top-0 h-[1px] bg-gray-200" />
-                                          )}
-                                          <motion.div
-                                            initial={{ opacity: 0, y: -20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: -20 }}
-                                            transition={{ duration: 0.5 }}
-                                            onClick={() => {
-                                                      if (isLockedLesson) return; 
-                                                        setSelectedVideo({
-                                                        videoUrl: link,
-                                                        title: title,
-                                                        duration: lesson_duration,
-                                                    });
-                                              Dispatch(clickedIdLessonAction(lessonId));
+                                    {lesson.map(
+                                      (
+                                        {
+                                          _id: lessonId,
+                                          title,
+                                          lesson_duration,
+                                          link,
+                                        },
+                                        index
+                                      ) => {
+                                        const isActive =
+                                          lessonId === ClickedIdLesson;
+                                        
+                                        return (
+                                          <li
+                                            key={lessonId}
+                                            className="relative"
+                                          >
+                                            {index > 0 && (
+                                              <div className="absolute left-0 right-0 top-0 h-[1px] bg-gray-200" />
+                                            )}
+                                            <motion.div
+                                              initial={{ opacity: 0, y: -20 }}
+                                              animate={{ opacity: 1, y: 0 }}
+                                              exit={{ opacity: 0, y: -20 }}
+                                              transition={{ duration: 0.5 }}
+                                              onClick={() => {
+                                                setSelectedVideo({
+                                                  videoUrl: link,
+                                                  title: title,
+                                                  duration: lesson_duration,
+                                                });
+                                                Dispatch(
+                                                  clickedIdLessonAction(
+                                                    lessonId
+                                                  )
+                                                );
                                               }}
-                                            className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 group relative
-                                              ${isLockedLesson
-                                              ? 'opacity-50 cursor-not-allowed'
-                                              : isActive
-                                              ? 'bg-purple-100 border-l-4 border-[#5d3599]'
-                                              : 'hover:bg-purple-50'
+                                              className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 group relative
+                                              ${
+                                                isActive
+                                                  ? "bg-purple-100 border-l-4 border-[#5d3599]"
+                                                  : "hover:bg-purple-50"
                                               }`}
                                             >
-                                            {completedLessonIds && (
-                                              <CheckBox 
-                                              checked={completedLessonIds.includes(lessonId)} 
-                                              disabled 
-                                              />
-                                              )}                                            
+                                              {completedLessonIds && (
+                                                <CheckBox
+                                                type="checkbox"
+                                                  checked={completedLessonIds.includes(
+                                                    lessonId
+                                                  )}
+                                                  disabled
+                                                />
+                                              )}
                                               <div className="flex-1">
-                                              <h5 className={`text-md font-medium transition-colors
-                                                ${isActive 
-                                                  ? 'text-black' 
-                                                  : 'text-gray-700 group-hover:text-black'}`}>
-                                                {title}
-                                              </h5>
-                                              <div className="flex items-center gap-2 mt-1">
-                                                <Youtube size={16} className="text-red-600" />
-                                                <span className="text-md text-gray-500">2 hrs</span>
+                                                <h5
+                                                  className={`text-md font-medium transition-colors
+                                                ${
+                                                  isActive
+                                                    ? "text-black"
+                                                    : "text-gray-700 group-hover:text-black"
+                                                }`}
+                                                >
+                                                  {title}
+                                                </h5>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                  <Youtube
+                                                    size={16}
+                                                    className="text-red-600"
+                                                  />
+                                                  <span className="text-md text-gray-500">
+                                                    2 hrs
+                                                  </span>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </motion.div>
-                                        </li>
-                                      );
-                                    })}
+                                            </motion.div>
+                                          </li>
+                                        );
+                                      }
+                                    )}
                                   </motion.ul>
                                 )}
                               </AnimatePresence>
+                              {categoryTasks[IdUser]?.[categoryId] && (
+                              <div
+                              className="flex gap-3 items-center bg-red-800 p-3 rounded-lg cursor-pointer hover:bg-red-700 transition-all duration-300 border border-gray-200"
+                              onClick={() => {
+                              Dispatch(addCurrentTaskIdAction(categoryTasks[IdUser]?.[categoryId]));
+                              navigate("/taskform");
+                              }}>
+                                <BookOpenCheck size={20} color="white" />
+                                <h4 className="text-lg font-medium text-white">You Have Task</h4>
+                              </div>
+                              )}
                             </div>
                           ))}
                         </motion.div>
