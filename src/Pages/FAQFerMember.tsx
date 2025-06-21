@@ -2,7 +2,6 @@ import Image from "../components/Image"
 import QuestionDev from "../components/QuestionDev"
 import { Questions } from "@/data"
 import Button from "../Ui/Button"
-import Input from "../Ui/Input"
 
 // interface FaqItem {
 //     question: string;

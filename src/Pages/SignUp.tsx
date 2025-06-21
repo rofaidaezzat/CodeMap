@@ -86,30 +86,6 @@ const SignUp = () => {
     navigate("/LogIn");
   };
 
-  const handleGoogleSignIn = async () => {
-    const user = await signInWithGoogle();
-    console.log(user);
-    if (user) {
-      console.log("Google User:", user);
-
-      const userInfo = {
-        username: user.displayName,
-        email: user.email,
-      };
-      const password = Math.random().toString(36).slice(-8);
-      localStorage.setItem("loggedInUser", JSON.stringify(userInfo));
-      await axiosInstance.post("auth/local/register", {
-        username: userInfo.username,
-        email: userInfo.email,
-        password,
-      });
-      setTimeout(() => {
-        //navigate("/",) مش هاينفع اعملها كده علشان هو مش بيعمل refresh ll pages
-        location.replace("/");
-      }, 2000);
-    }
-  };
-
   {
     /**Render */
   }
