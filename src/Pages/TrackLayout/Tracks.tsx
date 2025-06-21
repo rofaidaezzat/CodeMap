@@ -5,6 +5,7 @@ import Button from "../../Ui/Button";
 import { useGetTracksQuery } from "@/app/services/GetTracks";
 import CardTrackSkeleton from "@/components/CardTrackSkeleton";
 import "@/index.css";
+import { Link } from "react-router-dom";
 
 const Tracks = () => {
   const { data, isLoading } = useGetTracksQuery();
@@ -131,9 +132,24 @@ const Tracks = () => {
                       Get personalized learning recommendations from our AI
                     </p>
 
-                    <Button className="w-full bg-gradient-to-r from-[#6F44AF] to-[#371F5A] hover:from-[#371F5A] hover:to-[#6F44AF] text-white font-semibold py-3 px-4 rounded-xl text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#6F44AF]/25">
-                      Start Chatting
-                    </Button>
+                    <Link to="/chatbot">
+                      <Button className="bg-gradient-to-r from-[#2F174E] to-[#545BE8] text-white px-6 md:px-8 py-3 rounded-full flex items-center justify-center font-semibold text-sm md:text-base hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                        Start Chatting
+                        <svg
+                          className="ml-2 w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </Button>
+                    </Link>
                   </div>
 
                   {/* Decorative elements */}

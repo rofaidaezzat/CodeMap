@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "@/components/Image";
 import { motion } from "framer-motion";
 import SearchChatbot from "@/components/SearchChatbot/SearchChatbot";
-import { axiosInstance } from "@/config/axios.config";
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { IErrorResponse } from "@/interfaces";
 
 interface Message {
@@ -56,8 +55,8 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
     setMessages((prev) => [...prev, { type: "user", text }]);
 
     try {
-      const { data } = await axiosInstance.post(
-        `chatbot/sessions/${sessionId}/messages`,
+      const { data } = await axios.post(
+        `https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions/${sessionId}/messages`,
         { message: text },
         {
           headers: {
@@ -90,8 +89,8 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
       if (!sessionId) return;
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const { data } = await axiosInstance.get(
-          `chatbot/sessions/${sessionId}`,
+        const { data } = await axios.get(
+          `https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions/${sessionId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -136,13 +135,13 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
           <motion.h3
             variants={itemVariants}
             className="text-2xl font-bold text-white mb-2 text-center"
-            >
+          >
             Your Learning Journey Starts Here
-            </motion.h3>
-            <motion.p
+          </motion.h3>
+          <motion.p
             variants={itemVariants}
             className="text-lg text-gray-200 text-center max-w-md"
-            >
+          >
             Discover curated tracks designed to guide you step-by-step in
             mastering programming skills. Tailored to match your goals and
             expertise.
@@ -163,7 +162,7 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
             {msg.text}
           </div>
         ))}
-        <div style={{ height: '90px' }} />
+        <div style={{ height: "90px" }} />
         <div ref={chatEndRef} />
       </div>
 

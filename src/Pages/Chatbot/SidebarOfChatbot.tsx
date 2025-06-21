@@ -1,8 +1,6 @@
-
-import { axiosInstance } from "@/config/axios.config";
 import { IErrorResponse } from "@/interfaces";
 import React, { useEffect } from "react";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { FiTrash } from "react-icons/fi";
 import CloseChatbot from "@/components/CloseChatbot";
@@ -40,11 +38,14 @@ const Sidebar: React.FC<SidebarProps> = ({
     try {
       const accessToken = localStorage.getItem("accessToken");
 
-      const { data } = await axiosInstance.get("chatbot/sessions", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const { data } = await axios.get(
+        "https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       setSessions(data.data); // تحديث الحالة
     } catch (error) {
@@ -65,8 +66,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     try {
       const accessToken = localStorage.getItem("accessToken");
 
-      const { status, data: resData } = await axiosInstance.post(
-        "chatbot/sessions",
+      const { status, data: resData } = await axios.post(
+        "https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions",
         {},
         {
           headers: {
@@ -104,11 +105,14 @@ const Sidebar: React.FC<SidebarProps> = ({
     try {
       const accessToken = localStorage.getItem("accessToken");
 
-      const { data } = await axiosInstance.delete(`chatbot/sessions/${id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const { data } = await axios.delete(
+        `https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       toast.success(data.message || "Session deleted");
 

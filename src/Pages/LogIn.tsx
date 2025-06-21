@@ -83,9 +83,7 @@ const LogIn = () => {
       setIsLoading(false); // كده خلص تحميل
     }
   };
-  const togoogle = () => {
-    // navigate("/google")//?
-  };
+
   {
     /**Render */
   }
@@ -139,22 +137,6 @@ const LogIn = () => {
       <span className="hidden lg:block md:hidden bg-[#5D5A6F] w-1 h-96 rounded-2xl"></span>
       {/**the right dev  (input section )*/}
       <div className="flex flex-col w-full md:w-[550px]  lg:w-[550px] bg-white p-10 shadow-md rounded-md gap-2 mt-6 ">
-        <div className="border-2 rounded-lg flex gap-3 justify-start">
-          <Image
-            imageurl="/assets/SignUp/icon.png"
-            alt="error"
-            className="cursor-pointer"
-          />
-          <p
-            className="text-gray-700 font-medium py-4 cursor-pointer"
-            onClick={togoogle}
-          >
-            Signin with google
-          </p>
-        </div>
-        <h2 className="text-center text-gray-600 text-lg mb-4">
-          -or signip with your email-
-        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           {renderLogInUpForm}
           <Button
