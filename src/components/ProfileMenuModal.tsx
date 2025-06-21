@@ -6,23 +6,29 @@ import { axiosInstance } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import { CircleUserRound, Settings, LogOut, User } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 type IProfileMenuModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onLogout?: () => void; // Optional logout handler from parent
 };
 
 interface IUser {
   profile_image: string;
 }
 
-const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
+const ProfileMenuModal = ({
+  isOpen,
+  onClose,
+  onLogout,
+}: IProfileMenuModalProps) => {
   const userDataString = localStorage.getItem("loggedInUser");
   const userData = userDataString ? JSON.parse(userDataString) : null;
-  const IdUser = userData.id;
-  const Dispach = useDispatch();
-  const navigate = useNavigate();
+  const IdUser = userData?.id;
+  const dispatch = useDispatch();
+  const isLoggingOut = useRef(false);
 
   const getUserById = async (): Promise<IUser> => {
     if (!IdUser) throw new Error("No User ID Provided");
@@ -34,35 +40,65 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
   const { data } = useQuery({
     queryKey: ["oneUser", IdUser],
     queryFn: getUserById,
-    enabled: !!IdUser,
+    enabled: !!IdUser && !isLoggingOut.current && !!userData,
+    retry: false,
   });
 
-  const onLogout = async () => {
+  const handleLogout = async () => {
+    if (isLoggingOut.current) return;
+    isLoggingOut.current = true;
+
     try {
-      await axiosInstance.post("/auth/logout");
+      // Reset Redux state first
+      dispatch(resetwatchedLessons());
+      dispatch(resetCurrentTaskId());
+      dispatch(resetclickedId());
+      dispatch(resetIdLessonSlice());
 
-      localStorage.removeItem("loggedInUser");
-      localStorage.removeItem("accessToken");
+      // Close modal immediately
+      onClose();
 
-      // Navigate first
-      navigate("/login"); // أو "/"
+      // Use parent logout handler if provided, otherwise handle internally
+      if (onLogout) {
+        onLogout();
+      } else {
+        // Fallback logout logic
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("accessToken");
 
-      // Delay Redux resets to avoid race condition
-      setTimeout(() => {
-        Dispach(resetwatchedLessons());
-        Dispach(resetCurrentTaskId());
-        Dispach(resetclickedId());
-        Dispach(resetIdLessonSlice());
-      }, 50); // يعطي فرصة لإلغاء mount لأي component
+        // Dispatch custom event
+        window.dispatchEvent(new CustomEvent("userLoggedOut"));
+
+        // Try logout API call
+        axiosInstance.post("/auth/logout").catch((err) => {
+          console.warn("Logout API call failed:", err);
+        });
+
+        setTimeout(() => {
+          window.location.replace("/login");
+        }, 100);
+      }
     } catch (err) {
       console.error("Logout failed", err);
+      // Ensure cleanup
       localStorage.removeItem("loggedInUser");
       localStorage.removeItem("accessToken");
-      navigate("/login");
+      onClose();
+      window.dispatchEvent(new CustomEvent("userLoggedOut"));
+      setTimeout(() => {
+        window.location.replace("/login");
+      }, 100);
+    } finally {
+      isLoggingOut.current = false;
     }
   };
 
   if (!isOpen) return null;
+
+  // Check if user data is still valid
+  if (!userData || !IdUser) {
+    return null;
+  }
 
   return (
     <div className="relative inline-block text-left">
@@ -111,6 +147,7 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
           <div className="py-2">
             <Link
               to="/Profile"
+              onClick={onClose}
               className="group flex items-center px-6 py-3.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 ease-in-out"
             >
               <div className="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mr-4 transition-colors duration-200">
@@ -141,6 +178,7 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
 
             <Link
               to="/settings"
+              onClick={onClose}
               className="group flex items-center px-6 py-3.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 ease-in-out"
             >
               <div className="w-10 h-10 rounded-xl bg-gray-50 group-hover:bg-gray-100 flex items-center justify-center mr-4 transition-colors duration-200">
@@ -172,13 +210,16 @@ const ProfileMenuModal = ({ isOpen, onClose }: IProfileMenuModalProps) => {
 
             <button
               className="group w-full flex items-center px-6 py-3.5 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200 ease-in-out"
-              onClick={onLogout}
+              onClick={handleLogout}
+              disabled={isLoggingOut.current}
             >
               <div className="w-10 h-10 rounded-xl bg-red-50 group-hover:bg-red-100 flex items-center justify-center mr-4 transition-colors duration-200">
                 <LogOut className="w-5 h-5 text-red-600" />
               </div>
               <div className="flex-1 text-left">
-                <p className="font-medium">Sign Out</p>
+                <p className="font-medium">
+                  {isLoggingOut.current ? "Signing out..." : "Sign Out"}
+                </p>
                 <p className="text-xs text-red-400">Sign out of your account</p>
               </div>
             </button>

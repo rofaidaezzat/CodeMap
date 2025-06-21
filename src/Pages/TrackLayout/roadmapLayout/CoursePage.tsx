@@ -52,14 +52,14 @@ const CoursePage = () => {
   });
 
   useEffect(() => {
-    if (data && !isLoading) {
+    if (data && !isLoading && selectedVideo.videoUrl === "") {
       setSelectedVideo({
         videoUrl: data.link,
         title: data.title,
         duration: data.lesson_duration,
       });
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, selectedVideo.videoUrl]);
 
   return (
     <div className="flex flex-col-reverse lg:flex-row w-full min-h-screen bg-gradient-to-br from-[#CFD8FF]/10 to-white">
@@ -67,12 +67,12 @@ const CoursePage = () => {
       <div className="flex-1 overflow-hidden">
         <ContentOfPage
           currentLessonId={ClickedIdLesson ?? ""}
-          videoUrl={data?.link ?? ""}
-          title={data?.title ?? ""}
+          videoUrl={selectedVideo.videoUrl || data?.link || ""}
+          title={selectedVideo.title || data?.title || ""}
           LastEdit={data?.updatedAt ?? ""}
           description={data?.description ?? ""}
-          duration={data?.lesson_duration ?? 0}
-          titleofLesson={data?.title ?? ""}
+          duration={selectedVideo.duration || data?.lesson_duration || 0}
+          titleofLesson={selectedVideo.title || data?.title || ""}
           titleofStatge={data?.stage?.title ?? ""}
           isloading={isLoading}
           userId={IdUser}

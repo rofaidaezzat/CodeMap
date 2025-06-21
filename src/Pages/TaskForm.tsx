@@ -149,10 +149,10 @@ const TaskForm: React.FC = () => {
   const progressPercentage =
     totalQuestions > 0 ? (answeredQuestionsCount / totalQuestions) * 100 : 0;
 
-  // Handle answer change (single choice only)
+  // Handle answer change (single choice only) - FIXED: Now uses option _id instead of text
   const handleAnswerChange = useCallback(
-    (questionId: string, selectedAnswer: string) => {
-      console.log("Answer changing:", { questionId, selectedAnswer });
+    (questionId: string, selectedOptionId: string) => {
+      console.log("Answer changing:", { questionId, selectedOptionId });
 
       setUserAnswers((prevAnswers) => {
         const existingAnswerIndex = prevAnswers.findIndex(
@@ -164,14 +164,14 @@ const TaskForm: React.FC = () => {
           const newAnswers = [...prevAnswers];
           newAnswers[existingAnswerIndex] = {
             questionId,
-            selectedOptionIds: [selectedAnswer],
+            selectedOptionIds: [selectedOptionId],
           };
           return newAnswers;
         } else {
           // Add new answer
           return [
             ...prevAnswers,
-            { questionId, selectedOptionIds: [selectedAnswer] },
+            { questionId, selectedOptionIds: [selectedOptionId] },
           ];
         }
       });
@@ -259,7 +259,7 @@ const TaskForm: React.FC = () => {
   };
 
   const handleCloseModal = () => {
-    Navigate("/TasksPage");
+    Navigate("/tasks");
     dispatch(
       addcompletedTasks({
         userId: IdUser,

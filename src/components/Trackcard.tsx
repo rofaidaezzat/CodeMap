@@ -92,7 +92,7 @@ const Trackcard = ({ url, alt, title, path, _id }: Iprops) => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <Image
-                    imageurl="src/assets/Tracks img/Gemini_Generated_Image_8x5cps8x5cps8x5c.jpeg"
+                    imageurl={url}
                     alt=""
                     className="w-8 h-8 rounded-full object-cover border border-[#CFD8FF]"
                   />

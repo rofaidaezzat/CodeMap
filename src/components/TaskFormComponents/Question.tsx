@@ -25,7 +25,7 @@ interface IAnswers {
 interface IProps {
   questions: QuestionType[];
   currentQuestionIndex: number;
-  onAnswerChange: (questionId: string, selectedAnswer: string) => void;
+  onAnswerChange: (questionId: string, selectedOptionId: string) => void;
   userAnswers: IAnswers[];
 }
 
@@ -35,20 +35,19 @@ const Question: React.FC<IProps> = ({
   onAnswerChange,
   userAnswers,
 }) => {
-  const handleOptionChange = (questionId: string, optionText: string) => {
-    if (!questionId || !optionText) {
-      console.warn("Invalid questionId or optionText:", {
+  // FIXED: Now finds and passes the option _id instead of text
+  const handleOptionChange = (questionId: string, optionId: string) => {
+    if (!questionId || !optionId) {
+      console.warn("Invalid questionId or optionId:", {
         questionId,
-        optionText,
+        optionId,
       });
       return;
     }
-
-    onAnswerChange(questionId, optionText);
+    onAnswerChange(questionId, optionId);
   };
 
   const currentQuestion = questions[currentQuestionIndex];
-
   if (!currentQuestion) {
     return (
       <div className="flex items-center justify-center p-8 bg-gray-50 rounded-lg">
@@ -76,70 +75,86 @@ const Question: React.FC<IProps> = ({
 
   // Find user's answer for this question
   const userAnswer = userAnswers.find((ans) => ans.questionId === questionId);
-  const selectedAnswer = userAnswer?.selectedOptionIds?.[0] || "";
+  const selectedOptionId = userAnswer?.selectedOptionIds?.[0] || "";
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         {/* Question Header */}
-        <div className="border-l-4 border-blue-500 pl-4">
-          <h2 className="text-2xl font-semibold text-gray-800 leading-relaxed">
-            <span className="text-blue-600 font-bold">
-              {currentQuestionIndex + 1}.
-            </span>{" "}
+        <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-[#371F5A]">
+          <h3 className="text-xl font-semibold text-gray-800 leading-relaxed">
             {currentQuestion.questionText}
-          </h2>
-          <p className="text-sm text-gray-500 mt-2 font-medium">
-            Select one answer
-          </p>
+          </h3>
         </div>
 
-        {/* Options List */}
-        <div className="space-y-3 mt-4">
-          {currentQuestion.options.map((option, index) => {
-            const optionId = option.id || option._id || `opt-${index}`;
+        {/* Options */}
+        <div className="space-y-3">
+          {currentQuestion.options.map((option) => {
+            // CRITICAL FIX: Use option._id for the value instead of text
+            const optionId = option._id || option.id;
             const optionText = option.text || option.label || option.value;
 
-            if (!optionText) {
-              console.warn("Invalid option data:", option);
+            if (!optionId) {
+              console.warn("Option missing _id:", option);
               return null;
             }
 
-            const isSelected = selectedAnswer === optionText;
-            const radioId = `${questionId}-${optionId}`;
-
             return (
-              <div
-                key={radioId}
+              <label
+                key={optionId}
                 className={`
-                  relative flex items-center p-4 rounded-lg border-2 transition-all duration-200 cursor-pointer
+                  relative flex items-center p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:border-[#371F5A] hover:bg-purple-50
                   ${
-                    isSelected
-                      ? "border-blue-500 bg-blue-50 shadow-md"
-                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                    selectedOptionId === optionId
+                      ? "border-[#371F5A] bg-purple-50 shadow-md"
+                      : "border-gray-200 bg-white hover:shadow-sm"
                   }
                 `}
-                onClick={() => handleOptionChange(questionId, optionText)}
               >
                 <input
                   type="radio"
-                  name={`question-${questionId}`}
-                  id={radioId}
-                  checked={isSelected}
-                  onChange={() => handleOptionChange(questionId, optionText)}
-                  value={optionText}
-                  className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                  name={`question_${questionId}`}
+                  value={optionId} // This is the key fix - using _id instead of text
+                  checked={selectedOptionId === optionId}
+                  onChange={() => handleOptionChange(questionId!, optionId)}
+                  className="sr-only"
                 />
-                <label
-                  htmlFor={radioId}
-                  className="ml-4 text-lg text-gray-700 cursor-pointer select-none flex-1 font-medium"
+
+                {/* Custom Radio Button */}
+                <div
+                  className={`
+                    w-5 h-5 rounded-full border-2 mr-4 flex items-center justify-center transition-all duration-200
+                    ${
+                      selectedOptionId === optionId
+                        ? "border-[#371F5A] bg-[#371F5A]"
+                        : "border-gray-300 bg-white"
+                    }
+                  `}
+                >
+                  {selectedOptionId === optionId && (
+                    <div className="w-2 h-2 rounded-full bg-white"></div>
+                  )}
+                </div>
+
+                {/* Option Text */}
+                <span
+                  className={`
+                    text-lg font-medium transition-colors duration-200
+                    ${
+                      selectedOptionId === optionId
+                        ? "text-[#371F5A]"
+                        : "text-gray-700"
+                    }
+                  `}
                 >
                   {optionText}
-                </label>
-                {isSelected && (
-                  <div className="ml-2 w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+                </span>
+
+                {/* Selection Indicator */}
+                {selectedOptionId === optionId && (
+                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                     <svg
-                      className="w-3 h-3 text-white"
+                      className="w-6 h-6 text-[#371F5A]"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -151,7 +166,7 @@ const Question: React.FC<IProps> = ({
                     </svg>
                   </div>
                 )}
-              </div>
+              </label>
             );
           })}
         </div>

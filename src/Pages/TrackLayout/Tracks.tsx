@@ -5,10 +5,10 @@ import Button from "../../Ui/Button";
 import { useGetTracksQuery } from "@/app/services/GetTracks";
 import CardTrackSkeleton from "@/components/CardTrackSkeleton";
 import "@/index.css";
-import { Link } from "react-router-dom";
 
 const Tracks = () => {
   const { data, isLoading } = useGetTracksQuery();
+  const firstThreeTracks = data?.slice(0, 3);
 
   if (isLoading)
     return (
@@ -19,10 +19,14 @@ const Tracks = () => {
       </div>
     );
 
-  const renderTracks = data?.map(({ title, _id }) => (
+  const renderTracks = data?.map(({ title, _id, image }) => (
     <Trackcard
       key={_id}
-      url="src/assets/Tracks img/Front-End.jpeg"
+      url={
+        image
+          ? `https://codemap-wgjw.onrender.com${image}`
+          : "src/assets/Tracks img/ES.jpeg"
+      }
       alt={title}
       title={title}
       path="InfoOfFrontend"
@@ -86,14 +90,18 @@ const Tracks = () => {
                   </div>
 
                   <div className="space-y-4">
-                    {[...Array(3)].map((_, i) => (
+                    {firstThreeTracks?.map((track, i) => (
                       <div
                         key={i}
                         className="group flex items-center gap-4 p-3 rounded-xl bg-[#CFD8FF]/20 hover:bg-[#CFD8FF]/40 transition-all duration-300 cursor-pointer border border-[#CFD8FF]/30 hover:border-[#6F44AF]/40"
                       >
                         <div className="relative flex-shrink-0">
                           <Image
-                            imageurl="src/assets/Tracks img/Front-End.jpeg"
+                            imageurl={
+                              track.image
+                                ? `https://codemap-wgjw.onrender.com${track.image}`
+                                : "src/assets/Tracks img/ES.jpeg"
+                            }
                             alt="error"
                             className="w-14 h-14 rounded-xl object-cover"
                           />
@@ -101,7 +109,7 @@ const Tracks = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-[#371F5A] font-semibold text-sm leading-tight group-hover:text-[#6F44AF] transition-colors truncate">
-                            Mastering Frontend HTML/CSS/JS
+                            {track.title}
                           </p>
                           <p className="text-[#6F44AF]/70 text-xs mt-1">
                             2h 15m • 847 enrolled
@@ -132,24 +140,9 @@ const Tracks = () => {
                       Get personalized learning recommendations from our AI
                     </p>
 
-                    <Link to="/chatbot">
-                      <Button className="bg-gradient-to-r from-[#2F174E] to-[#545BE8] text-white px-6 md:px-8 py-3 rounded-full flex items-center justify-center font-semibold text-sm md:text-base hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-                        Start Chatting
-                        <svg
-                          className="ml-2 w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </Button>
-                    </Link>
+                    <Button className="w-full bg-gradient-to-r from-[#6F44AF] to-[#371F5A] hover:from-[#371F5A] hover:to-[#6F44AF] text-white font-semibold py-3 px-4 rounded-xl text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#6F44AF]/25">
+                      Start Chatting
+                    </Button>
                   </div>
 
                   {/* Decorative elements */}

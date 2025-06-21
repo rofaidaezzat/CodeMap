@@ -266,34 +266,33 @@ const HomePage = () => {
       >
         <div className="flex justify-between mx-10 px-10 w-auto h-11">
           <Image
-            imageurl="/assets/Home/lamb.png"
+            imageurl="src/assets/Home/lamb.png"
             alt="error"
             className="w-[80px] h-auto"
           />
           <Image
-            imageurl="/assets/Home/Group3.png"
+            imageurl="src/assets/Home/Group3.png"
             alt="error"
             className="w-8 h-8 "
           />
         </div>
-
         <h3 className="text-center font-semibold text-4xl">Our Tracks</h3>
         <p className="text-center">Most popular tracks suggested for you</p>
         <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="/assets/Home/Group2.png"
+              imageurl="src/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto mb-20 ml-5"
             />
             <Image
-              imageurl="/assets/Home/Group4.png"
+              imageurl="src/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-10 justify-center items-center flex-wrap">
+          <div className="flex flex-col md:flex-row gap-10 justify-center  items-center flex-wrap">
             {isLoading
               ? Array.from({ length: 3 }).map((_, index) => (
                   <CardTrackSkeleton key={index} />
@@ -301,7 +300,11 @@ const HomePage = () => {
               : firstThreeTracks?.map((track) => (
                   <Card
                     key={track._id}
-                    url="/assets/Tracks img/Front-End.jpeg"
+                    url={
+                      track.image
+                        ? `https://codemap-wgjw.onrender.com${track.image}`
+                        : "src/assets/Tracks img/ES.jpeg" // صورة افتراضية
+                    }
                     alt={track.title}
                     requirments={track.requirments}
                     title={track.title}
@@ -312,12 +315,12 @@ const HomePage = () => {
 
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="/assets/Home/Group2.png"
+              imageurl="src/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto"
             />
             <Image
-              imageurl="/assets/Home/Group4.png"
+              imageurl="src/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />

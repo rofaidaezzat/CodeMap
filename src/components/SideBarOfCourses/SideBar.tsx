@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
@@ -140,6 +140,33 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
     return completedLessonIds?.includes(previousLessonId) || false;
   };
 
+  // Auto-select first lesson when data loads
+  useEffect(() => {
+    if (data && !isLoading && !ClickedIdLesson) {
+      // Find the first lesson in the first stage
+      const firstStage = data[0];
+      if (firstStage && firstStage.lesson.length > 0) {
+        const firstLesson = firstStage.lesson[0];
+
+        // Set the selected video
+        setSelectedVideo({
+          videoUrl: firstLesson.link,
+          title: firstLesson.title,
+          duration: firstLesson.lesson_duration,
+        });
+
+        // Dispatch the lesson ID
+        Dispatch(clickedIdLessonAction(firstLesson._id));
+
+        // Auto-expand the first stage and its category
+        setExpandedMainIds([firstStage._id]);
+        if (firstStage.category.length > 0) {
+          setExpandedLessonIds([firstStage.category[0]._id]);
+        }
+      }
+    }
+  }, [data, isLoading, ClickedIdLesson, setSelectedVideo, Dispatch]);
+
   // Calculate progress statistics
   const getTotalStats = () => {
     const totalLessons =
@@ -172,9 +199,6 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
           <div className="flex items-center justify-center h-full">
             <div className="text-center space-y-4">
               <LargeLoadingSpinner />
-              <p className="text-slate-600 text-sm">
-                Loading course content...
-              </p>
             </div>
           </div>
         ) : (
@@ -212,7 +236,6 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                         />
                       </div>
                     </div>
-
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-3 text-center">
                       <div className="bg-white/5 rounded-lg p-2">
@@ -405,7 +428,6 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                                                       </div>
                                                     </div>
                                                   )}
-
                                                   <div className="flex items-center gap-3">
                                                     {/* Status Icon */}
                                                     <div
@@ -440,7 +462,6 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                                                         />
                                                       )}
                                                     </div>
-
                                                     {/* Content */}
                                                     <div className="flex-1 min-w-0">
                                                       <div className="flex items-center justify-between gap-2">
@@ -519,7 +540,6 @@ const Sidebar = ({ setSelectedVideo }: SidebarProps) => {
                                       </motion.div>
                                     )}
                                   </AnimatePresence>
-
                                   {/* Task Section */}
                                   {(() => {
                                     const taskId =
