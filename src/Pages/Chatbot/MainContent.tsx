@@ -41,9 +41,11 @@ const itemVariants = {
 
 const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const hasMessages = messages.length > 0; // ✅ أضفناه هنا
+  const hasMessages = messages.length > 0;
+
   const sendMessage = async (text: string) => {
     console.log("Will send to sessionId:", sessionId);
     console.log("Text:", text);
@@ -56,7 +58,7 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
 
     try {
       const { data } = await axios.post(
-        `https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions/${sessionId}/messages`,
+        `https://f910-105-197-145-76.ngrok-free.app/chatbot/sessions/${sessionId}/messages`,
         { message: text },
         {
           headers: {
@@ -77,20 +79,27 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
       });
     }
   };
-  useEffect(() => {
-    console.log("Received sessionId:", sessionId); // 👈 أضيفي دي
-  }, [sessionId]);
+
+  // ✅ Auto scroll to bottom when messages change
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-  // -------------fetch chat by id-------------------
+
+  // ✅ Fetch messages when sessionId changes
   useEffect(() => {
     const fetchMessages = async () => {
-      if (!sessionId) return;
+      if (!sessionId) {
+        setMessages([]); // Clear messages when no session
+        return;
+      }
+
+      console.log("Fetching messages for sessionId:", sessionId);
+      setIsLoadingMessages(true);
+
       try {
         const accessToken = localStorage.getItem("accessToken");
         const { data } = await axios.get(
-          `https://b684-102-189-220-226.ngrok-free.app/chatbot/sessions/${sessionId}`,
+          `https://f910-105-197-145-76.ngrok-free.app/chatbot/sessions/${sessionId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -98,29 +107,50 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
           }
         );
 
-        const loadedMessages = data.data.messages.map(
-          (msg: APISessionMessage) => ({
-            type: msg.role === "user" ? "user" : "bot",
-            text: msg.content,
-          })
-        );
+        console.log("API Response:", data);
 
+        // Handle different possible response structures
+        let messagesArray = [];
+
+        if (data && data.data) {
+          if (Array.isArray(data.data.messages)) {
+            messagesArray = data.data.messages;
+          } else if (
+            data.data.messages === null ||
+            data.data.messages === undefined
+          ) {
+            messagesArray = [];
+          }
+        }
+
+        console.log("Messages array:", messagesArray);
+
+        const loadedMessages = messagesArray.map((msg: APISessionMessage) => ({
+          type: msg.role === "user" ? "user" : "bot",
+          text: msg.content,
+        }));
+
+        console.log("Loaded messages:", loadedMessages);
         setMessages(loadedMessages);
       } catch (error) {
         const errorObj = error as AxiosError<IErrorResponse>;
-        toast.error(`${errorObj.message}`, {
+        console.error("Error fetching messages:", error);
+        setMessages([]); // Set empty array on error
+        toast.error(`Failed to load messages: ${errorObj.message}`, {
           position: "bottom-center",
           duration: 4000,
         });
+      } finally {
+        setIsLoadingMessages(false);
       }
     };
 
     fetchMessages();
-  }, [sessionId]);
+  }, [sessionId]); // ✅ This will trigger whenever sessionId changes
 
   return (
     <div className="flex-1 ml-64 relative h-[calc(100vh-4rem)] mt-24">
-      {!hasMessages && (
+      {!hasMessages && !isLoadingMessages && (
         <motion.div
           className="flex flex-col pt-28 items-center justify-start w-full h-full overflow-y-auto pb-32 px-8"
           variants={containerVariants}
@@ -149,23 +179,33 @@ const MainContent: React.FC<MainContentProps> = ({ sessionId }) => {
         </motion.div>
       )}
 
-      <div className="w-full max-w-2xl flex flex-col gap-3 px-8">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`rounded-lg px-4 py-2 max-w-[80%] ${
-              msg.type === "user"
-                ? "bg-purple-800 text-white self-end"
-                : "bg-gray-200 text-black self-start"
-            }`}
-          >
-            {msg.text}
-          </div>
-        ))}
-        <div style={{ height: "90px" }} />
-        <div ref={chatEndRef} />
-      </div>
+      {/* ✅ Loading indicator for messages */}
+      {isLoadingMessages && (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-white text-lg">Loading messages...</div>
+        </div>
+      )}
 
+      {/* ✅ Messages display - only show when we have messages and not loading */}
+      {hasMessages && !isLoadingMessages && (
+        <div className="w-full max-w-2xl mx-auto flex flex-col gap-3 px-8 pb-32 pt-8 overflow-y-auto h-full">
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                msg.type === "user"
+                  ? "bg-purple-800 text-white self-end"
+                  : "bg-gray-200 text-black self-start"
+              }`}
+            >
+              {msg.text}
+            </div>
+          ))}
+          <div ref={chatEndRef} />
+        </div>
+      )}
+
+      {/* ✅ Search input - always at bottom */}
       <div className="fixed left-64 bottom-0 w-[calc(100%-16rem)] flex justify-center z-20 pb-6">
         <SearchChatbot onSubmit={sendMessage} />
       </div>

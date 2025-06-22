@@ -21,9 +21,25 @@ interface Session {
 }
 
 const ServicesPage = () => {
-  const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
+  // ✅ استرجاع الـ activeSessionId من localStorage عند التحميل
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("activeSessionId");
+    }
+    return null;
+  });
+
   const [sessions, setSessions] = useState<Session[]>([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(() => window.innerWidth >= 768);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    () => window.innerWidth >= 768
+  );
+
+  // ✅ حفظ activeSessionId في localStorage كل مرة يتغير
+  useEffect(() => {
+    if (activeSessionId) {
+      localStorage.setItem("activeSessionId", activeSessionId);
+    }
+  }, [activeSessionId]);
 
   useEffect(() => {
     const handleResize = () => {
