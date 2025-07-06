@@ -116,7 +116,7 @@ const DetailsOfUser = () => {
             </div>
           ) : data?.profile_image?.length ? (
             <Image
-              imageurl={`https://codemap-wgjw.onrender.com/${data.profile_image.replace(
+              imageurl={`https://codemap-production.up.railway.app/${data.profile_image.replace(
                 /\\/g,
                 "/"
               )}`}

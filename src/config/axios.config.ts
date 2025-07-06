@@ -11,7 +11,7 @@ import axios from "axios";
 import { refreshAccessToken } from "../services/authService";
 
 export const axiosInstance = axios.create({
-    baseURL: "https://codemap-wgjw.onrender.com/", 
+    baseURL: "https://codemap-production.up.railway.app/", 
     withCredentials: true, 
     timeout: 10000, 
 });

@@ -157,7 +157,7 @@ const Navbar = ({ bg }: INavbarProps) => {
               <button onClick={() => setIsOpenModal(!isOpenModal)}>
                 {data && data.profile_image ? (
                   <img
-                    src={`https://codemap-wgjw.onrender.com/${data.profile_image.replace(
+                    src={`https://codemap-production.up.railway.app/${data.profile_image.replace(
                       /\\/g,
                       "/"
                     )}`}
@@ -297,7 +297,7 @@ const Navbar = ({ bg }: INavbarProps) => {
             <li className="flex items-center gap-2 w-full">
               {data && data.profile_image ? (
                 <img
-                  src={`https://b684-102-189-220-226.ngrok-free.app/${data.profile_image.replace(
+                  src={`https://codemap-production.up.railway.app/${data.profile_image.replace(
                     /\\/g,
                     "/"
                   )}`}

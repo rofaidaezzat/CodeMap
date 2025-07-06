@@ -76,7 +76,7 @@ const ResetPassword = () => {
     setIsLoading(true);
     try {
       const { status, data: resData } = await axios.post(
-        `https://codemap-wgjw.onrender.com/reset-password/${token}`,
+        `https://codemap-production.up.railway.app/reset-password/${token}`,
         {
           newPassword: data.newPassword,
           confirmPassword: data.confirmPassword,
