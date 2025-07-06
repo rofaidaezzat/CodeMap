@@ -87,14 +87,15 @@ export const NewPasswordSchema = yup.object({
     .matches(/[a-z]/, "Password must contain at least one lowercase letter.")
     .matches(/\d/, "Password must contain at least one number.")
     .matches(
-      /[!@#$%^&*(),.?":{}|<>]/,
-      "Password must contain at least one special character."
+      /(?=(.*[!@#$%^&*(),.?":{}|<>]){2,})/,
+      "Password must contain at least two special characters."
     ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("newPassword")], "Passwords must match")
     .required("Please confirm your password"),
 }).required();
+
 export const UpdatePasswordSchema = yup.object({
   currentPassword: yup.string().required("Current password is required"),
   newPassword: yup
