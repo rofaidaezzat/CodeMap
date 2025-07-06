@@ -118,7 +118,7 @@ const ProfileMenuModal = ({
               <div className="relative">
                 {data && data.profile_image ? (
                   <img
-                    src={`https://codemap-wgjw.onrender.com/${data.profile_image.replace(
+                    src={`https://codemap-production.up.railway.app/${data.profile_image.replace(
                       /\\/g,
                       "/"
                     )}`}
