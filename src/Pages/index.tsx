@@ -13,6 +13,8 @@ import { useGetTracksQuery } from "@/app/services/GetTracks";
 import CardTrackSkeleton from "@/components/CardTrackSkeleton";
 import Hero from "@/components/Hero";
 
+import image1 from '../../public/assets/Home/casual-life-3d-orange-planet-with-disk 1.png'
+
 const HomePage = () => {
   const texts = ["Course", "Video", "Track"];
 
@@ -69,6 +71,13 @@ const HomePage = () => {
   const { data, isLoading } = useGetTracksQuery();
   const firstThreeTracks = data?.slice(0, 3);
 
+  const staticTrackImages = [
+  "/frontend.jpg",
+  "/backend.jpg",
+  "/MachineLearning.jpg",
+];
+
+
   return (
     <>
       <div className="bg-[#CFD8FF] rounded-b-xl ">
@@ -116,7 +125,7 @@ const HomePage = () => {
         </div>
         <div className=" flex justify-between px-2 pb-2">
           <Image
-            imageurl="/assets/Home/casual-life-3d-orange-planet-with-disk 1.png"
+            imageurl={image1}
             alt="error"
             className="w-10"
           />
@@ -266,12 +275,12 @@ const HomePage = () => {
       >
         <div className="flex justify-between mx-10 px-10 w-auto h-11">
           <Image
-            imageurl="src/assets/Home/lamb.png"
+            imageurl="/assets/Home/lamb.png"
             alt="error"
             className="w-[80px] h-auto"
           />
           <Image
-            imageurl="src/assets/Home/Group3.png"
+            imageurl="/assets/Home/Group3.png"
             alt="error"
             className="w-8 h-8 "
           />
@@ -281,12 +290,12 @@ const HomePage = () => {
         <div className="mt-10 pb-7 flex flex-col lg:flex-row items-center gap-10 justify-between overflow-hidden flex-wrap w-full">
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="src/assets/Home/Group2.png"
+              imageurl="/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto mb-20 ml-5"
             />
             <Image
-              imageurl="src/assets/Home/Group4.png"
+              imageurl="/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />
@@ -297,13 +306,10 @@ const HomePage = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                   <CardTrackSkeleton key={index} />
                 ))
-              : firstThreeTracks?.map((track) => (
+              : firstThreeTracks?.map((track, index) => (
                   <Card
                     key={track._id}
-                    url={
-                      track.image
-                        ? `https://codemap-wgjw.onrender.com${track.image}`
-                        : "src/assets/Tracks img/ES.jpeg" // صورة افتراضية
+                    url={staticTrackImages[index % staticTrackImages.length]
                     }
                     alt={track.title}
                     requirments={track.requirments}
@@ -315,12 +321,12 @@ const HomePage = () => {
 
           <div className="hidden lg:flex flex-col justify-between h-full gap-10">
             <Image
-              imageurl="src/assets/Home/Group2.png"
+              imageurl="/assets/Home/Group2.png"
               alt="error"
               className="w-[40px] h-auto"
             />
             <Image
-              imageurl="src/assets/Home/Group4.png"
+              imageurl="/assets/Home/Group4.png"
               alt="error"
               className="w-[50px] h-auto"
             />

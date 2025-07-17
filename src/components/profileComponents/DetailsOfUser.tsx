@@ -115,15 +115,13 @@ const DetailsOfUser = () => {
               <LoadingSpanner />
             </div>
           ) : data?.profile_image?.length ? (
-            <Image
-              imageurl={`https://codemap-production.up.railway.app/${data.profile_image.replace(
-                /\\/g,
-                "/"
-              )}`}
-              alt="Profile"
-              className="rounded-full object-cover w-[130px] h-[130px]"
-              onClick={toggleMenu}
-            />
+          <Image
+          imageurl={`https://codemap-production.up.railway.app/${data.profile_image.replace(/\\/g, "/")}`}
+  alt="Profile"
+  className="rounded-full object-cover w-[130px] h-[130px]"
+  onClick={toggleMenu}
+/>
+
           ) : (
             <>
               <label
