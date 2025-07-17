@@ -33,7 +33,7 @@ const DetailsOfUser = () => {
   };
 
   // fetch image from database
-  const { data, isLoading: isloadingFetchImage } = useQuery({
+  const { data, isLoading: isloadingFetchImage,refetch } = useQuery({
     queryKey: ["oneUser", IdUser],
     queryFn: getUserById,
     enabled: !!IdUser,
@@ -72,6 +72,7 @@ const DetailsOfUser = () => {
           color: "white",
           width: "fit-content",
         },
+
       });
       setOpenMenu(false);
       // تحديث localStorage بالصورة الجديدة
@@ -81,10 +82,10 @@ const DetailsOfUser = () => {
         userData.profile_image = data.profile_image;
         localStorage.setItem("loggedInUser", JSON.stringify(userData));
       }
-      setTimeout(() => {
-        window.location.reload();
-      }, 800); // بعد 0.8 ثانية حتى تظهر رسالة التوست أولاً
+      
     }
+    refetch();
+
   }, [isSuccess, data?.profile_image]);
 
   // is success delete image
@@ -99,9 +100,8 @@ const DetailsOfUser = () => {
           width: "fit-content",
         },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 800); // بعد 0.8 ثانية حتى تظهر رسالة التوست أولاً
+          refetch();
+
     }
   }, [isSuccessDelete]);
 
